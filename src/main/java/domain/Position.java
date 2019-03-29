@@ -41,7 +41,7 @@ public class Position extends DomainEntity {
 		return this.title;
 	}
 
-	public void setTitle(final String title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
@@ -50,7 +50,7 @@ public class Position extends DomainEntity {
 		return this.description;
 	}
 
-	public void setDescription(final String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -60,7 +60,7 @@ public class Position extends DomainEntity {
 		return this.deadline;
 	}
 
-	public void setDeadline(final Date deadline) {
+	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
 
@@ -69,7 +69,7 @@ public class Position extends DomainEntity {
 		return this.requiredProfile;
 	}
 
-	public void setRequiredProfile(final String requiredProfile) {
+	public void setRequiredProfile(String requiredProfile) {
 		this.requiredProfile = requiredProfile;
 	}
 
@@ -78,7 +78,7 @@ public class Position extends DomainEntity {
 		return this.requiredSkills;
 	}
 
-	public void setRequiredSkills(final List<String> requiredSkills) {
+	public void setRequiredSkills(List<String> requiredSkills) {
 		this.requiredSkills = requiredSkills;
 	}
 
@@ -87,7 +87,7 @@ public class Position extends DomainEntity {
 		return this.requiredTecnologies;
 	}
 
-	public void setRequiredTecnologies(final List<String> requiredTecnologies) {
+	public void setRequiredTecnologies(List<String> requiredTecnologies) {
 		this.requiredTecnologies = requiredTecnologies;
 	}
 
@@ -96,7 +96,7 @@ public class Position extends DomainEntity {
 		return this.offeredSalary;
 	}
 
-	public void setOfferedSalary(final Double offeredSalary) {
+	public void setOfferedSalary(Double offeredSalary) {
 		this.offeredSalary = offeredSalary;
 	}
 
@@ -105,7 +105,7 @@ public class Position extends DomainEntity {
 		return this.ticker;
 	}
 
-	public void setTicker(final String ticker) {
+	public void setTicker(String ticker) {
 		this.ticker = ticker;
 	}
 
@@ -114,7 +114,7 @@ public class Position extends DomainEntity {
 		return this.isDraftMode;
 	}
 
-	public void setIsDraftMode(final Boolean isDraftMode) {
+	public void setIsDraftMode(Boolean isDraftMode) {
 		this.isDraftMode = isDraftMode;
 	}
 
@@ -123,7 +123,7 @@ public class Position extends DomainEntity {
 		return this.isCancelled;
 	}
 
-	public void setIsCancelled(final Boolean isCancelled) {
+	public void setIsCancelled(Boolean isCancelled) {
 		this.isCancelled = isCancelled;
 	}
 
@@ -132,7 +132,7 @@ public class Position extends DomainEntity {
 		return this.problems;
 	}
 
-	public void setProblems(final List<Problem> problems) {
+	public void setProblems(List<Problem> problems) {
 		this.problems = problems;
 	}
 
@@ -141,7 +141,7 @@ public class Position extends DomainEntity {
 		return this.applications;
 	}
 
-	public void setApplication(final List<Application> applications) {
+	public void setApplications(List<Application> applications) {
 		this.applications = applications;
 	}
 

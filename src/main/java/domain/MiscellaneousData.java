@@ -20,7 +20,7 @@ public class MiscellaneousData extends DomainEntity {
 		return this.freeText;
 	}
 
-	public void setFreeText(final String freeText) {
+	public void setFreeText(String freeText) {
 		this.freeText = freeText;
 	}
 
@@ -28,7 +28,7 @@ public class MiscellaneousData extends DomainEntity {
 		return this.attachment;
 	}
 
-	public void setAttachment(final String attachment) {
+	public void setAttachment(String attachment) {
 		this.attachment = attachment;
 	}
 

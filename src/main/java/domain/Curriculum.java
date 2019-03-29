@@ -27,7 +27,7 @@ public class Curriculum extends DomainEntity {
 		return this.title;
 	}
 
-	public void setTitle(final String title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
@@ -37,7 +37,7 @@ public class Curriculum extends DomainEntity {
 		return this.personalData;
 	}
 
-	public void setPersonalData(final PersonalData personalData) {
+	public void setPersonalData(PersonalData personalData) {
 		this.personalData = personalData;
 	}
 
@@ -47,7 +47,7 @@ public class Curriculum extends DomainEntity {
 		return this.positionData;
 	}
 
-	public void setPositionData(final List<PositionData> positionData) {
+	public void setPositionData(List<PositionData> positionData) {
 		this.positionData = positionData;
 	}
 
@@ -57,7 +57,7 @@ public class Curriculum extends DomainEntity {
 		return this.educationData;
 	}
 
-	public void setEducationData(final List<EducationData> educationData) {
+	public void setEducationData(List<EducationData> educationData) {
 		this.educationData = educationData;
 	}
 
@@ -67,7 +67,7 @@ public class Curriculum extends DomainEntity {
 		return this.miscellaneousData;
 	}
 
-	public void setMiscellaneousData(final List<MiscellaneousData> miscellaneousData) {
+	public void setMiscellaneousData(List<MiscellaneousData> miscellaneousData) {
 		this.miscellaneousData = miscellaneousData;
 	}
 }

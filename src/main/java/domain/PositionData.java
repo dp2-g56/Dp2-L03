@@ -27,7 +27,7 @@ public class PositionData extends DomainEntity {
 		return this.title;
 	}
 
-	public void setTitle(final String title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
@@ -36,7 +36,7 @@ public class PositionData extends DomainEntity {
 		return this.description;
 	}
 
-	public void setDescription(final String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -47,7 +47,7 @@ public class PositionData extends DomainEntity {
 		return this.startDate;
 	}
 
-	public void setStartDate(final Date startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
@@ -56,7 +56,7 @@ public class PositionData extends DomainEntity {
 		return this.endDate;
 	}
 
-	public void setEndDate(final Date endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
