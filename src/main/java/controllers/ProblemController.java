@@ -1,6 +1,9 @@
 
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CompanyService;
 import services.ProblemService;
 import domain.Problem;
 
@@ -18,9 +22,31 @@ public class ProblemController extends AbstractController {
 	@Autowired
 	private ProblemService	problemService;
 
+	@Autowired
+	private CompanyService	companyService;
+
 
 	public ProblemController() {
 		super();
+	}
+
+	@RequestMapping(value = "/company/list", method = RequestMethod.GET)
+	public ModelAndView listProblems() {
+		ModelAndView result;
+
+		this.companyService.loggedAsCompany();
+
+		List<Problem> problems = new ArrayList<Problem>();
+
+		problems = this.problemService.showProblems();
+
+		result = new ModelAndView("problem/company/list");
+
+		result.addObject("problems", problems);
+		result.addObject("requestURI", "problem/company/list.do");
+
+		return result;
+
 	}
 
 	@RequestMapping(value = "/company/create", method = RequestMethod.GET)

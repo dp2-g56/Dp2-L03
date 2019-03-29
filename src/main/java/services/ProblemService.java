@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ProblemRepository;
+import domain.Company;
 import domain.Problem;
 
 @Service
@@ -20,6 +21,9 @@ public class ProblemService {
 
 	@Autowired
 	private ProblemRepository	problemRepository;
+
+	@Autowired
+	private CompanyService		companyService;
 
 
 	public List<Problem> findAll() {
@@ -36,6 +40,13 @@ public class ProblemService {
 
 	public void delete(Problem problem) {
 		this.problemRepository.delete(problem);
+	}
+
+	public List<Problem> showProblems() {
+		Company company = this.companyService.getLoggedCompany();
+		List<Problem> problems = new ArrayList<Problem>();
+		problems = this.problemRepository.getProblemsByCompany(company);
+		return problems;
 	}
 
 	public Problem create() {
