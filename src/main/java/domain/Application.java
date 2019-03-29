@@ -38,7 +38,7 @@ public class Application extends DomainEntity {
 		return this.creationMoment;
 	}
 
-	public void setCreationMoment(final Date creationMoment) {
+	public void setCreationMoment(Date creationMoment) {
 		this.creationMoment = creationMoment;
 	}
 
@@ -48,7 +48,7 @@ public class Application extends DomainEntity {
 		return this.link;
 	}
 
-	public void setLink(final String link) {
+	public void setLink(String link) {
 		this.link = link;
 	}
 
@@ -57,7 +57,7 @@ public class Application extends DomainEntity {
 		return this.explication;
 	}
 
-	public void setExplication(final String explication) {
+	public void setExplication(String explication) {
 		this.explication = explication;
 	}
 
@@ -67,7 +67,7 @@ public class Application extends DomainEntity {
 		return this.submitMoment;
 	}
 
-	public void setSubmitMoment(final Date submitMoment) {
+	public void setSubmitMoment(Date submitMoment) {
 		this.submitMoment = submitMoment;
 	}
 
@@ -76,7 +76,7 @@ public class Application extends DomainEntity {
 		return this.status;
 	}
 
-	public void setStatus(final Status status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
@@ -85,7 +85,7 @@ public class Application extends DomainEntity {
 		return this.problem;
 	}
 
-	public void setProblem(final Problem problem) {
+	public void setProblem(Problem problem) {
 		this.problem = problem;
 	}
 
@@ -94,7 +94,7 @@ public class Application extends DomainEntity {
 		return this.position;
 	}
 
-	public void setPosition(final Position position) {
+	public void setPosition(Position position) {
 		this.position = position;
 	}
 
@@ -103,7 +103,7 @@ public class Application extends DomainEntity {
 		return this.curriculum;
 	}
 
-	public void setCurriculum(final Curriculum curriculum) {
+	public void setCurriculum(Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
 
@@ -112,7 +112,7 @@ public class Application extends DomainEntity {
 		return this.hacker;
 	}
 
-	public void setHacker(final Hacker hacker) {
+	public void setHacker(Hacker hacker) {
 		this.hacker = hacker;
 	}
 }

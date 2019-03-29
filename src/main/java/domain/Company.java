@@ -25,7 +25,7 @@ public class Company extends Actor {
 		return this.companyNumber;
 	}
 
-	public void setCompanyNumber(final String companyNumber) {
+	public void setCompanyNumber(String companyNumber) {
 		this.companyNumber = companyNumber;
 	}
 
@@ -34,7 +34,7 @@ public class Company extends Actor {
 		return this.problems;
 	}
 
-	public void setProblems(final List<Problem> problems) {
+	public void setProblems(List<Problem> problems) {
 		this.problems = problems;
 	}
 
@@ -43,7 +43,7 @@ public class Company extends Actor {
 		return this.positions;
 	}
 
-	public void setPositions(final List<Position> positions) {
+	public void setPositions(List<Position> positions) {
 		this.positions = positions;
 	}
 

@@ -25,7 +25,7 @@ public class Finder extends DomainEntity {
 		return this.keyWord;
 	}
 
-	public void setKeyWord(final String keyWord) {
+	public void setKeyWord(String keyWord) {
 		this.keyWord = keyWord;
 	}
 
@@ -35,7 +35,7 @@ public class Finder extends DomainEntity {
 		return this.deadLine;
 	}
 
-	public void setDeadLine(final Date deadLine) {
+	public void setDeadLine(Date deadLine) {
 		this.deadLine = deadLine;
 	}
 
@@ -44,7 +44,7 @@ public class Finder extends DomainEntity {
 		return this.minSalary;
 	}
 
-	public void setMinSalary(final Double minSalary) {
+	public void setMinSalary(Double minSalary) {
 		this.minSalary = minSalary;
 	}
 
@@ -54,7 +54,7 @@ public class Finder extends DomainEntity {
 		return this.maxDeadLine;
 	}
 
-	public void setMaxDeadLine(final Date maxDeadLine) {
+	public void setMaxDeadLine(Date maxDeadLine) {
 		this.maxDeadLine = maxDeadLine;
 	}
 
