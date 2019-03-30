@@ -18,10 +18,54 @@
 	">
 
 	<util:list id="converters">
-		<!-- 
-			Add your own converters using entries of the following form: 
-			<bean class="converters.Class1ToClass2" /> 
-		-->
+	
+		<bean class="converters.ActorToStringConverter" />
+		<bean class="converters.StringToActorConverter" />
+		
+		<bean class="converters.AdminToStringConverter" />
+		<bean class="converters.StringToAdminConverter" />
+		
+		<bean class="converters.ApplicationToStringConverter" />
+		<bean class="converters.StringToApplicationConverter" />
+		
+		<bean class="converters.CompanyToStringConverter" />
+		<bean class="converters.StringToCompanyConverter" />
+		
+		<bean class="converters.CreditCardToStringConverter" />
+		<bean class="converters.StringToCreditCardConverter" />
+		
+		<bean class="converters.CurriculumToStringConverter" />
+		<bean class="converters.StringToCurriculumConverter" />
+		
+		<bean class="converters.EducationDataToStringConverter" />
+		<bean class="converters.StringToEducationDataConverter" />
+		
+		<bean class="converters.FinderToStringConverter" />
+		<bean class="converters.StringToFinderConverter" />
+		
+		<bean class="converters.HackerToStringConverter" />
+		<bean class="converters.StringToHackerConverter" />
+		
+		<bean class="converters.MessageToStringConverter" />
+		<bean class="converters.StringToMessageConverter" />
+		
+		<bean class="converters.MiscellaneousDataToStringConverter" />
+		<bean class="converters.StringToMiscellaneousDataConverter" />
+		
+		<bean class="converters.PersonalDataToStringConverter" />
+		<bean class="converters.StringToPersonalDataConverter" />
+		
+		<bean class="converters.PositionDataToStringConverter" />
+		<bean class="converters.StringToPositionDataConverter" />
+		
+		<bean class="converters.PositionToStringConverter" />
+		<bean class="converters.StringToPositionConverter" />
+		
+		<bean class="converters.ProblemToStringConverter" />
+		<bean class="converters.StringToProblemConverter" />
+		
+		<bean class="converters.SocialProfileToStringConverter" />
+		<bean class="converters.StringToSocialProfileConverter" />
 	</util:list>
 	
 </beans>

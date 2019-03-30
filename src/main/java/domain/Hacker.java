@@ -28,6 +28,7 @@ public class Hacker extends Actor {
 
 	public void setCurriculums(List<Curriculum> curriculums) {
 		this.curriculums = curriculums;
+
 	}
 
 	@Valid

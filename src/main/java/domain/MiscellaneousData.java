@@ -34,8 +34,10 @@ public class MiscellaneousData extends DomainEntity {
 		return this.attachments;
 	}
 
+
 	public void setAttachments(List<String> attachments) {
 		this.attachments = attachments;
+
 	}
 
 }

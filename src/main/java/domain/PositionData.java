@@ -57,7 +57,7 @@ public class PositionData extends DomainEntity {
 		return this.endDate;
 	}
 
-	public void setEndDate(final Date endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

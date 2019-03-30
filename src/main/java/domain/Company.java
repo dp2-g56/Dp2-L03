@@ -26,6 +26,7 @@ public class Company extends Actor {
 		return this.companyName;
 	}
 
+
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}

@@ -22,17 +22,6 @@ public class Problem extends DomainEntity {
 	private List<String>	attachments;
 	private Boolean			isDraftMode;
 
-
-	@Valid
-	@ElementCollection(targetClass = String.class)
-	public List<String> getAttachments() {
-		return this.attachments;
-	}
-
-	public void setAttachments(List<String> attachments) {
-		this.attachments = attachments;
-	}
-
 	@NotBlank
 	public String getTitle() {
 		return this.title;
@@ -58,6 +47,16 @@ public class Problem extends DomainEntity {
 
 	public void setHint(String hint) {
 		this.hint = hint;
+	}
+
+	@Valid
+	@ElementCollection(targetClass = String.class)
+	public List<String> getAttachments() {
+		return this.attachments;
+	}
+
+	public void setAttachments(List<String> attachments) {
+		this.attachments = attachments;
 	}
 
 	@NotNull
