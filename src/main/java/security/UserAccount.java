@@ -85,11 +85,11 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		return this.authorities;
 	}
 
-	public void setAuthorities(final Collection<Authority> authorities) {
+	public void setAuthorities(Collection<Authority> authorities) {
 		this.authorities = authorities;
 	}
 
-	public void addAuthority(final Authority authority) {
+	public void addAuthority(Authority authority) {
 		Assert.notNull(authority);
 		Assert.isTrue(!this.authorities.contains(authority));
 
