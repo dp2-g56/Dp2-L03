@@ -26,7 +26,7 @@ public class Hacker extends Actor {
 		return this.curriculum;
 	}
 
-	public void setCurriculum(final Curriculum curriculum) {
+	public void setCurriculum(Curriculum curriculum) {
 		this.curriculum = curriculum;
 	}
 
@@ -36,7 +36,7 @@ public class Hacker extends Actor {
 		return this.applications;
 	}
 
-	public void setApplications(final List<Application> applications) {
+	public void setApplications(List<Application> applications) {
 		this.applications = applications;
 	}
 
@@ -46,7 +46,7 @@ public class Hacker extends Actor {
 		return this.finder;
 	}
 
-	public void setFinder(final Finder finder) {
+	public void setFinder(Finder finder) {
 		this.finder = finder;
 	}
 }

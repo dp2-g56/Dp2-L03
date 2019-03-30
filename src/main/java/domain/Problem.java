@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ public class Problem extends DomainEntity {
 	private String			title;
 	private String			statement;
 	private String			hint;
-	private List<String>	attachment;
+	private List<String>	attachments;
 	private Boolean			isDraftMode;
 
 
@@ -27,7 +28,7 @@ public class Problem extends DomainEntity {
 		return this.title;
 	}
 
-	public void setTitle(final String title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
@@ -36,7 +37,7 @@ public class Problem extends DomainEntity {
 		return this.statement;
 	}
 
-	public void setStatement(final String statement) {
+	public void setStatement(String statement) {
 		this.statement = statement;
 	}
 
@@ -45,17 +46,18 @@ public class Problem extends DomainEntity {
 		return this.hint;
 	}
 
-	public void setHint(final String hint) {
+	public void setHint(String hint) {
 		this.hint = hint;
 	}
 
 	@Valid
-	public List<String> getAttachment() {
-		return this.attachment;
+	@ElementCollection(targetClass = String.class)
+	public List<String> getAttachments() {
+		return this.attachments;
 	}
 
-	public void setAttachment(final List<String> attachment) {
-		this.attachment = attachment;
+	public void setAttachments(List<String> attachments) {
+		this.attachments = attachments;
 	}
 
 	@NotNull
@@ -63,7 +65,7 @@ public class Problem extends DomainEntity {
 		return this.isDraftMode;
 	}
 
-	public void setIsDraftMode(final Boolean isDraftMode) {
+	public void setIsDraftMode(Boolean isDraftMode) {
 		this.isDraftMode = isDraftMode;
 	}
 
