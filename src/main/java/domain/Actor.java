@@ -42,7 +42,7 @@ public class Actor extends DomainEntity {
 		return this.name;
 	}
 
-	public void setName(final String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -51,16 +51,18 @@ public class Actor extends DomainEntity {
 		return this.surname;
 	}
 
-	public void setSurname(final String surname) {
+	public void setSurname(String surname) {
 		this.surname = surname;
 	}
 
 	@NotBlank
+	@Pattern(
+		regexp = "((AT)?U[0-9]{8}|(BE)?0[0-9]{9}|(BG)?[0-9]{9,10}|(CY)?[0-9]{8}L|(CZ)?[0-9]{8,10}|(DE)?[0-9]{9}|(DK)?[0-9]{8}|(EE)?[0-9]{9}|(EL|GR)?[0-9]{9}|(ES)?[0-9A-Z][0-9]{7}[0-9A-Z]|(FI)?[0-9]{8}|(FR)?[0-9A-Z]{2}[0-9]{9}|(GB)?([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})|(HU)?[0-9]{8}|(IE)?[0-9]S[0-9]{5}L|(IT)?[0-9]{11}|(LT)?([0-9]{9}|[0-9]{12})|(LU)?[0-9]{8}|(LV)?[0-9]{11}|(MT)?[0-9]{8}|(NL)?[0-9]{9}B[0-9]{2}|(PL)?[0-9]{10}|(PT)?[0-9]{9}|(RO)?[0-9]{2,10}|(SE)?[0-9]{12}|(SI)?[0-9]{8}|(SK)?[0-9]{10})")
 	public String getVATNumber() {
 		return this.VATNumber;
 	}
 
-	public void setVATNumber(final String vATNumber) {
+	public void setVATNumber(String vATNumber) {
 		this.VATNumber = vATNumber;
 	}
 
@@ -70,7 +72,7 @@ public class Actor extends DomainEntity {
 		return this.creditCard;
 	}
 
-	public void setCreditCard(final CreditCard creditCard) {
+	public void setCreditCard(CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
 
@@ -79,7 +81,7 @@ public class Actor extends DomainEntity {
 		return this.photo;
 	}
 
-	public void setPhoto(final String photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 
@@ -89,7 +91,7 @@ public class Actor extends DomainEntity {
 		return this.email;
 	}
 
-	public void setEmail(final String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -98,7 +100,7 @@ public class Actor extends DomainEntity {
 		return this.phone;
 	}
 
-	public void setPhone(final String phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
@@ -107,7 +109,7 @@ public class Actor extends DomainEntity {
 		return this.address;
 	}
 
-	public void setAddress(final String address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
@@ -117,7 +119,7 @@ public class Actor extends DomainEntity {
 		return this.socialProfiles;
 	}
 
-	public void setSocialProfiles(final List<SocialProfile> socialProfiles) {
+	public void setSocialProfiles(List<SocialProfile> socialProfiles) {
 		this.socialProfiles = socialProfiles;
 	}
 
@@ -127,7 +129,7 @@ public class Actor extends DomainEntity {
 		return this.messages;
 	}
 
-	public void setMessages(final List<Message> messages) {
+	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
 
@@ -137,7 +139,7 @@ public class Actor extends DomainEntity {
 		return this.userAccount;
 	}
 
-	public void setUserAccount(final UserAccount userAccount) {
+	public void setUserAccount(UserAccount userAccount) {
 		this.userAccount = userAccount;
 	}
 }

@@ -1,9 +1,13 @@
 
 package domain;
 
+import java.util.List;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -11,8 +15,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @Access(AccessType.PROPERTY)
 public class MiscellaneousData extends DomainEntity {
 
-	private String	freeText;
-	private String	attachment;
+	private String			freeText;
+	private List<String>	attachments;
 
 
 	@NotBlank
@@ -20,16 +24,18 @@ public class MiscellaneousData extends DomainEntity {
 		return this.freeText;
 	}
 
-	public void setFreeText(final String freeText) {
+	public void setFreeText(String freeText) {
 		this.freeText = freeText;
 	}
 
-	public String getAttachment() {
-		return this.attachment;
+	@Valid
+	@ElementCollection(targetClass = String.class)
+	public List<String> getAttachments() {
+		return this.attachments;
 	}
 
-	public void setAttachment(final String attachment) {
-		this.attachment = attachment;
+	public void setAttachments(List<String> attachments) {
+		this.attachments = attachments;
 	}
 
 }

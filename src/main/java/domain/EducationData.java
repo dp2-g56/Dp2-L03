@@ -28,7 +28,7 @@ public class EducationData extends DomainEntity {
 		return this.degree;
 	}
 
-	public void setDegree(final String degree) {
+	public void setDegree(String degree) {
 		this.degree = degree;
 	}
 
@@ -37,7 +37,7 @@ public class EducationData extends DomainEntity {
 		return this.institution;
 	}
 
-	public void setInstitution(final String institution) {
+	public void setInstitution(String institution) {
 		this.institution = institution;
 	}
 
@@ -46,7 +46,7 @@ public class EducationData extends DomainEntity {
 		return this.mark;
 	}
 
-	public void setMark(final Mark mark) {
+	public void setMark(Mark mark) {
 		this.mark = mark;
 	}
 
@@ -57,17 +57,17 @@ public class EducationData extends DomainEntity {
 		return this.startDate;
 	}
 
-	public void setStartDate(final Date startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@Past
 	public Date getEndDate() {
 		return this.endDate;
 	}
 
-	public void setEndDate(final Date endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

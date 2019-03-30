@@ -25,7 +25,7 @@ public class PersonalData extends DomainEntity {
 		return this.fullName;
 	}
 
-	public void setFullName(final String fullName) {
+	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
 
@@ -34,7 +34,7 @@ public class PersonalData extends DomainEntity {
 		return this.statement;
 	}
 
-	public void setStatement(final String statement) {
+	public void setStatement(String statement) {
 		this.statement = statement;
 	}
 
@@ -43,7 +43,7 @@ public class PersonalData extends DomainEntity {
 		return this.phoneNumber;
 	}
 
-	public void setPhoneNumber(final String phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -53,7 +53,7 @@ public class PersonalData extends DomainEntity {
 		return this.gitHubProfile;
 	}
 
-	public void setGitHubProfile(final String gitHubProfile) {
+	public void setGitHubProfile(String gitHubProfile) {
 		this.gitHubProfile = gitHubProfile;
 	}
 
@@ -63,7 +63,7 @@ public class PersonalData extends DomainEntity {
 		return this.linkedinProfile;
 	}
 
-	public void setLinkedinProfile(final String linkedinProfile) {
+	public void setLinkedinProfile(String linkedinProfile) {
 		this.linkedinProfile = linkedinProfile;
 	}
 }
