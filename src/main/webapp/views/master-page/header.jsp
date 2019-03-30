@@ -40,6 +40,15 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('COMPANY')">
+			<li><a class="fNiv"><spring:message	code="master.page.company" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="problem/company/list.do"><spring:message code="master.page.company.listProblems" /></a></li>				
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>

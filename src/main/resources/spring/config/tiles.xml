@@ -27,6 +27,10 @@
 		<value>/views/administrator/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/profile/tiles.xml</value>
+		
+		<value>/views/company/tiles.xml</value>
+		
+		
 	</util:list>
 
 </beans>
