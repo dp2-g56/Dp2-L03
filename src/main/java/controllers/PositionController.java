@@ -73,8 +73,9 @@ public class PositionController extends AbstractController {
 
 		Position position = this.positionService.findOne(positionId);
 
-		if (position.getIsDraftMode())
+		if (position.getIsDraftMode()) {
 			return this.list();
+		}
 
 		allProblems = position.getProblems();
 
@@ -90,7 +91,7 @@ public class PositionController extends AbstractController {
 
 	//--------------------------LISTA DE ATTACHEMENTS----------------------------
 	//---------------------------------------------------------------------------
-	@RequestMapping(value = "/problemPosition/company/attachement/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/attachement/list", method = RequestMethod.GET)
 	public ModelAndView listAttachement(@RequestParam int problemId) {
 
 		ModelAndView result;
@@ -101,8 +102,9 @@ public class PositionController extends AbstractController {
 
 		Problem problem = this.problemService.findOne(problemId);
 
-		if (!loggedCompany.getProblems().contains(problem))
+		if (!loggedCompany.getProblems().contains(problem)) {
 			return this.list();
+		}
 
 		list = problem.getAttachments();
 
@@ -129,8 +131,9 @@ public class PositionController extends AbstractController {
 
 		Position position = this.positionService.findOne(positionId);
 
-		if (!loggedCompany.getPositions().contains(position))
+		if (!loggedCompany.getPositions().contains(position)) {
 			return this.list();
+		}
 
 		list = position.getRequiredTecnologies();
 
@@ -157,8 +160,9 @@ public class PositionController extends AbstractController {
 
 		Position position = this.positionService.findOne(positionId);
 
-		if (!loggedCompany.getPositions().contains(position))
+		if (!loggedCompany.getPositions().contains(position)) {
 			return this.list();
+		}
 
 		list = position.getRequiredSkills();
 
@@ -217,11 +221,13 @@ public class PositionController extends AbstractController {
 		position = this.positionService.findOne(positionId);
 		Company company = this.companyService.loggedCompany();
 
-		if (!position.getIsDraftMode() || position.getIsCancelled())
+		if (!position.getIsDraftMode() || position.getIsCancelled()) {
 			return this.list();
+		}
 
-		if (!(company.getPositions().contains(position)))
+		if (!(company.getPositions().contains(position))) {
 			return this.list();
+		}
 
 		FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox = this.positionService.prepareFormObjectPositionProblemCheckbox(positionId);
 
@@ -239,9 +245,9 @@ public class PositionController extends AbstractController {
 		Position position = new Position();
 		position = this.positionService.createPosition();
 
-		if (binding.hasErrors())
+		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(position);
-		else
+		} else {
 			try {
 
 				List<Problem> problems = this.problemService.reconstructList(formObjectPositionProblemCheckbox);
@@ -257,6 +263,7 @@ public class PositionController extends AbstractController {
 				result = this.createEditModelAndView(position, "commit.error");
 
 			}
+		}
 		return result;
 	}
 

@@ -24,6 +24,7 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="administrator/administrator/create.do"><spring:message code="master.page.administrator.createAdmin" /></a></li>		
 					
 				</ul>
 			</li>

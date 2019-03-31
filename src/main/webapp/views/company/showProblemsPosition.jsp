@@ -22,7 +22,7 @@
 		
 	<display:column titleKey="problem.attachments">
         <jstl:set var="attachmentsSize" value="${row.attachments.size()}" />
-        <spring:url var="attachementsURL" value="/problemPosition/company/attachement/list.do?problemId={problemId}">      		
+        <spring:url var="attachementsURL" value="/position/company/attachement/list.do?problemId={problemId}">      		
         	<spring:param name="problemId" value="${row.id}"/>	
         </spring:url>							
         <a href="${attachementsURL}">
