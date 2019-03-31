@@ -119,6 +119,13 @@
 				<spring:message code="position.edit" />
 			</a>
 		</jstl:if>
+		
+		<jstl:if test="${!row.isDraftMode && !row.isCancelled}">
+			<a href="position/company/cancel.do?positionId=${row.id}">
+				<spring:message code="position.cancel" />
+			</a>
+		</jstl:if>
+		
 	</display:column>
 
 												
