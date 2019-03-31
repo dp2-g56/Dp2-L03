@@ -16,6 +16,7 @@
        
 <tiles-definitions>
 
+	<!-- POSITION -->
 	<definition name="position/company/list" extends="master.page">	
 		<put-attribute name="title" value="Positions" />
 		<put-attribute name="body" value="/views/company/positionList.jsp" />
@@ -44,6 +45,28 @@
 	<definition name="problemPosition/company/attachement/list" extends="master.page">	
 		<put-attribute name="title" value="List of Attachements" />
 		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+
+
+	<!--PROBLEM -->
+	<definition name="problem/company/list" extends="master.page">	
+		<put-attribute name="title" value="Company problems" />
+		<put-attribute name="body" value="/views/company/problemList.jsp" />
+	</definition>
+
+	<definition name="problem/company/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit Problem" />
+		<put-attribute name="body" value="/views/company/editProblem.jsp" />
+	</definition>
+	
+	<definition name="problem/company/listAttachments" extends="master.page">	
+		<put-attribute name="title" value="List of attachments" />
+		<put-attribute name="body" value="/views/company/showAttachments.jsp" />
+	</definition>
+	
+	<definition name="problem/company/addAttachment" extends="master.page">	
+		<put-attribute name="title" value="Add an attachment" />
+		<put-attribute name="body" value="/views/company/addAttachment.jsp" />
+
 	</definition>
 	
 	

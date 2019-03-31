@@ -41,4 +41,4 @@
 	<form:radiobutton path="${path}" value="True"/> <spring:message code="${trueCode}" />
 	<form:radiobutton path="${path}" value="False"/> <spring:message code="${falseCode}" />
 	<form:errors cssClass="error" path="${path}"/>
-</div>
+

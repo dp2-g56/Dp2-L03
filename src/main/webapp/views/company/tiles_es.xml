@@ -16,6 +16,7 @@
       
 <tiles-definitions>
 
+	<!--POSITION -->
 	<definition name="position/company/list" extends="master.page">	
 		<put-attribute name="title" value="Situaciones" />
 		<put-attribute name="body" value="/views/company/positionList.jsp" />
@@ -47,5 +48,25 @@
 	</definition>
 	
 	
+	<!--PROBLEM -->
+	<definition name="problem/company/list" extends="master.page">	
+		<put-attribute name="title" value="Problemas de la empresa" />
+		<put-attribute name="body" value="/views/company/problemList.jsp" />
+	</definition>
+	
+	<definition name="problem/company/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar Problema" />
+		<put-attribute name="body" value="/views/company/editProblem.jsp" />
+	</definition>
+	
+	<definition name="problem/company/listAttachments" extends="master.page">	
+		<put-attribute name="title" value="Lista de archivos" />
+		<put-attribute name="body" value="/views/company/showAttachments.jsp" />
+	</definition>
+	
+	<definition name="problem/company/addAttachment" extends="master.page">	
+		<put-attribute name="title" value="Crear un archivo" />
+		<put-attribute name="body" value="/views/company/addAttachment.jsp" />
+	</definition>
 	
 </tiles-definitions>
