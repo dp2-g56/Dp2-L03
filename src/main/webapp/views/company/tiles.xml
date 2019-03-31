@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<definition name="position/company/list" extends="master.page">	
+		<put-attribute name="title" value="Positions" />
+		<put-attribute name="body" value="/views/company/positionList.jsp" />
+	</definition>
+	
+	<definition name="position/company/create" extends="master.page">	
+		<put-attribute name="title" value="Create a Position" />
+		<put-attribute name="body" value="/views/company/createPosition.jsp" />
+	</definition>
+	
+	<definition name="problemPosition/company/list" extends="master.page">	
+		<put-attribute name="title" value="List of Problems" />
+		<put-attribute name="body" value="/views/company/showProblemsPosition.jsp" />
+	</definition>
+	
+	<definition name="position/company/skill/list" extends="master.page">	
+		<put-attribute name="title" value="List of Required Skills" />
+		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+	</definition>
+	
+	<definition name="position/company/technology/list" extends="master.page">	
+		<put-attribute name="title" value="List of Required Technologies" />
+		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+	</definition>
+						
+	<definition name="problemPosition/company/attachement/list" extends="master.page">	
+		<put-attribute name="title" value="List of Attachements" />
+		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+	</definition>
+	
+	
+</tiles-definitions>

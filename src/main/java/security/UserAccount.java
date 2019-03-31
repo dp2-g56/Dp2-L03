@@ -55,6 +55,14 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	private boolean					isNotLocked;
 
 
+	public boolean getIsNotLocked() {
+		return this.isNotLocked;
+	}
+
+	public void setIsNotLocked(final boolean isNotLocked) {
+		this.isNotLocked = isNotLocked;
+	}
+
 	@Size(min = 5, max = 32)
 	@Column(unique = true)
 	@Override
@@ -62,7 +70,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		return this.username;
 	}
 
-	public void setUsername(final String username) {
+	public void setUsername(String username) {
 		this.username = username;
 	}
 
@@ -72,7 +80,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		return this.password;
 	}
 
-	public void setPassword(final String password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
