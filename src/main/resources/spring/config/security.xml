@@ -27,26 +27,32 @@
 	<!-- Access control -->
 
 	<security:http auto-config="true" use-expressions="true">
+	
+		<!-- PERMIT ALL -->
 		<security:intercept-url pattern="/" access="permitAll" /> 
-
 		<security:intercept-url pattern="/favicon.ico" access="permitAll" /> 
 		<security:intercept-url pattern="/images/**" access="permitAll" /> 
 		<security:intercept-url pattern="/scripts/**" access="permitAll" /> 
 		<security:intercept-url pattern="/styles/**" access="permitAll" /> 
-
 		<security:intercept-url pattern="/views/misc/index.jsp" access="permitAll" /> 
-
 		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
-
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" /> 
 
-		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/action-2.do" access="hasRole('ADMIN')" /> 
+		<!-- ADMIN -->
+		<security:intercept-url pattern="/administrator/administrator/**" access="hasRole('ADMIN')" /> 
+		
 
-		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" /> 
+		<!-- COMPANY -->
+		<security:intercept-url pattern="/position/company/**" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/problemPosition/company/**" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/problem/company/**" access="hasRole('COMPANY')" /> 
 
+		<!-- HACKER -->
+		<security:intercept-url pattern="/finder/hacker/**" access="hasRole('HACKER')" /> 
+
+
+		<!-- AUTHENTICATED -->
 		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 

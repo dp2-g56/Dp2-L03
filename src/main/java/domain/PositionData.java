@@ -52,6 +52,7 @@ public class PositionData extends DomainEntity {
 	}
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@Past
 	public Date getEndDate() {
 		return this.endDate;
 	}

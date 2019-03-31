@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+ * tiles.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+<tiles-definitions>
+
+	<!-- POSITION -->
+	<definition name="position/company/list" extends="master.page">	
+		<put-attribute name="title" value="Positions" />
+		<put-attribute name="body" value="/views/company/positionList.jsp" />
+	</definition>
+	
+	<definition name="position/company/create" extends="master.page">	
+		<put-attribute name="title" value="Create a Position" />
+		<put-attribute name="body" value="/views/company/createPosition.jsp" />
+	</definition>
+	
+	<definition name="problemPosition/company/list" extends="master.page">	
+		<put-attribute name="title" value="List of Problems" />
+		<put-attribute name="body" value="/views/company/showProblemsPosition.jsp" />
+	</definition>
+	
+	<definition name="position/company/skill/list" extends="master.page">	
+		<put-attribute name="title" value="List of Required Skills" />
+		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+	</definition>
+	
+	<definition name="position/company/technology/list" extends="master.page">	
+		<put-attribute name="title" value="List of Required Technologies" />
+		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+	</definition>
+						
+	<definition name="problemPosition/company/attachement/list" extends="master.page">	
+		<put-attribute name="title" value="List of Attachements" />
+		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+	</definition>
+
+	<!--PROBLEM -->
+	<definition name="problem/company/list" extends="master.page">	
+		<put-attribute name="title" value="Company problems" />
+		<put-attribute name="body" value="/views/company/problemList.jsp" />
+	</definition>
+
+	<definition name="problem/company/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit Problem" />
+		<put-attribute name="body" value="/views/company/editProblem.jsp" />
+	</definition>
+	
+	<definition name="problem/company/listAttachments" extends="master.page">	
+		<put-attribute name="title" value="List of attachments" />
+		<put-attribute name="body" value="/views/company/showAttachments.jsp" />
+	</definition>
+	
+	<definition name="problem/company/addAttachment" extends="master.page">	
+		<put-attribute name="title" value="Add an attachment" />
+		<put-attribute name="body" value="/views/company/addAttachment.jsp" />
+
+	</definition>
+	
+	
+</tiles-definitions>

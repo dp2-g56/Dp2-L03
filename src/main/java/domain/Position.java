@@ -8,13 +8,17 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -33,6 +37,7 @@ public class Position extends DomainEntity {
 	private Boolean				isCancelled;
 
 	private List<Problem>		problems;
+
 	private List<Application>	applications;
 
 
@@ -56,6 +61,7 @@ public class Position extends DomainEntity {
 
 	@Future
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@NotNull
 	public Date getDeadline() {
 		return this.deadline;
 	}
@@ -74,6 +80,7 @@ public class Position extends DomainEntity {
 	}
 
 	@ElementCollection(targetClass = String.class)
+	@NotEmpty
 	public List<String> getRequiredSkills() {
 		return this.requiredSkills;
 	}
@@ -83,6 +90,7 @@ public class Position extends DomainEntity {
 	}
 
 	@ElementCollection(targetClass = String.class)
+	@NotEmpty
 	public List<String> getRequiredTecnologies() {
 		return this.requiredTecnologies;
 	}
@@ -92,6 +100,7 @@ public class Position extends DomainEntity {
 	}
 
 	@Min(0)
+	@NotNull
 	public Double getOfferedSalary() {
 		return this.offeredSalary;
 	}
@@ -127,7 +136,10 @@ public class Position extends DomainEntity {
 		this.isCancelled = isCancelled;
 	}
 
-	@OneToMany
+	@ManyToMany
+	@Valid
+	@NotEmpty
+	@Size(min = 2)
 	public List<Problem> getProblems() {
 		return this.problems;
 	}

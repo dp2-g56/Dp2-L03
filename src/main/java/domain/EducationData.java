@@ -61,8 +61,8 @@ public class EducationData extends DomainEntity {
 		this.startDate = startDate;
 	}
 
-	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+	@Past
 	public Date getEndDate() {
 		return this.endDate;
 	}

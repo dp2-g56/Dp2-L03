@@ -15,19 +15,20 @@ import javax.validation.Valid;
 @Access(AccessType.PROPERTY)
 public class Hacker extends Actor {
 
-	private Curriculum			curriculum;
+	private List<Curriculum>	curriculums;
 	private List<Application>	applications;
 	private Finder				finder;
 
 
-	@OneToOne(optional = true, cascade = CascadeType.ALL)
 	@Valid
-	public Curriculum getCurriculum() {
-		return this.curriculum;
+	@OneToMany
+	public List<Curriculum> getCurriculums() {
+		return this.curriculums;
 	}
 
-	public void setCurriculum(Curriculum curriculum) {
-		this.curriculum = curriculum;
+	public void setCurriculums(List<Curriculum> curriculums) {
+		this.curriculums = curriculums;
+
 	}
 
 	@Valid

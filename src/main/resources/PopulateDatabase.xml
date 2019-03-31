@@ -16,11 +16,81 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	">
 	
-	<!-- User accounts -->
+	
+	
+	<bean id ="configuration" class="domain.Configuration">
+		<property name="spainTelephoneCode" value="+34" />
+		<property name="maxFinderResults" value="100"/>
+		<property name="minFinderResults" value="10" />
+		<property name="spamWords">
+			<list>
+				<value>sex</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>you’ve been selected</value>
+				<value>Nigeria</value>
+				<value>sexo</value>
+				<value>un millón</value>
+				<value>ha sido seleccionado</value>
+				<value>pene</value>
+				<value>maduras</value>
+				<value>astolfo</value>
+				<value>furry</value>
+				<value>ugly bastard</value>
+				<value>chase</value>
+				<value>wals</value>
+			</list>
+		</property>
+		<property name="priorityLvl">
+			<list>
+				<value>HIGH</value>
+				<value>NEUTRAL</value>
+				<value>LOW</value>
+			</list>
+		</property>
+		<property name="cardType">
+			<list>
+				<value>VISA</value>
+				<value>MASTER</value>
+				<value>DINNERS</value>
+				<value>AMEX</value>
+				<value>FLY</value>
+			</list>
+		</property>
+		<property name="priorityLvlSpa">
+			<list>
+				<value>ALTA</value>
+				<value>NEUTRAL</value>
+				<value>BAJA</value>
+			</list>
+		</property>
+		<property name="goodWords" value="good, fantastic, excellent, great, amazing, terrific, beautiful, bueno, fantastico, excelente, increible, estupendo, hermoso" />
+		<property name="badWords" value="not, bad, horrible, average, disaster, no, malo, horrible, mediocre, desastre " />
+		
+		<property name="minTimeFinder" value="1" />
+		<property name="maxTimeFinder" value="24" />
+		<property name="finderResult" value="10"/>
+		<property name="timeFinder" value="1"/>
 
+		
+		<property name="welcomeMessageEnglish" value="Welcome to Acme Parade, the site to organise your parades" />
+		<property name="welcomeMessageSpanish" value="¡Bienvenido a Acme Parade! el lugar para organizar tus desfiles" />
+		
+		<property name="systemName" value="Acme Parade" />
+		<property name="imageURL" value="https://i.ibb.co/HhytG1y/Untitled.jpg" />
+
+		<property name="VAT" value="21" />
+		<property name="fare" value="1" />
+		
+	</bean>
+	
+	<!-- USER ACCOUNT -->
+	
+	<!-- ADMIN1 -->
 	<bean id="userAccount1" class="security.UserAccount">
-		<property name="username" value="admin" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="username" value="admin1" />
+		<property name="password" value="e00cf25ad42683b3df678c61f42c6bda" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -28,35 +98,1409 @@
 				</bean>
 			</list>
 		</property>
+		<property name="isNotLocked" value="True" />
 	</bean>
 
+	<!-- ADMIN2 -->
 	<bean id="userAccount2" class="security.UserAccount">
-		<property name="username" value="customer" />
-		<property name="password" value="91ec1f9324753048c0096d036a694f86" />
-		<property name="authorities">
-			<list>
-				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="userAccount3" class="security.UserAccount">
-		<property name="username" value="super" />
-		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
+		<property name="username" value="admin2" />
+		<property name="password" value="c84258e9c39059a89ab77d846ddab909" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
 					<property name="authority" value="ADMIN" />
 				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+
+	<!-- HACKER1 -->
+	<bean id="userAccount3" class="security.UserAccount">
+		<property name="username" value="hacker1" />
+		<property name="password" value="2ba2a8ac968a7a2b0a7baa7f2fef18d2" />
+		<property name="authorities">
+			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="CUSTOMER" />
+					<property name="authority" value="HACKER" />
 				</bean>
 			</list>
 		</property>
+		<property name="isNotLocked" value="True" />
 	</bean>
 	
-	<!-- Other domain beans come here -->	
+	<!-- HACKER2 -->
+	<bean id="userAccount4" class="security.UserAccount">
+		<property name="username" value="hacker2" />
+		<property name="password" value="91af68b69a50a98dbc0800942540342c" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
 	
+	<!-- HACKER3 -->
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="hacker3" />
+		<property name="password" value="c6ae6edca1ad45f42e619ec91a32b636" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<!-- HACKER4 -->
+	<bean id="userAccount6" class="security.UserAccount">
+		<property name="username" value="hacker4" />
+		<property name="password" value="a0ba178a7585a3b3575613351aa76ef7" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<!-- COMPANY1 -->
+	<bean id="userAccount7" class="security.UserAccount">
+		<property name="username" value="company1" />
+		<property name="password" value="df655f976f7c9d3263815bd981225cd9" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<!-- COMPANY2 -->
+	<bean id="userAccount8" class="security.UserAccount">
+		<property name="username" value="company2" />
+		<property name="password" value="d196a28097115067fefd73d25b0c0be8" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<!-- COMPANY3 -->
+	<bean id="userAccount9" class="security.UserAccount">
+		<property name="username" value="company3" />
+		<property name="password" value="e828ae3339b8d80b3902c1564578804e" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<!-- COMPANY4 -->
+	<bean id="userAccount10" class="security.UserAccount">
+		<property name="username" value="company4" />
+		<property name="password" value="856dfd9045541fa727ef6ad392835eb0" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="COMPANY" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<!-- FIN USER ACCOUNT -->	
+	
+	<!-- ACTOR -->
+		<!-- ADMIN -->
+			<!-- ADMIN1 -->
+				<bean id="admin1" class="domain.Admin">
+					<property name="name" value="admin" />
+					<property name="surname" value="admin surname" />
+					<property name="VATNumber" value="SE123456789" />
+					<property name="creditCard" ref="creditCard1" />
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="admin1@gmail.com" />
+					<property name="phone" value="+34609236920" />
+					<property name="address" value="Reino de los Cielos" />
+					<property name="socialProfiles">
+						<list>
+							<ref bean="socialProfile1" />
+							<ref bean="socialProfile2" />
+						</list>
+					</property>
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					<property name="userAccount" ref="userAccount1" />
+				</bean>
+			
+			<!-- ADMIN2 -->
+				<bean id="admin2" class="domain.Admin">
+					<property name="name" value="admin2" />
+					<property name="surname" value="admin2 surname2" />
+					<property name="VATNumber" value="SE987654321" />
+					<property name="creditCard" ref="creditCard2" />
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="admin2@gmail.com" />
+					<property name="phone" value="+34609237221" />
+					<property name="address" value="Hackerland" />
+					<property name="socialProfiles">
+						<list>
+							<ref bean="socialProfile3" />
+							<ref bean="socialProfile4" />
+						</list>
+					</property>
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					<property name="userAccount" ref="userAccount2" />
+				</bean>
+		
+		<!-- HACKER -->
+			<!-- HACKER1 -->
+			 	<bean id="hacker1" class="domain.Hacker">
+					<property name="name" value="hacker1" />
+					<property name="surname" value="hacker surname" />
+					<property name="VATNumber" value="SE123654321" />
+					<property name="creditCard" ref="creditCard7"/>
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="hacker1@gmail.com" />
+					<property name="phone" value="+34609235522" />
+					<property name="address" value="hacker1House" />
+					<property name="socialProfiles">
+						<list>
+							<ref bean="socialProfile11" />
+							<ref bean="socialProfile12" />
+						</list>
+					</property>
+					
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					
+					<property name="curriculums">
+						<list>
+							<ref bean="curriculum1" />
+							<ref bean="curriculum2" />
+						</list>
+					</property>
+					
+					<property name="applications">
+						<list>
+						</list>
+					</property>
+					
+					<property name="finder" ref ="finder1" />
+					<property name="userAccount" ref="userAccount3" />
+				</bean>	
+				
+			<!-- HACKER2 -->
+			 	<bean id="hacker2" class="domain.Hacker">
+					<property name="name" value="hacker2" />
+					<property name="surname" value="hacker2 surname" />
+					<property name="VATNumber" value="SE123204321" />
+					<property name="creditCard" ref="creditCard8"/>
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="hacker2@gmail.com" />
+					<property name="phone" value="+34609235523" />
+					<property name="address" value="hacker2House" />
+					<property name="socialProfiles">
+						<list>
+							<ref bean="socialProfile13" />
+						</list>
+					</property>
+					
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					
+					<property name="curriculums">
+						<list>
+							<ref bean="curriculum3" />
+						</list>
+					</property>
+					
+					<property name="applications">
+						<list>
+						</list>
+					</property>
+					
+					<property name="finder" ref ="finder2" />
+					<property name="userAccount" ref="userAccount4" />
+				</bean>	
+				
+			<!-- HACKER3 -->
+			 	<bean id="hacker3" class="domain.Hacker">
+					<property name="name" value="hacker3" />
+					<property name="surname" value="hacker3 surname" />
+					<property name="VATNumber" value="SE593204321" />
+					<property name="creditCard" ref="creditCard9"/>
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="hacker3@gmail.com" />
+					<property name="phone" value="+34609235524" />
+					<property name="address" value="hacker3House" />
+					<property name="socialProfiles">
+						<list>
+							<ref bean="socialProfile14" />
+						</list>
+					</property>
+					
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					
+					<property name="curriculums">
+						<list>
+							<ref bean="curriculum4" />
+						</list>
+					</property>
+					
+					<property name="applications">
+						<list>
+						</list>
+					</property>
+					
+					<property name="finder" ref ="finder3" />
+					<property name="userAccount" ref="userAccount5" />
+				</bean>	
+				
+			<!-- HACKER4 -->
+			 	<bean id="hacker4" class="domain.Hacker">
+					<property name="name" value="hacker4" />
+					<property name="surname" value="hacker4 surname" />
+					<property name="VATNumber" value="SE593204281" />
+					<property name="creditCard" ref="creditCard10"/>
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="hacker4@gmail.com" />
+					<property name="phone" value="+34609235525" />
+					<property name="address" value="hacker4House" />
+					<property name="socialProfiles">
+						<list>
+						</list>
+					</property>
+					
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					
+					<property name="curriculums">
+						<list>
+						</list>
+					</property>
+					
+					<property name="applications">
+						<list>
+						</list>
+					</property>
+					
+					<property name="finder" ref ="finder4" />
+					<property name="userAccount" ref="userAccount6" />
+				</bean>
+		
+		<!-- COMPANY -->
+			<!-- COMPANY1 -->
+				<bean id="company1" class="domain.Company">
+					<property name="name" value="company1" />
+					<property name="surname" value="company1 surname1" />
+					<property name="VATNumber" value="SE456234853" />
+					<property name="creditCard" ref="creditCard3" />
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="company1@gmail.com" />
+					<property name="phone" value="+34609235639" />
+					<property name="address" value="CompanyLand" />
+					<property name="socialProfiles">
+						<list>
+							<ref bean="socialProfile5" />
+							<ref bean="socialProfile6" />
+						</list>
+					</property>
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					<property name="userAccount" ref="userAccount7" />
+					<property name="companyName" value="company1" />
+					<property name="positions">
+						<list>
+						 	<ref bean="position1" />
+						 	<ref bean="position2" />
+						 	<ref bean="position3" />
+						 	<ref bean="position4" />
+						</list>
+					</property>
+					<property name="problems">
+						<list>
+							<ref bean="problem1" />
+							<ref bean="problem2" />
+							<ref bean="problem3" />
+							<ref bean="problem4" />
+							<ref bean="problem5" />
+							<ref bean="problem6" />
+						</list>
+					</property>
+				</bean>
+				
+			<!-- COMPANY2 -->
+				<bean id="company2" class="domain.Company">
+					<property name="name" value="company2" />
+					<property name="surname" value="company2 surname2" />
+					<property name="VATNumber" value="SE432790321" />
+					<property name="creditCard" ref="creditCard4" />
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="company2@gmail.com" />
+					<property name="phone" value="+34609235528" />
+					<property name="address" value="CompanyLand2" />
+					<property name="socialProfiles">
+						<list>
+							<ref bean="socialProfile7" />
+							<ref bean="socialProfile8" />
+						</list>
+					</property>
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					<property name="userAccount" ref="userAccount8" />
+					<property name="companyName" value="company2" />
+					<property name="positions">
+						<list>
+					 		<ref bean="position5" />
+					 		<ref bean="position6" />
+						</list>
+					</property>
+					<property name="problems">
+						<list>
+				 			<ref bean="problem7" />
+				 			<ref bean="problem8" />
+				 			<ref bean="problem9" />
+						</list>
+					</property>
+				</bean>
+				
+			<!-- COMPANY3 -->
+				<bean id="company3" class="domain.Company">
+					<property name="name" value="company3" />
+					<property name="surname" value="company3 surname3" />
+					<property name="VATNumber" value="SE328431097" />
+					<property name="creditCard" ref="creditCard5" />
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="company3@gmail.com" />
+					<property name="phone" value="+34609236527" />
+					<property name="address" value="CompanyLand3" />
+					<property name="socialProfiles">
+						<list>
+							<ref bean="socialProfile9" />
+							<ref bean="socialProfile10" />
+						</list>
+					</property>
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					<property name="userAccount" ref="userAccount9" />
+					<property name="companyName" value="company3" />
+					<property name="positions">
+						<list>
+					 		<ref bean="position7" />
+					 		<ref bean="position8" />
+						</list>
+					</property>
+					<property name="problems">
+						<list>
+							<ref bean="problem10" />
+							<ref bean="problem11" />
+							<ref bean="problem12" />
+						</list>
+					</property>
+				</bean>
+			
+			<!-- COMPANY4 -->
+				<bean id="company4" class="domain.Company">
+					<property name="name" value="company4" />
+					<property name="surname" value="company4 surname4" />
+					<property name="VATNumber" value="SE432456444" />
+					<property name="creditCard" ref="creditCard6" />
+					<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+					<property name="email" value="company4@gmail.com" />
+					<property name="phone" value="+34609236726" />
+					<property name="address" value="CompanyLand4" />
+					<property name="socialProfiles">
+						<list>
+						</list>
+					</property>
+					<property name="messages">
+						<list>
+						</list>
+					</property>
+					<property name="userAccount" ref="userAccount10" />
+					<property name="companyName" value="company4" />
+					<property name="positions">
+						<list>
+						</list>
+					</property>
+					<property name="problems">
+						<list>
+						</list>
+					</property>
+				</bean>
+			
+	<!-- FIN ACTOR -->
+	
+	<!-- CREDIT CARD -->
+		<!-- ADMIN -->
+			<!-- ADMIN1 -->
+				<bean id="creditCard1" class="domain.CreditCard">
+					<property name="holderName" value="David" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4880576829512546" />
+					<property name="expirationMonth" value="12" />
+					<property name="expirationYear" value="23" />
+					<property name="cvvCode" value="123" />
+				</bean>
+			<!-- ADMIN2 -->
+				<bean id="creditCard2" class="domain.CreditCard">
+					<property name="holderName" value="David" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4880576829512546" />
+					<property name="expirationMonth" value="12" />
+					<property name="expirationYear" value="18" />
+					<property name="cvvCode" value="234" />
+				</bean>
+				
+		<!-- COMPANY -->
+		
+			<!-- COMPANY1 -->
+				<bean id="creditCard3" class="domain.CreditCard">
+					<property name="holderName" value="Otto Octavius" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4449064407720173" />
+					<property name="expirationMonth" value="04" />
+					<property name="expirationYear" value="27" />
+					<property name="cvvCode" value="285" />
+				</bean>
+				
+			<!-- COMPANY2 -->
+				<bean id="creditCard4" class="domain.CreditCard">
+					<property name="holderName" value="Juan Carlos" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4198817549021591" />
+					<property name="expirationMonth" value="04" />
+					<property name="expirationYear" value="22" />
+					<property name="cvvCode" value="978" />
+				</bean>
+			
+			<!-- COMPANY3 -->
+				<bean id="creditCard5" class="domain.CreditCard">
+					<property name="holderName" value="Dio Brando" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4235191107129443" />
+					<property name="expirationMonth" value="02" />
+					<property name="expirationYear" value="20" />
+					<property name="cvvCode" value="640" />
+				</bean>
+				
+			<!-- COMPANY4 -->
+				<bean id="creditCard6" class="domain.CreditCard">
+					<property name="holderName" value="Jotaro Kujo" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4706720254967575" />
+					<property name="expirationMonth" value="02" />
+					<property name="expirationYear" value="23" />
+					<property name="cvvCode" value="951" />
+				</bean>
+		<!-- HACKER -->
+			<!-- HACKER1 -->
+				<bean id="creditCard7" class="domain.CreditCard">
+					<property name="holderName" value="Giorno Giovanna" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4394520390502949" />
+					<property name="expirationMonth" value="05" />
+					<property name="expirationYear" value="27" />
+					<property name="cvvCode" value="678" />
+				</bean>
+				
+			<!-- HACKER2 -->
+				<bean id="creditCard8" class="domain.CreditCard">
+					<property name="holderName" value="Giorno Giovanna" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4598266351198327" />
+					<property name="expirationMonth" value="02" />
+					<property name="expirationYear" value="24" />
+					<property name="cvvCode" value="725" />
+				</bean>
+				
+			<!-- HACKER3 -->
+				<bean id="creditCard9" class="domain.CreditCard">
+					<property name="holderName" value="Jolyne Cujoh" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4326407502453976" />
+					<property name="expirationMonth" value="09" />
+					<property name="expirationYear" value="21" />
+					<property name="cvvCode" value="260" />
+				</bean>
+				
+			<!-- HACKER4 -->
+				<bean id="creditCard10" class="domain.CreditCard">
+					<property name="holderName" value="Johny Joestar" />
+					<property name="brandName" value="VISA" />
+					<property name="number" value="4552196258057173" />
+					<property name="expirationMonth" value="08" />
+					<property name="expirationYear" value="24" />
+					<property name="cvvCode" value="560" />
+				</bean>
+				
+	<!-- FIN CREDIT CARD -->
+	
+	<!-- SOCIAL PROFILES -->
+		<!-- ADMIN -->
+			<!-- ADMIN1 -->
+				<bean class="domain.SocialProfile" id="socialProfile1">
+					<property value="Administrador1" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile2">
+					<property value="Administrador1" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- ADMIN2 -->
+				<bean class="domain.SocialProfile" id="socialProfile3">
+					<property value="Administrador2" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile4">
+					<property value="Administrador2" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+		<!-- FIN ADMIN -->		
+		
+		<!-- COMPANY -->
+		
+			<!-- COMPANY1 -->
+				<bean class="domain.SocialProfile" id="socialProfile5">
+					<property value="Company1" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile6">
+					<property value="Company1" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- COMPANY2 -->
+				<bean class="domain.SocialProfile" id="socialProfile7">
+					<property value="Company2" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile8">
+					<property value="Company2" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- COMPANY3 -->
+				<bean class="domain.SocialProfile" id="socialProfile9">
+					<property value="Company3" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile10">
+					<property value="Company3" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- COMPANY 4 NO TIENE -->
+			
+		<!-- FIN COMPANY -->
+		
+		<!-- HACKER -->
+		
+			<!-- HACKER1 -->
+				<bean class="domain.SocialProfile" id="socialProfile11">
+					<property value="Hacker1" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile12">
+					<property value="Hacker1" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+			
+			<!-- HACKER2 -->
+				<bean class="domain.SocialProfile" id="socialProfile13">
+					<property value="Hacker2" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- HACKER3 -->
+				<bean class="domain.SocialProfile" id="socialProfile14">
+					<property value="Hacker3" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- HACKER4 NO TIENE -->
+				
+		<!-- FIN HACKER -->
+	
+	<!-- FIN SOCIAL PROFILES -->
+	
+	<!-- MESSAGES -->
+	<!-- FIN MESSAGES -->
+	
+	<!-- CURRICULUM -->
+		<!-- HACKER1 -->
+			 	<bean id="curriculum1" class="domain.Curriculum">
+					<property name="title" value="curriculum1" />
+					<property name="personalData" ref ="personalData1" />
+					
+					<property name="positionData">
+						<list>
+							<ref bean="positionData1" />
+							<ref bean="positionData2" />
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+							<ref bean="educationData1" />
+							<ref bean="educationData2" />
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+							<ref bean="miscellaneousData1" />
+							<ref bean="miscellaneousData2" />
+						</list>
+					</property>
+				</bean>	
+	
+		<!-- HACKER1 -->
+			 	<bean id="curriculum2" class="domain.Curriculum">
+					<property name="title" value="curriculum2" />
+					<property name="personalData" ref ="personalData2" />
+					
+					<property name="positionData">
+						<list>
+							<ref bean="positionData3" />
+							<ref bean="positionData4" />
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+							<ref bean="educationData3" />
+							<ref bean="educationData4" />
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+							<ref bean="miscellaneousData3" />
+							<ref bean="miscellaneousData4" />
+						</list>
+					</property>
+				</bean>
+				
+		<!-- HACKER2 -->
+			 	<bean id="curriculum3" class="domain.Curriculum">
+					<property name="title" value="curriculum3" />
+					<property name="personalData" ref ="personalData3" />
+					
+					<property name="positionData">
+						<list>
+							<ref bean="positionData5" />
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+							<ref bean="educationData5" />
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+						</list>
+					</property>
+				</bean>
+				
+		<!-- HACKER3 -->
+			 	<bean id="curriculum4" class="domain.Curriculum">
+					<property name="title" value="curriculum4" />
+					<property name="personalData" ref ="personalData4" />
+					
+					<property name="positionData">
+						<list>
+						
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+						</list>
+					</property>
+				</bean>
+	<!-- FIN CURRICULUM -->
+	
+	<!-- DATA FROM CURRICULUM -->
+		<!-- CURRICULUM1 -->
+			<!-- PERSONALDATA -->
+				<bean id ="personalData1" class="domain.PersonalData">
+					<property name="fullName" value="Bruno Buccellati" />
+					<property name="statement" value="Sticky fingers" />
+					<property name="phoneNumber" value="+34609236920" />
+					<property name="gitHubProfile" value="https://github.com/JuanCarlosAlonsoValenzuela" />
+					<property name="linkedinProfile" value="https://github.com/JuanCarlosAlonsoValenzuela" />
+				</bean>
+				
+			<!-- POSITIONDATA -->
+				<bean id ="positionData1" class="domain.PositionData">
+					<property name="title" value="title1" />
+					<property name="description" value="Sticky fingers" />
+					<property name="startDate" value="02/01/2015 11:30" />
+					<property name="endDate" value="02/01/2018 11:30" />
+				</bean>
+				
+				<bean id ="positionData2" class="domain.PositionData">
+					<property name="title" value="title2" />
+					<property name="description" value="Sticky fingers" />
+					<property name="startDate" value="02/01/2012 11:30" />
+					<property name="endDate" value="02/01/2014 11:30" />
+				</bean>
+				
+			<!-- EDUCATIONDATA -->
+				<bean id ="educationData1" class="domain.EducationData">
+					<property name="degree" value="degree1" />
+					<property name="institution" value="Institution1" />
+					<property name="mark" value="A" />
+					<property name="startDate" value="02/01/2009 11:30" />
+					<property name="endDate" value="02/01/2013 11:30" />
+				</bean>
+				
+				<bean id ="educationData2" class="domain.EducationData">
+					<property name="degree" value="degree2" />
+					<property name="institution" value="Institution2" />
+					<property name="mark" value="B" />
+					<property name="startDate" value="02/01/2005 11:30" />
+					<property name="endDate" value="02/01/2009 11:30" />
+				</bean>
+				
+			<!-- MISCELLANEOUSDATA -->
+				<bean id ="miscellaneousData1" class="domain.MiscellaneousData">
+					<property name="freeText" value="freeText1" />
+					<property name="attachments">
+						<list>
+							<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
+							<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
+						</list>
+					</property>	
+				</bean>
+				
+				<bean id ="miscellaneousData2" class="domain.MiscellaneousData">
+					<property name="freeText" value="freeText2" />
+					<property name="attachments">
+						<list>
+							<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
+							<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
+						</list>
+					</property>	
+				</bean>
+				
+		<!-- CURRICULUM2 -->
+			<!-- PERSONALDATA -->
+				<bean id ="personalData2" class="domain.PersonalData">
+					<property name="fullName" value="Giorno Giovanna" />
+					<property name="statement" value="Golden Experience Requiem" />
+					<property name="phoneNumber" value="+34609236921" />
+					<property name="gitHubProfile" value="https://github.com/Alegomcab1" />
+					<property name="linkedinProfile" value="https://github.com/Alegomcab1" />
+				</bean>
+				
+			<!-- POSITIONDATA -->
+				<bean id ="positionData3" class="domain.PositionData">
+					<property name="title" value="title3" />
+					<property name="description" value="Golden Experience Requiem" />
+					<property name="startDate" value="02/01/2015 11:30" />
+					<property name="endDate" value="02/01/2018 11:30" />
+				</bean>
+				
+				<bean id ="positionData4" class="domain.PositionData">
+					<property name="title" value="title4" />
+					<property name="description" value="Golden Experience Requiem" />
+					<property name="startDate" value="02/01/2012 11:30" />
+					<property name="endDate" value="02/01/2014 11:30" />
+				</bean>
+				
+			<!-- EDUCATIONDATA -->
+				<bean id ="educationData3" class="domain.EducationData">
+					<property name="degree" value="degree3" />
+					<property name="institution" value="Institution3" />
+					<property name="mark" value="A" />
+					<property name="startDate" value="02/01/2009 11:30" />
+					<property name="endDate" value="02/01/2013 11:30" />
+				</bean>
+				
+				<bean id ="educationData4" class="domain.EducationData">
+					<property name="degree" value="degree4" />
+					<property name="institution" value="Institution4" />
+					<property name="mark" value="B" />
+					<property name="startDate" value="02/01/2005 11:30" />
+					<property name="endDate" value="02/01/2009 11:30" />
+				</bean>
+				
+			<!-- MISCELLANEOUSDATA -->
+				<bean id ="miscellaneousData3" class="domain.MiscellaneousData">
+					<property name="freeText" value="freeText3" />
+					<property name="attachments">
+						<list>
+							<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
+							<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
+						</list>
+					</property>	
+				</bean>
+				
+				<bean id ="miscellaneousData4" class="domain.MiscellaneousData">
+					<property name="freeText" value="freeText4" />
+					<property name="attachments">
+						<list>
+							<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
+							<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
+						</list>
+					</property>	
+				</bean>
+				
+		<!-- CURRICULUM3 -->
+			<!-- PERSONALDATA -->
+				<bean id ="personalData3" class="domain.PersonalData">
+					<property name="fullName" value="Leone Abbacchio" />
+					<property name="statement" value="Moody Blues" />
+					<property name="phoneNumber" value="+34690236921" />
+					<property name="gitHubProfile" value="https://github.com/RobertoHermoso" />
+					<property name="linkedinProfile" value="https://github.com/RobertoHermoso" />
+				</bean>	
+				
+			<!-- POSITIONDATA -->
+				<bean id ="positionData5" class="domain.PositionData">
+					<property name="title" value="title5" />
+					<property name="description" value="Moody Blues" />
+					<property name="startDate" value="02/01/2015 11:30" />
+					<property name="endDate" value="02/01/2018 11:30" />
+				</bean>
+				
+			<!-- EDUCATIONDATA -->
+				<bean id ="educationData5" class="domain.EducationData">
+					<property name="degree" value="degree5" />
+					<property name="institution" value="Institution5" />
+					<property name="mark" value="A" />
+					<property name="startDate" value="02/01/2009 11:30" />
+					<property name="endDate" value="02/01/2013 11:30" />
+				</bean>
+				
+		<!-- CURRICULUM4 -->
+			<!-- PERSONALDATA -->
+				<bean id ="personalData4" class="domain.PersonalData">
+					<property name="fullName" value="Narancia Ghirga" />
+					<property name="statement" value="Aerosmith" />
+					<property name="phoneNumber" value="+34690236921" />
+					<property name="gitHubProfile" value="https://github.com/DaviidGilB" />
+					<property name="linkedinProfile" value="https://github.com/DaviidGilB" />
+				</bean>	
+				
+	<!-- FIN DATA FROM CURRICULUM -->
+	
+	<!-- APPLICATION -->
+	<!-- FIN APPLICATION -->
+	
+	<!-- FINDER -->
+		<!-- HACKER1 -->
+			<bean id ="finder1" class="domain.Finder">
+				<property name="keyWord" value="" />
+				<property name="deadLine" value="02/01/2025 11:30" />
+				<property name="minSalary" value="" />
+				<property name="maxDeadLine" value="02/01/2025 11:30" />
+			</bean>
+			
+		<!-- HACKER2 -->
+			<bean id ="finder2" class="domain.Finder">
+				<property name="keyWord" value="" />
+				<property name="deadLine" value="02/01/2025 11:30" />
+				<property name="minSalary" value="" />
+				<property name="maxDeadLine" value="02/01/2025 11:30" />
+			</bean>
+			
+		<!-- HACKER3 -->
+			<bean id ="finder3" class="domain.Finder">
+				<property name="keyWord" value="" />
+				<property name="deadLine" value="02/01/2025 11:30" />
+				<property name="minSalary" value="" />
+				<property name="maxDeadLine" value="02/01/2025 11:30" />
+			</bean>
+			
+		<!-- HACKER4 -->
+			<bean id ="finder4" class="domain.Finder">
+				<property name="keyWord" value="" />
+				<property name="deadLine" value="02/01/2025 11:30" />
+				<property name="minSalary" value="" />
+				<property name="maxDeadLine" value="02/01/2025 11:30" />
+			</bean>
+			
+	<!-- FIN FINDER -->
+	
+	<!-- POSITION -->
+		<!-- COMPANY1 -->
+			<bean id ="position1" class="domain.Position">
+				<property name="title" value="position1" />
+				<property name="description" value="description1" />
+				<property name="deadline" value="02/01/2025 11:30" />
+				<property name="requiredProfile" value="A++ in DP" />
+				<property name="requiredSkills">
+					<list>
+						<value>Skill 1</value>
+						<value>Skill 2</value>
+					</list>
+				</property>	
+				<property name="requiredTecnologies">
+					<list>
+						<value>Windows XP</value>
+						<value>MY SQL 5.5 </value>
+						<value>Tomcat 7</value>
+						<value>Eclipse Indigo</value>
+						<value>A really complex system based on pulleys</value>
+					</list>
+				</property>	
+				<property name="offeredSalary" value="1200.0" />
+				<property name="ticker" value="posi-1234" />
+				<property name="isDraftMode" value="false" />
+				<property name="isCancelled" value="false" />
+				<property name="problems">
+						<list>
+						<ref bean="problem1" />
+							<ref bean="problem2" />
+							<ref bean="problem3" />
+						</list>
+					</property>
+			</bean>
+			
+		
+			<bean id ="position2" class="domain.Position">
+				<property name="title" value="position2" />
+				<property name="description" value="description2" />
+				<property name="deadline" value="02/01/2022 12:45" />
+				<property name="requiredProfile" value="F- in DP" />
+				<property name="requiredSkills">
+					<list>
+						<value>Skill 3</value>
+						<value>Skill 4</value>
+					</list>
+				</property>	
+				<property name="requiredTecnologies">
+					<list>
+						<value>Windows 10</value>
+						<value>MY SQL 11 </value>
+						<value>Tomcat 9</value>
+						<value>Eclipse Photon</value>
+					</list>
+				</property>	
+				<property name="offeredSalary" value="140.0" />
+				<property name="ticker" value="posi-1235" />
+				<property name="isDraftMode" value="false" />
+				<property name="isCancelled" value="false" />
+				<property name="problems">
+						<list>
+							<ref bean="problem3" />
+							<ref bean="problem4" /> 
+						</list>
+					</property>
+			</bean>
+			
+			<bean id ="position3" class="domain.Position">
+				<property name="title" value="position3" />
+				<property name="description" value="description3" />
+				<property name="deadline" value="02/01/2027 19:30" />
+				<property name="requiredProfile" value="Requirement Engineer" />
+				<property name="requiredSkills">
+					<list>
+						<value>Skill 5</value>
+					</list>
+				</property>	
+				<property name="requiredTecnologies">
+					<list>
+						<value>Ubuntu</value>
+						<value>PL/SQL </value>
+						<value>Eclipse Neon</value>
+					</list>
+				</property>	
+				<property name="offeredSalary" value="3240.0" />
+				<property name="ticker" value="posi-1225" />
+				<property name="isDraftMode" value="true" />
+				<property name="isCancelled" value="false" />
+				<property name="problems">
+						<list>
+							<ref bean="problem1" />
+							<ref bean="problem3" /> 
+						</list>
+					</property>
+			</bean>
+			
+			<bean id ="position4" class="domain.Position">
+				<property name="title" value="position4" />
+				<property name="description" value="description4" />
+				<property name="deadline" value="02/01/2021 19:30" />
+				<property name="requiredProfile" value="AI Expert" />
+				<property name="requiredSkills">
+					<list>
+						<value>Skill 6</value>
+						<value>Skill 7</value>
+					</list>
+				</property>	
+				<property name="requiredTecnologies">
+					<list>
+						<value>Ubuntu</value>
+						<value>PL/SQL </value>
+						<value>Eclipse Neon</value>
+					</list>
+				</property>	
+				<property name="offeredSalary" value="3240.0" />
+				<property name="ticker" value="posi-4225" />
+				<property name="isDraftMode" value="false" />
+				<property name="isCancelled" value="true" />
+				<property name="problems">
+						<list>
+							<ref bean="problem1" />
+							<ref bean="problem2" /> 
+						</list>
+					</property>
+			</bean>	
+			
+		<!-- COMPANY2 -->
+			<bean id ="position5" class="domain.Position">
+				<property name="title" value="position5" />
+				<property name="description" value="description5" />
+				<property name="deadline" value="11/11/2025 11:30" />
+				<property name="requiredProfile" value="A++ in IR" />
+				<property name="requiredSkills">
+					<list>
+						<value>Requirement Engineer</value>
+						<value>Navigable mockups</value>
+					</list>
+				</property>	
+				<property name="requiredTecnologies">
+					<list>
+						<value>Balsamiq</value>
+						<value>Word </value>
+						<value>REM</value>
+						<value>A really complex system based on pulleys</value>
+					</list>
+				</property>	
+				<property name="offeredSalary" value="3.0" />
+				<property name="ticker" value="posi-1329" />
+				<property name="isDraftMode" value="false" />
+				<property name="isCancelled" value="false" />
+				<property name="problems">
+						<list>
+							<ref bean="problem7" />
+							<ref bean="problem9" /> 
+						</list>
+					</property>
+			</bean>
+			
+			<bean id ="position6" class="domain.Position">
+				<property name="title" value="position6" />
+				<property name="description" value="description6" />
+				<property name="deadline" value="11/11/2025 11:30" />
+				<property name="requiredProfile" value="A++ in PSG" />
+				<property name="requiredSkills">
+					<list>
+						<value>Scrum</value>
+					</list>
+				</property>	
+				<property name="requiredTecnologies">
+					<list>
+						<value>Niko Niko Diagram</value>
+						<value>Word </value>
+						<value>A really complex system based on pulleys</value>
+					</list>
+				</property>	
+				<property name="offeredSalary" value="31.0" />
+				<property name="ticker" value="posi-7329" />
+				<property name="isDraftMode" value="true" />
+				<property name="isCancelled" value="false" />
+				<property name="problems">
+						<list>
+						<ref bean="problem8" />
+							<ref bean="problem9" /> 
+						</list>
+					</property>
+			</bean>
+			
+		<!-- COMPANY3 -->
+		
+			<bean id ="position7" class="domain.Position">
+				<property name="title" value="position7" />
+				<property name="description" value="description7" />
+				<property name="deadline" value="11/11/2025 11:30" />
+				<property name="requiredProfile" value="ORA ORA ORA" />
+				<property name="requiredSkills">
+					<list>
+						<value>Requirement Engineer</value>
+						<value>Navigable mockups</value>
+					</list>
+				</property>	
+				<property name="requiredTecnologies">
+					<list>
+						<value>Balsamiq</value>
+						<value>Word </value>
+						<value>REM</value>
+						<value>A really complex system based on pulleys</value>
+					</list>
+				</property>	
+				<property name="offeredSalary" value="3.0" />
+				<property name="ticker" value="posi-1329" />
+				<property name="isDraftMode" value="false" />
+				<property name="isCancelled" value="true" />
+				<property name="problems">
+						<list>
+							<ref bean="problem10" />
+							<ref bean="problem11" />
+						</list>
+					</property>
+			</bean>
+			
+			<bean id ="position8" class="domain.Position">
+				<property name="title" value="position8" />
+				<property name="description" value="description8" />
+				<property name="deadline" value="11/11/2030 11:30" />
+				<property name="requiredProfile" value="ARI ARI ARI" />
+				<property name="requiredSkills">
+					<list>
+						<value>Requirement Engineer</value>
+						<value>Navigable mockups</value>
+					</list>
+				</property>	
+				<property name="requiredTecnologies">
+					<list>
+						<value>Balsamiq</value>
+						<value>Word </value>
+						<value>REM</value>
+						<value>A really complex system based on pulleys</value>
+					</list>
+				</property>	
+				<property name="offeredSalary" value="3.0" />
+				<property name="ticker" value="posi-1329" />
+				<property name="isDraftMode" value="true" />
+				<property name="isCancelled" value="false" />
+				<property name="problems">
+						<list>
+							<ref bean="problem10" />
+							<ref bean="problem12" />  
+						</list>
+					</property>
+			</bean>
+			
+	<!-- FIN POSITION -->
+	
+	<!-- PROBLEM -->
+		<!-- COMPANY1 -->
+			<bean id ="problem1" class="domain.Problem">
+				<property name="title" value="problem1" />
+				<property name="statement" value="The First Problem" />
+				<property name="hint" value="Pero vamos a ver" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment1.com</value>
+						<value>https://www.attachment2.com</value>
+						<value>https://www.attachment3.com</value>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>
+			
+			<bean id ="problem2" class="domain.Problem">
+				<property name="title" value="problem2" />
+				<property name="statement" value="The Second Problem" />
+				<property name="hint" value="Pero has borrao la cashé?" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment4.com</value>
+						<value>https://www.attachment5.com</value>
+						<value>https://www.attachment6.com</value>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>
+			
+			<bean id ="problem3" class="domain.Problem">
+				<property name="title" value="problem3" />
+				<property name="statement" value="The Third Problem" />
+				<property name="hint" value="Preguntale a M" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment7.com</value>
+						<value>https://www.attachment8.com</value>
+						<value>https://www.attachment9.com</value>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>
+			
+			<bean id ="problem4" class="domain.Problem">
+				<property name="title" value="problem4" />
+				<property name="statement" value="The Fourth Problem" />
+				<property name="hint" value="I cant install Pycharm" />
+				<property name="attachments">
+					<list>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>
+			
+			<bean id ="problem5" class="domain.Problem">
+				<property name="title" value="problem5" />
+				<property name="statement" value="The Fith Problem" />
+				<property name="hint" value="MUDA MUDA MUDA" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment13.com</value>
+					</list>
+				</property>		
+				<property value="true" name="isDraftMode" />
+			</bean>
+			
+			<bean id ="problem6" class="domain.Problem">
+				<property name="title" value="problem6" />
+				<property name="statement" value="The Fith Problem" />
+				<property name="hint" value="Try to use an Operative System that wasn't released in 2001" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment14.com</value>
+					</list>
+				</property>		
+				<property value="true" name="isDraftMode" />
+			</bean>
+		
+		<!-- COMPANY2 -->
+			<bean id ="problem7" class="domain.Problem">
+				<property name="title" value="problem7" />
+				<property name="statement" value="The Seventh Problem" />
+				<property name="hint" value="Try to restart your computer" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment3.com</value>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>
+			
+			<bean id ="problem8" class="domain.Problem">
+				<property name="title" value="problem8" />
+				<property name="statement" value="The eighth Problem" />
+				<property name="hint" value="Try to turn on your computer" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment3.com</value>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>
+			
+			<bean id ="problem9" class="domain.Problem">
+				<property name="title" value="problem9" />
+				<property name="statement" value="The last Problem" />
+				<property name="hint" value="Try to turn off your computer" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment3.com</value>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>		
+		<!-- COMPANY3 -->
+				<bean id ="problem10" class="domain.Problem">
+				<property name="title" value="problem10" />
+				<property name="statement" value="The last Problem1" />
+				<property name="hint" value="Change the POM.xml" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment3.com</value>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>
+			
+			<bean id ="problem11" class="domain.Problem">
+				<property name="title" value="problem11" />
+				<property name="statement" value="The last Problem2" />
+				<property name="hint" value="Change the web.xml" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment3.com</value>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>
+			
+	 		<bean id ="problem12" class="domain.Problem">
+				<property name="title" value="problem12" />
+				<property name="statement" value="The last Problem3" />
+				<property name="hint" value="Change the readme.md" />
+				<property name="attachments">
+					<list>
+						<value>https://www.attachment3.com</value>
+					</list>
+				</property>		
+				<property value="false" name="isDraftMode" />
+			</bean>	 
+		
+		
+		<!-- COMPANY 4 HAS NO PROBLEMS -->
+		
+	<!-- FIN PROBLEM -->
+
 </beans>

@@ -22,7 +22,6 @@ public class Problem extends DomainEntity {
 	private List<String>	attachments;
 	private Boolean			isDraftMode;
 
-
 	@NotBlank
 	public String getTitle() {
 		return this.title;

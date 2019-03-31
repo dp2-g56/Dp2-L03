@@ -10,6 +10,9 @@ import domain.Company;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
-	@Query("select c from Company m join m.userAccount u where u.username = ?1")
+
+	@Query("select m from Company m join m.userAccount u where u.username = ?1")
 	public Company getCompanyByUsername(String username);
+
+
 }

@@ -11,9 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+
+
 import repositories.ProblemRepository;
 import domain.Company;
 import domain.Problem;
+
+
+import forms.FormObjectPositionProblemCheckbox;
 
 @Service
 @Transactional
@@ -22,16 +29,31 @@ public class ProblemService {
 	@Autowired
 	private ProblemRepository	problemRepository;
 
+
 	@Autowired
 	private CompanyService		companyService;
 
+	@Autowired
+	private CompanyService		companyService;
+
+	@Autowired
+	private Validator			validator;
+
+
+	//-------------------------------------------CRUD---------------------------------------------------
+	//--------------------------------------------------------------------------------------------------
+
+	public List<Problem> getFinalProblemsByCompany(int companyId) {
+		return this.problemRepository.getFinalProblemsByCompany(companyId);
+	}
+
+	public Problem findOne(int problemId) {
+		return this.problemRepository.findOne(problemId);
+	}
 
 	public List<Problem> findAll() {
 		return this.problemRepository.findAll();
-	}
 
-	public Problem findOne(int id) {
-		return this.problemRepository.findOne(id);
 	}
 
 	public Problem save(Problem problem) {
@@ -42,8 +64,39 @@ public class ProblemService {
 		this.problemRepository.delete(problem);
 	}
 
+
 	public List<Problem> showProblems() {
 		Company company = this.companyService.getLoggedCompany();
+
+	public void flush() {
+		this.problemRepository.flush();
+	}
+
+	//----------------------------CREATE/EDIT POSITION----------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------------------------------
+	public List<Problem> reconstructList(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox) {
+
+		List<Integer> ids = formObjectPositionProblemCheckbox.getProblems();
+
+		Company loggedCompany = this.companyService.loggedCompany();
+
+		List<Problem> problems = new ArrayList<>();
+
+		for (Integer id : ids) {
+
+			Problem problem = this.problemRepository.findOne(id);
+			Assert.notNull(problem);
+			Assert.isTrue(loggedCompany.getProblems().contains(problem));
+
+			problems.add(problem);
+
+		}
+		return problems;
+	}
+
+	public List<Problem> showProblems() {
+		Company company = this.companyService.loggedCompany();
+
 		List<Problem> problems = new ArrayList<Problem>();
 		problems = this.problemRepository.getProblemsByCompany(company);
 		return problems;
@@ -55,12 +108,16 @@ public class ProblemService {
 
 		problem.setAttachments(attachment);
 		problem.setTitle("");
-		problem.setHint("");
+
 		problem.setIsDraftMode(null);
+
+		problem.setIsDraftMode(true);
+
 		problem.setStatement("");
 
 		return problem;
 	}
+
 
 	public Problem addAttachment(String attachment, Problem problem) {
 
@@ -68,6 +125,18 @@ public class ProblemService {
 
 		problem.getAttachments().add(attachment);
 		return this.save(problem);
+
+	public void addAttachment(String attachment, Problem problem) {
+		Assert.isTrue(this.companyService.loggedCompany().getProblems().contains(problem) && problem.getIsDraftMode());
+		List<String> attachments = problem.getAttachments();
+
+		if (!attachment.trim().isEmpty() && this.isUrl(attachment) && !attachments.contains(attachment)) {
+			attachments.add(attachment);
+			problem.setAttachments(attachments);
+			this.save(problem);
+		}
+
+
 	}
 
 	public Boolean isUrl(String url) {
@@ -78,4 +147,61 @@ public class ProblemService {
 			return false;
 		}
 	}
+
+
+
+	public Problem reconstruct(Problem problem, BindingResult binding) {
+		Problem result = new Problem();
+
+		if (problem.getId() == 0) {
+			result = problem;
+		} else {
+			Problem copy = this.findOne(problem.getId());
+
+			result.setVersion(copy.getVersion());
+			result.setTitle(problem.getTitle());
+			result.setAttachments(copy.getAttachments());
+			result.setHint(problem.getHint());
+			result.setStatement(problem.getStatement());
+			result.setIsDraftMode(problem.getIsDraftMode());
+
+			result.setId(copy.getId());
+		}
+		this.validator.validate(result, binding);
+		return result;
+	}
+
+	public void updateProblem(Problem problem) {
+		Company loggedCompany = this.companyService.loggedCompany();
+		Assert.isTrue(loggedCompany.getProblems().contains(problem) && problem.getIsDraftMode());
+		this.save(problem);
+
+	}
+
+	public void deleteProblem(Problem problem) {
+		Company loggedCompany = this.companyService.loggedCompany();
+		Assert.isTrue(loggedCompany.getProblems().contains(problem));
+		Assert.isTrue(problem.getIsDraftMode());
+
+		List<Problem> problems = loggedCompany.getProblems();
+		problems.remove(problem);
+		loggedCompany.setProblems(problems);
+
+		this.companyService.save(loggedCompany);
+
+		this.problemRepository.delete(problem);
+
+	}
+
+	public void removeAttachment(Problem problem, int attachmentNumber) {
+
+		List<String> attachments = problem.getAttachments();
+		Assert.isTrue(this.companyService.loggedCompany().getProblems().contains(problem) && attachments.size() > attachmentNumber && problem.getIsDraftMode());
+
+		attachments.remove(attachmentNumber);
+		problem.setAttachments(attachments);
+		this.save(problem);
+	}
+
+
 }
