@@ -21,4 +21,9 @@
 		<put-attribute name="body" value="/views/administrator/createAdmin.jsp" />
 	</definition>
 	
+	<definition name="statistics/administrator/show" extends="master.page">	
+		<put-attribute name="title" value="Estadisticas" />
+		<put-attribute name="body" value="/views/administrator/statistics.jsp" />
+	</definition>
+	
 </tiles-definitions>

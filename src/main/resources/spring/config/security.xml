@@ -41,6 +41,7 @@
 
 		<!-- ADMIN -->
 		<security:intercept-url pattern="/administrator/administrator/**" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/statistics/administrator/**" access="hasRole('ADMIN')" />
 		
 
 		<!-- COMPANY -->

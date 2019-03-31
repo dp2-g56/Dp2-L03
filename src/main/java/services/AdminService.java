@@ -37,6 +37,9 @@ public class AdminService {
 	@Autowired
 	private ConfigurationService	configurationService;
 
+	@Autowired
+	private FinderService			finderService;
+
 
 	//----------------------------------------CRUD METHODS--------------------------
 	//------------------------------------------------------------------------------
@@ -215,4 +218,35 @@ public class AdminService {
 		this.adminRepository.save(admin);
 	}
 
+	public List<Float> showStatisticsOfFinder() {
+
+		this.finderService.updateAllFinders();
+
+		List<Float> statistics = new ArrayList<Float>();
+
+		statistics.add(this.adminRepository.minResultFinders());
+		statistics.add(this.adminRepository.maxResultFinders());
+		statistics.add(this.adminRepository.avgResultFinders());
+		statistics.add(this.adminRepository.stddevResultFinders());
+
+		if (this.adminRepository.ratioEmptyFinder() == null)
+			statistics.add((float) 0);
+		else
+			statistics.add(this.adminRepository.ratioEmptyFinder());
+
+		return statistics;
+
+	}
+
+	public List<Float> showStatisticsOfCurriculum() {
+
+		List<Float> statistics = new ArrayList<Float>();
+
+		statistics.add(this.adminRepository.minCurriculumPerHacker());
+		statistics.add(this.adminRepository.maxCurriculumPerHacker());
+		statistics.add(this.adminRepository.avgCurriculumPerHacker());
+		statistics.add(this.adminRepository.stddevCurriculumPerHacker());
+
+		return statistics;
+	}
 }
