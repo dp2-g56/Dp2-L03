@@ -25,7 +25,6 @@
 		
 		<value>/views/administrator/messages</value>
 		<value>/views/anonymous/messages</value>
-		<value>/views/customer/messages</value>
 		<value>/views/profile/messages</value>
 		<value>/views/company/messages</value>
 	</util:list>

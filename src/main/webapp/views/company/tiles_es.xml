@@ -16,6 +16,39 @@
       
 <tiles-definitions>
 
+	<!--POSITION -->
+	<definition name="position/company/list" extends="master.page">	
+		<put-attribute name="title" value="Situaciones" />
+		<put-attribute name="body" value="/views/company/positionList.jsp" />
+	</definition>
+	
+	<definition name="position/company/create" extends="master.page">	
+		<put-attribute name="title" value="Crear una situacion" />
+		<put-attribute name="body" value="/views/company/createPosition.jsp" />
+	</definition>
+	
+	<definition name="problemPosition/company/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de Problemas" />
+		<put-attribute name="body" value="/views/company/showProblemsPosition.jsp" />
+	</definition>
+	
+	<definition name="position/company/skill/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de Destrezas Requeridas" />
+		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+	</definition>
+	
+	<definition name="position/company/technology/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de Tecnologias Requeridas" />
+		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+	</definition>
+	
+	<definition name="problemPosition/company/attachement/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de adjuntos" />
+		<put-attribute name="body" value="/views/company/listRequired.jsp" />
+	</definition>
+	
+	
+	<!--PROBLEM -->
 	<definition name="problem/company/list" extends="master.page">	
 		<put-attribute name="title" value="Problemas de la empresa" />
 		<put-attribute name="body" value="/views/company/problemList.jsp" />
@@ -35,6 +68,5 @@
 		<put-attribute name="title" value="Crear un archivo" />
 		<put-attribute name="body" value="/views/company/addAttachment.jsp" />
 	</definition>
-	
 	
 </tiles-definitions>

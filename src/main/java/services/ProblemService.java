@@ -1,6 +1,7 @@
 
 package services;
 
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,11 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
+
 import repositories.ProblemRepository;
 import domain.Company;
 import domain.Problem;
+import forms.FormObjectPositionProblemCheckbox;
 
 @Service
 @Transactional
@@ -23,20 +26,25 @@ public class ProblemService {
 
 	@Autowired
 	private ProblemRepository	problemRepository;
-
 	@Autowired
 	private CompanyService		companyService;
 
 	@Autowired
 	private Validator			validator;
 
+	//-------------------------------------------CRUD---------------------------------------------------
+	//--------------------------------------------------------------------------------------------------
+
+	public List<Problem> getFinalProblemsByCompany(int companyId) {
+		return this.problemRepository.getFinalProblemsByCompany(companyId);
+	}
+
+	public Problem findOne(int problemId) {
+		return this.problemRepository.findOne(problemId);
+	}
 
 	public List<Problem> findAll() {
 		return this.problemRepository.findAll();
-	}
-
-	public Problem findOne(int id) {
-		return this.problemRepository.findOne(id);
 	}
 
 	public Problem save(Problem problem) {
@@ -50,6 +58,31 @@ public class ProblemService {
 	public void flush() {
 		this.problemRepository.flush();
 	}
+
+	//----------------------------CREATE/EDIT POSITION----------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------------------------------------
+	public List<Problem> reconstructList(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox) {
+
+		List<Integer> ids = formObjectPositionProblemCheckbox.getProblems();
+
+		Company loggedCompany = this.companyService.loggedCompany();
+
+		List<Problem> problems = new ArrayList<>();
+
+		for (Integer id : ids) {
+
+			Problem problem = this.problemRepository.findOne(id);
+			Assert.notNull(problem);
+			Assert.isTrue(loggedCompany.getProblems().contains(problem));
+
+			problems.add(problem);
+
+		}
+		return problems;
+	}
+
+
+	
 
 	public List<Problem> showProblems() {
 		Company company = this.companyService.getLoggedCompany();

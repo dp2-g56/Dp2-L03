@@ -14,6 +14,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Company;
+
 import domain.Problem;
 
 @Service
@@ -26,18 +27,41 @@ public class CompanyService {
 	private ProblemService		problemService;
 
 
+	//----------------------------------------CRUD METHODS--------------------------
+	//------------------------------------------------------------------------------
+	
+
 	public Company save(Company company) {
 		return this.companyRepository.save(company);
 	}
 
-	public void loggedAsCompany() {
+	//-----------------------------------------SECURITY-----------------------------
+	//------------------------------------------------------------------------------
 
+	/**
+	 * LoggedCompany now contains the security of loggedAsCompany
+	 * 
+	 * @return
+	 */
+	public Company loggedCompany() {
+		Company company = new Company();
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
+		Assert.isTrue(authorities.get(0).toString().equals("COMPANY"));
+		company = this.companyRepository.getCompanyByUsername(userAccount.getUsername());
+		Assert.notNull(company);
+		return company;
+	}
+
+	public void loggedAsCompany() {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
 		Assert.isTrue(authorities.get(0).toString().equals("COMPANY"));
 
 	}
+
 
 	public Company getLoggedCompany() {
 		UserAccount userAccount;
@@ -56,7 +80,6 @@ public class CompanyService {
 		problems.add(problem);
 		loggedCompany.setProblems(problems);
 		this.save(loggedCompany);
-
 	}
 
 }
