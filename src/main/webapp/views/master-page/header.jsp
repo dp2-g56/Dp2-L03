@@ -34,6 +34,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="position/company/list.do"><spring:message code="master.page.company.PositionList" /></a></li>
+					<li><a href="problem/company/list.do"><spring:message code="master.page.company.listProblems" /></a></li>	
 				</ul>
 			</li>
 		</security:authorize>
@@ -43,15 +44,6 @@
 				<ul>
 					<li class="arrow"></li>
 								
-				</ul>
-			</li>
-		</security:authorize>
-		
-		<security:authorize access="hasRole('COMPANY')">
-			<li><a class="fNiv"><spring:message	code="master.page.company" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="problem/company/list.do"><spring:message code="master.page.company.listProblems" /></a></li>				
 				</ul>
 			</li>
 		</security:authorize>
