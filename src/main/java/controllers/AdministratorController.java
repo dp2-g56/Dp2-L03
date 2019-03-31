@@ -10,13 +10,34 @@
 
 package controllers;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import services.AdminService;
+import services.ConfigurationService;
+import domain.Admin;
+import domain.Configuration;
+import forms.FormObjectAdmin;
 
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController extends AbstractController {
+
+	@Autowired
+	private AdminService			adminService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -24,24 +45,71 @@ public class AdministratorController extends AbstractController {
 		super();
 	}
 
-	// Action-1 ---------------------------------------------------------------		
-
-	@RequestMapping("/action-1")
-	public ModelAndView action1() {
+	@RequestMapping(value = "/administrator/create", method = RequestMethod.GET)
+	public ModelAndView createAdmin() {
 		ModelAndView result;
 
-		result = new ModelAndView("administrator/action-1");
+		FormObjectAdmin formObjectAdmin = new FormObjectAdmin();
+		formObjectAdmin.setTermsAndConditions(false);
+
+		result = this.createEditModelAndView(formObjectAdmin);
 
 		return result;
 	}
 
-	// Action-2 ---------------------------------------------------------------
+	@RequestMapping(value = "/administrator/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid FormObjectAdmin formObjectAdmin, BindingResult binding) {
 
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
 		ModelAndView result;
 
-		result = new ModelAndView("administrator/action-2");
+		Admin admin = new Admin();
+		admin = this.adminService.createAdmin();
+
+		Configuration configuration = this.configurationService.getConfiguration();
+		String prefix = configuration.getSpainTelephoneCode();
+
+		//Reconstruccion
+		admin = this.adminService.reconstruct(formObjectAdmin, binding);
+
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(formObjectAdmin);
+		} else {
+			try {
+
+				if (admin.getPhone().matches("([0-9]{4,})$")) {
+					admin.setPhone(prefix + admin.getPhone());
+				}
+				this.adminService.saveNewAdmin(admin);
+
+				result = new ModelAndView("redirect:/");
+
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(formObjectAdmin, "company.commit.error");
+
+			}
+		}
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(FormObjectAdmin formObjectAdmin) {
+		ModelAndView result;
+
+		result = this.createEditModelAndView(formObjectAdmin, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(FormObjectAdmin formObjectAdmin, String messageCode) {
+		ModelAndView result;
+
+		String locale = LocaleContextHolder.getLocale().getLanguage().toUpperCase();
+		List<String> cardType = this.configurationService.getConfiguration().getCardType();
+
+		result = new ModelAndView("administrator/administrator/create");
+		result.addObject("formObjectAdmin", formObjectAdmin);
+		result.addObject("message", messageCode);
+		result.addObject("locale", locale);
+		result.addObject("cardType", cardType);
 
 		return result;
 	}
