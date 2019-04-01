@@ -88,6 +88,7 @@ public class FinderService {
 		
 		Assert.notNull(finder);
 		Assert.isTrue(finder.getId()>0);
+		Assert.isTrue(hacker.getFinder().getId() == finder.getId());
 		
 		List<Position> positions = this.positionService.getFinalPositions();
 		
@@ -100,6 +101,8 @@ public class FinderService {
 		finder.setMinSalary(0.);
 		finder.setPositions(positions);
 		this.finderRepository.save(finder);
+		
+		this.finderRepository.flush();
 		
 		return positions;
 	}

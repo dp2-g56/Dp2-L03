@@ -67,7 +67,7 @@ public class FinderHackerController extends AbstractController {
 		ModelAndView result;
 
 		Hacker hacker = this.hackerService.securityAndHacker();
-		List<Position> positions = this.finderService.getFinalPositionsAndCleanFinder(hacker.getFinder());
+		this.finderService.getFinalPositionsAndCleanFinder(hacker.getFinder());
 
 		result = new ModelAndView("redirect:list.do");
 
