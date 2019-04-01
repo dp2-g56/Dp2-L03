@@ -1,7 +1,6 @@
 
 package services;
 
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
 
 import repositories.ProblemRepository;
 import domain.Company;
@@ -31,6 +29,7 @@ public class ProblemService {
 
 	@Autowired
 	private Validator			validator;
+
 
 	//-------------------------------------------CRUD---------------------------------------------------
 	//--------------------------------------------------------------------------------------------------
@@ -81,11 +80,8 @@ public class ProblemService {
 		return problems;
 	}
 
-
-	
-
 	public List<Problem> showProblems() {
-		Company company = this.companyService.getLoggedCompany();
+		Company company = this.companyService.loggedCompany();
 		List<Problem> problems = new ArrayList<Problem>();
 		problems = this.problemRepository.getProblemsByCompany(company);
 		return problems;
@@ -105,7 +101,7 @@ public class ProblemService {
 	}
 
 	public void addAttachment(String attachment, Problem problem) {
-		Assert.isTrue(this.companyService.getLoggedCompany().getProblems().contains(problem) && problem.getIsDraftMode());
+		Assert.isTrue(this.companyService.loggedCompany().getProblems().contains(problem) && problem.getIsDraftMode());
 		List<String> attachments = problem.getAttachments();
 
 		if (!attachment.trim().isEmpty() && this.isUrl(attachment) && !attachments.contains(attachment)) {
@@ -147,16 +143,14 @@ public class ProblemService {
 	}
 
 	public void updateProblem(Problem problem) {
-		this.companyService.loggedAsCompany();
-		Company loggedCompany = this.companyService.getLoggedCompany();
+		Company loggedCompany = this.companyService.loggedCompany();
 		Assert.isTrue(loggedCompany.getProblems().contains(problem) && problem.getIsDraftMode());
 		this.save(problem);
 
 	}
 
 	public void deleteProblem(Problem problem) {
-		this.companyService.loggedAsCompany();
-		Company loggedCompany = this.companyService.getLoggedCompany();
+		Company loggedCompany = this.companyService.loggedCompany();
 		Assert.isTrue(loggedCompany.getProblems().contains(problem));
 		Assert.isTrue(problem.getIsDraftMode());
 
@@ -173,7 +167,7 @@ public class ProblemService {
 	public void removeAttachment(Problem problem, int attachmentNumber) {
 
 		List<String> attachments = problem.getAttachments();
-		Assert.isTrue(this.companyService.getLoggedCompany().getProblems().contains(problem) && attachments.size() > attachmentNumber && problem.getIsDraftMode());
+		Assert.isTrue(this.companyService.loggedCompany().getProblems().contains(problem) && attachments.size() > attachmentNumber && problem.getIsDraftMode());
 
 		attachments.remove(attachmentNumber);
 		problem.setAttachments(attachments);

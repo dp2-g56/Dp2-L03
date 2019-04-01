@@ -30,6 +30,7 @@ public class Actor extends DomainEntity {
 	private String				email;
 	private String				phone;
 	private String				address;
+	private boolean				hasSpam;
 
 	private List<SocialProfile>	socialProfiles;
 	private List<Message>		messages;
@@ -111,6 +112,15 @@ public class Actor extends DomainEntity {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	@Valid
+	public Boolean getHasSpam() {
+		return this.hasSpam;
+	}
+
+	public void setHasSpam(Boolean hasSpam) {
+		this.hasSpam = hasSpam;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL)

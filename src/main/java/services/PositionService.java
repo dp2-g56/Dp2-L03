@@ -57,7 +57,7 @@ public class PositionService {
 	//---------------------------------------CREATE-------------------------
 	//----------------------------------------------------------------------
 	public Position createPosition() {
-		Company loggedCompany = this.companyService.loggedCompany();
+		this.companyService.loggedAsCompany();
 
 		Position position = new Position();
 
@@ -91,13 +91,14 @@ public class PositionService {
 
 		String companyName = loggedCompany.getCompanyName();
 
-		if (companyName.length() >= 4)
+		if (companyName.length() >= 4) {
 			res = companyName.substring(0, 4) + "-";
-		else {
+		} else {
 			int numberOfX = 4 - companyName.length();
 			res = companyName;
-			for (int i = 1; i <= numberOfX; i++)
+			for (int i = 1; i <= numberOfX; i++) {
 				res = res + "X";
+			}
 			res = res + "-";
 		}
 
@@ -115,9 +116,11 @@ public class PositionService {
 
 		List<Position> lc = this.positionRepository.findAll();
 
-		for (Position c : lc)
-			if (c.getTicker() == res)
+		for (Position c : lc) {
+			if (c.getTicker() == res) {
 				return this.generateTicker();
+			}
+		}
 		return res;
 	}
 
@@ -212,8 +215,9 @@ public class PositionService {
 		FormObjectPositionProblemCheckbox result = new FormObjectPositionProblemCheckbox();
 
 		List<Integer> problems = new ArrayList<>();
-		for (Problem f : position.getProblems())
+		for (Problem f : position.getProblems()) {
 			problems.add(f.getId());
+		}
 
 		result.setDeadline(position.getDeadline());
 		result.setDescription(position.getDescription());
@@ -224,13 +228,15 @@ public class PositionService {
 		result.setRequiredProfile(position.getRequiredProfile());
 
 		String requiredSkills = "";
-		for (String skill : position.getRequiredSkills())
+		for (String skill : position.getRequiredSkills()) {
 			requiredSkills = requiredSkills + skill + ",";
+		}
 		result.setRequiredSkills(requiredSkills);
 
 		String requiredTecnologies = "";
-		for (String tech : position.getRequiredTecnologies())
+		for (String tech : position.getRequiredTecnologies()) {
 			requiredTecnologies = requiredTecnologies + tech + ",";
+		}
 		result.setRequiredTecnologies(requiredTecnologies);
 		result.setTitle(position.getTitle());
 
@@ -245,8 +251,9 @@ public class PositionService {
 
 		Map<Integer, String> map = new HashMap<>();
 
-		for (Problem problem : problems)
+		for (Problem problem : problems) {
 			map.put(problem.getId(), problem.getTitle());
+		}
 
 		return map;
 	}
@@ -254,9 +261,9 @@ public class PositionService {
 	public Position reconstructCheckBox(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox, BindingResult binding) {
 		Position result = new Position();
 
-		if (formObjectPositionProblemCheckbox.getId() == 0)
+		if (formObjectPositionProblemCheckbox.getId() == 0) {
 			result.setTicker(this.generateTicker());
-		else {
+		} else {
 			result = this.positionRepository.findOne(formObjectPositionProblemCheckbox.getId());
 			Assert.isTrue(result.getIsDraftMode() && !result.getIsCancelled());
 		}
@@ -291,8 +298,9 @@ public class PositionService {
 
 		Company loggedCompany = this.companyService.loggedCompany();
 
-		for (Problem f : problems)
+		for (Problem f : problems) {
 			Assert.isTrue(loggedCompany.getProblems().contains(f) && f.getId() > 0);
+		}
 
 		if (position.getId() > 0) {
 			Position positionFounded = this.findOne(position.getId());
