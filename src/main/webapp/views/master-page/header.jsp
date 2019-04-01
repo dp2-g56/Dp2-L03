@@ -71,8 +71,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.termsAndConditions" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="/anonymous/termsAndConditionsEN.do"><spring:message code="master.page.termsAndConditionsEN" /></a></li>
-					<li><a href="/anonymous/termsAndConditionsES.do"><spring:message code="master.page.termsAndConditionsES" /></a></li>					
+					<li><a href="anonymous/termsAndConditionsEN.do"><spring:message code="master.page.termsAndConditionsEN" /></a></li>
+					<li><a href="anonymous/termsAndConditionsES.do"><spring:message code="master.page.termsAndConditionsES" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>

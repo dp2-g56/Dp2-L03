@@ -56,12 +56,14 @@
 		<!-- AUTHENTICATED -->
 		<security:intercept-url pattern="/authenticated/**" access="isAuthenticated()" /> 
 	
-		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
+		
 		
 		<!-- TERMS AND CONDITIONS -->
 		<security:intercept-url pattern="/anonymous/termsAndConditionsEN.do" access="permitAll" /> 
 		<security:intercept-url pattern="/anonymous/termsAndConditionsES.do" access="permitAll" /> 
 		
+		
+		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 		
 		<security:form-login 
 			login-page="/security/login.do"
