@@ -57,7 +57,6 @@ public class PositionService {
 	//---------------------------------------CREATE-------------------------
 	//----------------------------------------------------------------------
 	public Position createPosition() {
-		this.companyService.loggedAsCompany();
 
 		Position position = new Position();
 
@@ -306,6 +305,10 @@ public class PositionService {
 			Position positionFounded = this.findOne(position.getId());
 			Assert.isTrue(positionFounded.getIsDraftMode() && loggedCompany.getPositions().contains(positionFounded));
 		}
+		
+		if(!position.getIsDraftMode()) {
+			Assert.isTrue(problems.size()>=2);
+		}
 
 		position.setProblems(problems);
 		Position saved = new Position();
@@ -342,6 +345,11 @@ public class PositionService {
 
 	public List<Position> getFinalPositions() {
 		return this.positionRepository.getFinalPositions();
+	
+	//--------------------------------------AUXILIAR METHODS-------------------------//
+	
+	public void flush() {
+		this.positionRepository.flush();
 	}
 
 }
