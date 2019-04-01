@@ -134,8 +134,27 @@ public class FinderService {
 		List<Position> filter = new ArrayList<>();
 		List<Position> result = this.positionService.getFinalPositions();
 		
+		// Keyword
 		if(!finder.getKeyWord().equals(null) && !finder.getKeyWord().contentEquals("")) {
 			filter = this.finderRepository.getPositionsByKeyWord("%" + finder.getKeyWord() + "%");
+			result.retainAll(filter);
+		}
+		
+		// Deadline
+		if (finder.getDeadLine() != null) {
+			filter = this.finderRepository.getParadesByDeadline(finder.getDeadLine());
+			result.retainAll(filter);
+		}
+		
+		// Max deadline
+		if (finder.getMaxDeadLine() != null) {
+			filter = this.finderRepository.getParadesByMaxDeadline(finder.getMaxDeadLine());
+			result.retainAll(filter);
+		}
+		
+		// Min salary
+		if (!finder.getMinSalary().equals(null) && !finder.getMinSalary().equals(0.)) {
+			filter = this.finderRepository.getParadesByMinSalary(finder.getMinSalary());
 			result.retainAll(filter);
 		}
 		
