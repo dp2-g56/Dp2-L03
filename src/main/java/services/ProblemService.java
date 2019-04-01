@@ -103,7 +103,7 @@ public class ProblemService {
 
 		problem.setAttachments(attachment);
 		problem.setTitle("");
-		problem.setHint("")
+		problem.setHint("");
 		problem.setIsDraftMode(true);
 		problem.setStatement("");
 
