@@ -11,6 +11,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.CompanyRepository;
 import repositories.FinderRepository;
@@ -36,6 +38,8 @@ public class FinderService {
 	private HackerService hackerService;
 	@Autowired
 	private PositionService positionService;
+	@Autowired
+	private Validator validator;
 
 	public List<Position> finderList(Finder finder) {
 		this.hackerService.securityAndHacker();
@@ -98,6 +102,47 @@ public class FinderService {
 		this.finderRepository.save(finder);
 		
 		return positions;
+	}
+
+	public Finder reconstruct(Finder finderForm, BindingResult binding) {
+		Finder result = new Finder();
+		
+		Finder finder = this.finderRepository.findOne(finderForm.getId());
+		
+		result.setId(finder.getId());
+		result.setVersion(finder.getVersion());
+		result.setPositions(finder.getPositions());
+		
+		Date date = new Date();
+		result.setLastEdit(date);
+		
+		result.setKeyWord(finderForm.getKeyWord());
+		result.setDeadLine(finderForm.getDeadLine());
+		result.setMaxDeadLine(finderForm.getMaxDeadLine());
+		result.setMinSalary(finderForm.getMinSalary());
+		
+		this.validator.validate(result, binding);
+		
+		return result;
+	}
+
+	public void filterPositionsByFinder(Finder finder) {
+		Hacker hacker = this.hackerService.securityAndHacker();
+		
+		Assert.isTrue(hacker.getFinder().getId() == finder.getId());
+		
+		List<Position> filter = new ArrayList<>();
+		List<Position> result = this.positionService.getFinalPositions();
+		
+		if(!finder.getKeyWord().equals(null) && !finder.getKeyWord().contentEquals("")) {
+			filter = this.finderRepository.getPositionsByKeyWord("%" + finder.getKeyWord() + "%");
+			result.retainAll(filter);
+		}
+		
+		finder.setPositions(result);
+		Finder finderRes = this.finderRepository.save(finder);
+		hacker.setFinder(finderRes);
+		this.hackerService.save(hacker);
 	}	
 	
 }

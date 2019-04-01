@@ -36,5 +36,9 @@ public class HackerService {
 
 		return loggedHacker;
 	}
+
+	public Hacker save(Hacker hacker) {
+		return this.hackerRepository.save(hacker);
+	}
 	
 }
