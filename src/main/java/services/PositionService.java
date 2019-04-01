@@ -57,6 +57,7 @@ public class PositionService {
 	//---------------------------------------CREATE-------------------------
 	//----------------------------------------------------------------------
 	public Position createPosition() {
+		this.companyService.loggedAsCompany();
 
 		Position position = new Position();
 
