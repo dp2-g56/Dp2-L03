@@ -31,5 +31,9 @@ public class CurriculumService {
 		
 		return curriculums;
 	}
+
+	public Curriculum findOne(int curriculumId) {
+		return this.curriculumRepository.findOne(curriculumId);
+	}
 	
 }
