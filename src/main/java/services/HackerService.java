@@ -36,6 +36,10 @@ public class HackerService {
 
 		return loggedHacker;
 	}
+	
+	public Hacker getHackerByUsername(String username) {
+		return this.hackerRepository.getHackerByUsername(username);
+	}
 
 	public Hacker save(Hacker hacker) {
 		return this.hackerRepository.save(hacker);

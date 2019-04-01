@@ -42,7 +42,11 @@ public class FinderService {
 	private Validator validator;
 
 	public List<Position> finderList(Finder finder) {
-		this.hackerService.securityAndHacker();
+		Hacker hacker = this.hackerService.securityAndHacker();
+		
+		Assert.notNull(finder);
+		Assert.isTrue(finder.getId()>0);
+		Assert.isTrue(hacker.getFinder().getId() == finder.getId());
 		
 		List<Position> positions = new ArrayList<>();
 		List<Position> finderPositions = finder.getPositions();
@@ -51,25 +55,20 @@ public class FinderService {
 			// Current Date
 			Date currentDate = new Date();
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(currentDate);
-			Integer currentDay = calendar.get(Calendar.DATE);
-			Integer currentMonth = calendar.get(Calendar.MONTH);
-			Integer currentYear = calendar.get(Calendar.YEAR);
-			Integer currentHour = calendar.get(Calendar.HOUR);
+			Calendar calendar1 = Calendar.getInstance();
+			calendar1.setTime(currentDate);
 			
 			// LastEdit Finder
-			Date lasEdit = finder.getLastEdit();
-			calendar.setTime(lasEdit);
-			Integer lastEditDay = calendar.get(Calendar.DATE);
-			Integer lastEditMonth = calendar.get(Calendar.MONTH);
-			Integer lastEditYear = calendar.get(Calendar.YEAR);
-			Integer lastEditHour = calendar.get(Calendar.HOUR);	
+			Date lastEdit = finder.getLastEdit();
+			
+			Calendar calendar2 = Calendar.getInstance();
+			calendar2.setTime(lastEdit);
 			
 			Integer time = this.configurationService.getConfiguration().getTimeFinder();
 			
-			if (currentDay.equals(lastEditDay) && currentMonth.equals(lastEditMonth) && currentYear.equals(lastEditYear)
-					&& lastEditHour < (currentHour + time)) {
+			calendar2.add(Calendar.HOUR, time);
+			
+			if (calendar2.after(calendar1)) {
 				Integer numFinderResult = this.configurationService.getConfiguration().getFinderResult();
 
 				if (finderPositions.size() > numFinderResult)
@@ -132,6 +131,8 @@ public class FinderService {
 	public void filterPositionsByFinder(Finder finder) {
 		Hacker hacker = this.hackerService.securityAndHacker();
 		
+		Assert.notNull(finder);
+		Assert.isTrue(finder.getId()>0);
 		Assert.isTrue(hacker.getFinder().getId() == finder.getId());
 		
 		List<Position> filter = new ArrayList<>();
@@ -139,7 +140,7 @@ public class FinderService {
 		
 		// Keyword
 		if(!finder.getKeyWord().equals(null) && !finder.getKeyWord().contentEquals("")) {
-			filter = this.finderRepository.getPositionsByKeyWord("%" + finder.getKeyWord() + "%");
+			filter = this.getPositionsByKeyWord(finder.getKeyWord());
 			result.retainAll(filter);
 		}
 		
@@ -165,6 +166,18 @@ public class FinderService {
 		Finder finderRes = this.finderRepository.save(finder);
 		hacker.setFinder(finderRes);
 		this.hackerService.save(hacker);
+	}
+
+	public Finder save(Finder finder) {
+		return this.finderRepository.save(finder);
+	}
+
+	public Finder findOne(Integer id) {
+		return this.finderRepository.findOne(id);
+	}
+
+	public List<Position> getPositionsByKeyWord(String keyWord) {
+		return this.finderRepository.getPositionsByKeyWord("%" + keyWord + "%");
 	}	
 	
 }
