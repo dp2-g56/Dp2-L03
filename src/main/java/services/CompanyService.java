@@ -24,12 +24,7 @@ public class CompanyService {
 
 	@Autowired
 	private CompanyRepository	companyRepository;
-
-
-
-	public void loggedAsCompany() {
-
-
+		
 	@Autowired
 	private ProblemService		problemService;
 
@@ -57,14 +52,6 @@ public class CompanyService {
 		Assert.isTrue(authorities.get(0).toString().equals("COMPANY"));
 		return this.companyRepository.getCompanyByUsername(userAccount.getUsername());
 	}
-
-	public Company getLoggedCompany() {
-		UserAccount userAccount;
-		userAccount = LoginService.getPrincipal();
-		return this.companyRepository.getCompanyByUsername(userAccount.getUsername());
-	}
-
-	
 
 	public void loggedAsCompany() {
 		UserAccount userAccount;
