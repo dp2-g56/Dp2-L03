@@ -842,6 +842,27 @@
 						</list>
 					</property>
 				</bean>
+				<!-- COPIAS DE CURRICULUM PARA APPLICATION -->
+				<!-- ############################################# -->
+					<bean id="curriculum5" class="domain.Curriculum">
+					<property name="title" value="curriculum1Copy" />
+					<property name="personalData" ref ="personalData5" />
+					
+					<property name="positionData">
+						<list>
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+						</list>
+					</property>
+				</bean>
 				
 		<!-- HACKER2 -->
 			 	<bean id="curriculum3" class="domain.Curriculum">
@@ -1053,11 +1074,34 @@
 					<property name="linkedinProfile" value="https://github.com/DaviidGilB" />
 				</bean>	
 				
+		<!-- CURRICULUM5 (COPY CURRICULUM1) -->
+		<bean id ="personalData5" class="domain.PersonalData">
+					<property name="fullName" value="Bruno Buccellati" />
+					<property name="statement" value="Sticky fingers" />
+					<property name="phoneNumber" value="+34609236920" />
+					<property name="gitHubProfile" value="https://github.com/JuanCarlosAlonsoValenzuela" />
+					<property name="linkedinProfile" value="https://github.com/JuanCarlosAlonsoValenzuela" />
+				</bean>
+				
 	<!-- FIN DATA FROM CURRICULUM -->
 	
 	<!-- APPLICATION -->
-	<!-- FIN APPLICATION -->
 	
+	
+			<bean id ="application1" class="domain.Application">
+				<property name="creationMoment" value="02/01/2017 11:30" />
+				<property name="link" value="https://www.youtube.com/watch?v=SVfovID6QU8" />
+				<property name="explication" value="Explication 1" />
+				<property name="submitMoment" value="02/01/2018 11:30" />
+				
+				<property name="status" value="SUBMITTED" />
+				<property name="problem" ref="problem2" />
+				<property name="position" ref="position1" />
+				<property name="curriculum" ref="curriculum5" />
+				<property name="hacker" ref="hacker1" />
+			</bean>
+	<!-- FIN APPLICATION -->
+			
 	<!-- FINDER -->
 		<!-- HACKER1 -->
 			<bean id ="finder1" class="domain.Finder">
@@ -1065,6 +1109,7 @@
 				<property name="deadLine" value="02/01/2025 11:30" />
 				<property name="minSalary" value="" />
 				<property name="maxDeadLine" value="02/01/2025 11:30" />
+				<property name="lastEdit" value="01/04/2019 01:00" />
 			</bean>
 			
 		<!-- HACKER2 -->
@@ -1073,6 +1118,7 @@
 				<property name="deadLine" value="02/01/2025 11:30" />
 				<property name="minSalary" value="" />
 				<property name="maxDeadLine" value="02/01/2025 11:30" />
+				<property name="lastEdit" value="02/01/2018 11:30" />
 			</bean>
 			
 		<!-- HACKER3 -->
@@ -1081,6 +1127,7 @@
 				<property name="deadLine" value="02/01/2025 11:30" />
 				<property name="minSalary" value="" />
 				<property name="maxDeadLine" value="02/01/2025 11:30" />
+				<property name="lastEdit" value="02/01/2018 11:30" />
 			</bean>
 			
 		<!-- HACKER4 -->
@@ -1089,6 +1136,7 @@
 				<property name="deadLine" value="02/01/2025 11:30" />
 				<property name="minSalary" value="" />
 				<property name="maxDeadLine" value="02/01/2025 11:30" />
+				<property name="lastEdit" value="02/01/2018 11:30" />
 			</bean>
 			
 	<!-- FIN FINDER -->

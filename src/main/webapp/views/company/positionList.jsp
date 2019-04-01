@@ -121,14 +121,13 @@
 		</jstl:if>
 		
 		<jstl:if test="${!row.isDraftMode && !row.isCancelled}">
-			<a href="position/company/cancel.do?positionId=${row.id}">
+			<a href="position/company/cancel.do?positionId=${row.id}" onclick="return confirm('<spring:message code="position.verificationCancel" />')">
 				<spring:message code="position.cancel" />
 			</a>
 		</jstl:if>
-		
-	</display:column>
 
-												
+	</display:column>
+									
 </display:table>
 
 
