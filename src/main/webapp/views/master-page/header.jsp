@@ -25,7 +25,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="administrator/administrator/create.do"><spring:message code="master.page.administrator.createAdmin" /></a></li>		
-					
+					<li><a href="statistics/administrator/show.do"><spring:message code="master.page.administrator.statistics" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

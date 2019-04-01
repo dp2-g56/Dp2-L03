@@ -14,7 +14,9 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Company;
+
 import domain.Problem;
+
 
 @Service
 @Transactional
@@ -22,6 +24,7 @@ public class CompanyService {
 
 	@Autowired
 	private CompanyRepository	companyRepository;
+		
 	@Autowired
 	private ProblemService		problemService;
 
@@ -42,6 +45,7 @@ public class CompanyService {
 	 * @return
 	 */
 	public Company loggedCompany() {
+
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
@@ -67,5 +71,6 @@ public class CompanyService {
 		loggedCompany.setProblems(problems);
 		this.save(loggedCompany);
 	}
+
 
 }
