@@ -60,9 +60,6 @@ public class ProblemService {
 		this.problemRepository.delete(problem);
 	}
 
-	public List<Problem> showProblems() {
-		Company company = this.companyService.getLoggedCompany();
-
 	public void flush() {
 		this.problemRepository.flush();
 	}
