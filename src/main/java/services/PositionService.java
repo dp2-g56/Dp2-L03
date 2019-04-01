@@ -176,6 +176,27 @@ public class PositionService {
 		this.positionRepository.delete(position);
 	}
 
+	//----------------------------CANCEL POSITION----------------------------------
+	//-----------------------------------------------------------------------------
+	public void cancelPosition(Position position) {
+		//Security
+		Company loggedCompany = this.companyService.loggedCompany();
+		List<Position> positions = loggedCompany.getPositions();
+
+		Assert.isTrue(positions.contains(position));
+		Assert.isTrue(!position.getIsDraftMode());
+		Assert.isTrue(!position.getIsCancelled());
+
+		positions.remove(position);
+
+		position.setIsCancelled(true);
+		Position saved = this.save(position);
+		positions.add(saved);
+		loggedCompany.setPositions(positions);
+
+		this.companyService.save(loggedCompany);
+	}
+
 	//-----------------------------RECONSTRUCT FORM OBJECT-------------------------
 	//-----------------------------------------------------------------------------
 	public FormObjectPositionProblemCheckbox prepareFormObjectPositionProblemCheckbox(int positionId) {

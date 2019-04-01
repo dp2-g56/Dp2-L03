@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ApplicationService;
 import services.CompanyService;
 import services.PositionService;
 import services.ProblemService;
+import domain.Application;
 import domain.Company;
 import domain.Position;
 import domain.Problem;
+import domain.Status;
 import forms.FormObjectPositionProblemCheckbox;
 
 @Controller
@@ -29,11 +32,13 @@ import forms.FormObjectPositionProblemCheckbox;
 public class PositionController extends AbstractController {
 
 	@Autowired
-	private CompanyService	companyService;
+	private CompanyService		companyService;
 	@Autowired
-	private PositionService	positionService;
+	private PositionService		positionService;
 	@Autowired
-	private ProblemService	problemService;
+	private ProblemService		problemService;
+	@Autowired
+	private ApplicationService	applicationService;
 
 
 	public PositionController() {
@@ -83,9 +88,78 @@ public class PositionController extends AbstractController {
 		result.addObject("allProblems", allProblems);
 		result.addObject("requestURI", "problem/company/list.do");
 		result.addObject("positionId", positionId);
-		result.addObject("restriction", true);
 
 		return result;
+	}
+
+	//--------------------------LISTA DE APPLICATIONS----------------------------
+	//---------------------------------------------------------------------------
+	@RequestMapping(value = "/application/list", method = RequestMethod.GET)
+	public ModelAndView listApplication(@RequestParam int positionId) {
+		ModelAndView result;
+
+		Company loggedCompany = this.companyService.loggedCompany();
+
+		List<Application> allApplications = new ArrayList<>();
+
+		Position position = this.positionService.findOne(positionId);
+
+		if (position.getIsDraftMode())
+			return this.list();
+
+		allApplications = this.applicationService.getApplicationsCompany(positionId);
+
+		result = new ModelAndView("applicationPosition/company/list");
+
+		result.addObject("allApplications", allApplications);
+		result.addObject("requestURI", "application/company/list.do");
+		result.addObject("positionId", positionId);
+
+		return result;
+	}
+
+	//------------------------------EDIT APPLICATION STATUS----------------------------
+	//---------------------------------------------------------------------------------
+	// ACCEPT APPLICATION
+	@RequestMapping(value = "/application/accept", method = RequestMethod.GET)
+	public ModelAndView acceptApplication(@RequestParam int applicationId) {
+		ModelAndView result;
+		Application application;
+		application = this.applicationService.findOne(applicationId);
+		Position position = application.getPosition();
+		Company company = this.companyService.loggedCompany();
+		List<Position> positions = company.getPositions();
+
+		if (application.getStatus() != Status.SUBMITTED)
+			return this.list();
+
+		if (!(company.getPositions().contains(position)))
+			return this.list();
+
+		this.applicationService.editApplicationCompany(application, true);
+
+		return this.list();
+	}
+
+	// ACCEPT APPLICATION
+	@RequestMapping(value = "/application/reject", method = RequestMethod.GET)
+	public ModelAndView rejectApplication(@RequestParam int applicationId) {
+		ModelAndView result;
+		Application application;
+		application = this.applicationService.findOne(applicationId);
+		Position position = application.getPosition();
+		Company company = this.companyService.loggedCompany();
+		List<Position> positions = company.getPositions();
+
+		if (application.getStatus() != Status.SUBMITTED)
+			return this.list();
+
+		if (!(company.getPositions().contains(position)))
+			return this.list();
+
+		this.applicationService.editApplicationCompany(application, false);
+
+		return this.list();
 	}
 
 	//--------------------------LISTA DE ATTACHEMENTS----------------------------
@@ -171,30 +245,6 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	//	@RequestMapping(value = "/request/list", method = RequestMethod.GET)
-	//	public ModelAndView listRequest(@RequestParam int paradeId) {
-	//		ModelAndView result;
-	//
-	//		this.brotherhoodService.loggedAsBrotherhood();
-	//		Brotherhood loggedBrotherhood = this.brotherhoodService.loggedBrotherhood();
-	//
-	//		Boolean hasArea = !(loggedBrotherhood.getArea() == null);
-	//
-	//		List<Request> requests = new ArrayList<Request>();
-	//
-	//		Parade parade = this.paradeService.findOne(paradeId);
-	//		requests = parade.getRequests();
-	//
-	//		result = new ModelAndView("parade/brotherhood/requests");
-	//
-	//		result.addObject("requests", requests);
-	//		result.addObject("requestURI", "parade/brotherhood/request/list.do");
-	//		result.addObject("hasArea", hasArea);
-	//		result.addObject("paradeId", paradeId);
-	//
-	//		return result;
-	//	}
-
 	// CREATE POSITION
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createPosition() {
@@ -228,9 +278,28 @@ public class PositionController extends AbstractController {
 		result = this.createEditModelAndView(formObjectPositionProblemCheckbox);
 
 		return result;
-
 	}
 
+	// CANCEL POSITION
+	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
+	public ModelAndView cancel(@RequestParam int positionId) {
+		ModelAndView result;
+		Position position;
+		position = this.positionService.findOne(positionId);
+		Company company = this.companyService.loggedCompany();
+
+		if (position.getIsDraftMode() || position.getIsCancelled())
+			return this.list();
+
+		if (!(company.getPositions().contains(position)))
+			return this.list();
+
+		this.positionService.cancelPosition(position);
+
+		return this.list();
+	}
+
+	//SAVE POSITION
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox, BindingResult binding) {
 
@@ -260,7 +329,7 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	// MODEL AND VIEW Parade CHECKBOX
+	// MODEL AND VIEW POSITION CHECKBOX
 	protected ModelAndView createEditModelAndView(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox) {
 		ModelAndView result;
 
@@ -285,7 +354,7 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	// MODEL AND VIEW Parade
+	// MODEL AND VIEW POSITION
 	protected ModelAndView createEditModelAndView(Position position) {
 		ModelAndView result;
 
@@ -326,51 +395,24 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	//	// CREATE Parade
-	//	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	//	public ModelAndView createParade() {
+	//	// MODEL AND VIEW APPLICATION
+	//	protected ModelAndView createEditModelAndView(Application application) {
 	//		ModelAndView result;
-	//		FormObjectParadeFloat formObjectParadeFloat = new FormObjectParadeFloat();
 	//
-	//		result = this.createEditModelAndView1(formObjectParadeFloat);
+	//		result = this.createEditModelAndView(application, null);
 	//
 	//		return result;
 	//	}
 	//
-	//	// MODEL AND VIEW Parade
-	//	protected ModelAndView createEditModelAndView1(FormObjectParadeFloat formObjectParadeFloat) {
+	//	protected ModelAndView createEditModelAndView(Application application, String messageCode) {
 	//		ModelAndView result;
 	//
-	//		result = this.createEditModelAndView1(formObjectParadeFloat, null);
-	//
-	//		return result;
-	//	}
-	//
-	//	protected ModelAndView createEditModelAndView1(FormObjectParadeFloat formObjectParadeFloat, String messageCode) {
-	//		ModelAndView result;
-	//
-	//		result = new ModelAndView("parade/brotherhood/create");
-	//		result.addObject("formObjectParadeFloat", formObjectParadeFloat);
+	//		List<Status> listStatus = Arrays.asList(Status.values());
+	//		result = new ModelAndView("CREAR MODEL AND VIEW CON NOMBRE GRACIOSO");
+	//		result.addObject("application", application);
 	//		result.addObject("message", messageCode);
-	//
-	//		return result;
-	//	}
-	//
-	//	// MODEL AND VIEW Parade
-	//	protected ModelAndView createEditModelAndView1(Parade parade) {
-	//		ModelAndView result;
-	//
-	//		result = this.createEditModelAndView1(parade, null);
-	//
-	//		return result;
-	//	}
-	//
-	//	protected ModelAndView createEditModelAndView1(Parade parade, String messageCode) {
-	//		ModelAndView result;
-	//
-	//		result = new ModelAndView("parade/brotherhood/create");
-	//		result.addObject("parade", parade);
-	//		result.addObject("message", messageCode);
+	//		result.addObject("listStatus", listStatus);
+	//		//		result.addObject("positionId", formObjectPositionProblemCheckbox.getId());
 	//
 	//		return result;
 	//	}
