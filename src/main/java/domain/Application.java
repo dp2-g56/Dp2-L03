@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -72,6 +74,7 @@ public class Application extends DomainEntity {
 	}
 
 	@NotNull
+	@Enumerated(EnumType.STRING)
 	public Status getStatus() {
 		return this.status;
 	}
