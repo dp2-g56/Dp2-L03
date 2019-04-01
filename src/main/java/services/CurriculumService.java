@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import domain.Curriculum;
 import domain.Hacker;
@@ -34,6 +35,13 @@ public class CurriculumService {
 
 	public Curriculum findOne(int curriculumId) {
 		return this.curriculumRepository.findOne(curriculumId);
+	}
+
+	public Curriculum getCurriculumOfLoggedHacker(int curriculumId) {
+		Hacker hacker = this.hackerService.securityAndHacker();
+		Curriculum curriculum = this.findOne(curriculumId);
+		Assert.isTrue(hacker.getCurriculums().contains(curriculum));
+		return curriculum;
 	}
 	
 }

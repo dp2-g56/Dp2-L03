@@ -40,7 +40,7 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView show(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		Curriculum curriculum = this.curriculumService.findOne(curriculumId);
+		Curriculum curriculum = this.curriculumService.getCurriculumOfLoggedHacker(curriculumId);
 		
 		result = new ModelAndView("hacker/curriculum");
 		result.addObject("curriculum", curriculum);
