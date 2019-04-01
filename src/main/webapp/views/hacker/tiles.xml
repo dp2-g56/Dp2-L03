@@ -21,9 +21,14 @@
 		<put-attribute name="body" value="/views/hacker/finderResult.jsp" />
 	</definition>
 	
-		<definition name="hacker/finder" extends="master.page">	
+	<definition name="hacker/finder" extends="master.page">	
 		<put-attribute name="title" value="Finder" />
 		<put-attribute name="body" value="/views/hacker/finder.jsp" />
+	</definition>
+	
+	<definition name="hacker/curriculums" extends="master.page">	
+		<put-attribute name="title" value="Curriculums" />
+		<put-attribute name="body" value="/views/hacker/curriculums.jsp" />
 	</definition>
 	
 </tiles-definitions>
