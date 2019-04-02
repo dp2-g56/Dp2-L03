@@ -74,6 +74,14 @@
 			
 		<display:column property="status" titleKey="request.status" style="color:${color}"/>
 		
+		<display:column titleKey="application.position" style="color:${color}">
+			<jstl:out value="${row.position.title}"/>
+		</display:column>
+		
+		<display:column titleKey="application.curriculum" style="color:${color}">
+			<jstl:out value="${row.curriculum.title}"/>
+		</display:column>
+		
 		<%-- <display:column titleKey="action">
 			<jstl:if test="${row.status.toString()!='REJECTED'}">
 				<spring:url var="editRequest" value="/request/brotherhood/edit.do">
