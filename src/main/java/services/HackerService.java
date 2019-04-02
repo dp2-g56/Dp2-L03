@@ -57,11 +57,6 @@ public class HackerService {
 
 	}
 
-	public void save(Hacker hacker) {
-		this.loggedAsHacker();
-		this.hackerRepository.save(hacker);
-	}
-
 	public void addApplication(Application p) {
 		Hacker hacker = this.loggedHacker();
 		Assert.isTrue(p.getId() == 0);

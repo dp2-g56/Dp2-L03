@@ -51,18 +51,6 @@ public class ApplicationService {
 		return applications;
 	}
 
-	public Application findOne(int id) {
-		Hacker hacker = this.hackerService.loggedHacker();
-		Application application = this.applicationRepository.findOne(id);
-		return application;
-	}
-
-	public Application save(Application a) {
-		Hacker hacker = this.hackerService.loggedHacker();
-		Application c = this.applicationRepository.save(a);
-		return c;
-	}
-
 	public Collection<Application> getApplicationsByHacker(Hacker hacker) {
 		return this.applicationRepository.getApplicationsByHacker(hacker);
 	}
