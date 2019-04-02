@@ -1,0 +1,176 @@
+package controllers;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import domain.Application;
+import domain.Curriculum;
+import domain.Hacker;
+import domain.Position;
+import domain.Problem;
+import domain.Status;
+import services.ApplicationService;
+import services.HackerService;
+import services.PositionService;
+
+@Controller
+@RequestMapping("/application/hacker")
+public class ApplicationHackerController extends AbstractController {
+
+	@Autowired
+	private ApplicationService applicationService;
+
+	@Autowired
+	private HackerService hackerService;
+
+	@Autowired
+	private PositionService positionService;
+
+	public ApplicationHackerController() {
+		super();
+	}
+
+	// ----------------------------LIST------------------------------------
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView result;
+
+		Hacker hacker = this.hackerService.loggedHacker();
+
+		List<Application> applications = new ArrayList<Application>();
+
+		applications = (List<Application>) this.applicationService.getApplicationsByHacker(hacker);
+
+		result = new ModelAndView("application/hacker/list");
+
+		result.addObject("applications", applications);
+		result.addObject("requestURI", "application/hacker/list.do");
+
+		return result;
+
+	}
+
+	@RequestMapping(value = "/filter", method = { RequestMethod.POST, RequestMethod.GET }, params = "refresh")
+	public ModelAndView applicationsFilter(@RequestParam String fselect) {
+		ModelAndView result;
+
+		if (fselect.equals("ALL"))
+			result = new ModelAndView("redirect:list.do");
+		else {
+
+			Status status = Status.ACCEPTED;
+			if (fselect.equals("PENDING"))
+				status = Status.PENDING;
+			else if (fselect.equals("REJECTED"))
+				status = Status.REJECTED;
+			else if (fselect.equals("SUBMITTED"))
+				status = Status.SUBMITTED;
+
+			Hacker loggedHacker = this.hackerService.loggedHacker();
+			List<Application> applications = (List<Application>) this.applicationService
+					.getApplicationsByHackerAndStatus(loggedHacker, status);
+
+			result = new ModelAndView("application/hacker/list");
+
+			result.addObject("applications", applications);
+			result.addObject("requestURI", "application/hacker/filter.do");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView createApplication() {
+		ModelAndView result;
+
+		Hacker hacker = this.hackerService.loggedHacker();
+
+		List<Position> positions = this.positionService.findAll();
+
+		Application application = new Application();
+
+		result = this.createEditModelAndView(application);
+		result.addObject("application", application);
+		result.addObject("curriculums", hacker.getCurriculums());
+		result.addObject("positions", positions);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView editApplication(@RequestParam int applicationId) {
+		ModelAndView result;
+
+		this.hackerService.loggedAsHacker();
+
+		Application application = this.applicationService.findOne(applicationId);
+
+		result = this.createEditModelAndView(application);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@ModelAttribute("application") Application application, BindingResult binding) {
+
+		ModelAndView result;
+
+		Application p = new Application();
+
+		Hacker hacker = this.hackerService.loggedHacker();
+
+		List<Position> positions = this.positionService.findAll();
+
+		p = this.applicationService.reconstruct(application, binding);
+
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(p);
+			result.addObject("curriculums", hacker.getCurriculums());
+			result.addObject("positions", positions);
+		} else {
+			try {
+				this.hackerService.addApplication(p);
+
+				result = new ModelAndView("redirect:list.do");
+				result.addObject("curriculums", hacker.getCurriculums());
+				result.addObject("positions", positions);
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(application, "hacker.commit.error");
+				result.addObject("curriculums", hacker.getCurriculums());
+				result.addObject("positions", positions);
+			}
+		}
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(Application application) {
+		ModelAndView result;
+
+		result = this.createEditModelAndView(application, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(Application application, String messageCode) {
+		ModelAndView result;
+
+		result = new ModelAndView("application/hacker/edit");
+
+		result.addObject("application", application);
+		result.addObject("message", messageCode);
+
+		return result;
+	}
+
+}

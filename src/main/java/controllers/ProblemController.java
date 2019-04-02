@@ -21,11 +21,10 @@ import domain.Problem;
 public class ProblemController extends AbstractController {
 
 	@Autowired
-	private ProblemService	problemService;
+	private ProblemService problemService;
 
 	@Autowired
-	private CompanyService	companyService;
-
+	private CompanyService companyService;
 
 	public ProblemController() {
 		super();
