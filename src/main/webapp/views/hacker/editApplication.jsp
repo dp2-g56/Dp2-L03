@@ -18,11 +18,11 @@
 		<form:hidden path="id" />
 		<form:hidden path="version" />
 
-		<acme:select code="application.curriculum" path="curriculum"
+		<acme:selectNotPred code="application.curriculum" path="curriculum"
 			items="${curriculums}" itemLabel="title" />
 		<br />
 		
-		<acme:select code="application.position" path="position"
+		<acme:selectNotPred code="application.position" path="position"
 			items="${positions}" itemLabel="title" />
 		<br />
 

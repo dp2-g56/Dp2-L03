@@ -96,7 +96,7 @@ public class ApplicationHackerController extends AbstractController {
 
 		Hacker hacker = this.hackerService.loggedHacker();
 
-		List<Position> positions = this.positionService.findAll();
+		List<Position> positions = this.positionService.getFinalPositions();
 
 		Application application = new Application();
 
@@ -131,23 +131,25 @@ public class ApplicationHackerController extends AbstractController {
 		Hacker hacker = this.hackerService.loggedHacker();
 
 		List<Position> positions = this.positionService.findAll();
+		
+		List<Curriculum> curriculums = hacker.getCurriculums();
 
 		p = this.applicationService.reconstruct(application, binding);
 
 		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(p);
-			result.addObject("curriculums", hacker.getCurriculums());
+			result.addObject("curriculums", curriculums);
 			result.addObject("positions", positions);
 		} else {
 			try {
 				this.hackerService.addApplication(p);
 
 				result = new ModelAndView("redirect:list.do");
-				result.addObject("curriculums", hacker.getCurriculums());
+				result.addObject("curriculums", curriculums);
 				result.addObject("positions", positions);
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(application, "hacker.commit.error");
-				result.addObject("curriculums", hacker.getCurriculums());
+				result.addObject("curriculums", curriculums);
 				result.addObject("positions", positions);
 			}
 		}

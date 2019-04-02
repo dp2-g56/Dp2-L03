@@ -20,6 +20,7 @@ import org.springframework.util.Assert;
 import repositories.ApplicationRepository;
 import domain.Application;
 import domain.Company;
+import domain.Curriculum;
 import domain.Position;
 import domain.Status;
 
@@ -38,11 +39,15 @@ public class ApplicationService {
 
 	@Autowired
 	private Validator validator;
-	
+
 	@Autowired
-	private CompanyService			companyService;
+	private CompanyService companyService;
+
 	@Autowired
-	private PositionService			positionService;
+	private PositionService positionService;
+
+	@Autowired
+	private CurriculumService curriculumService;
 
 	public List<Application> findAll() {
 		Hacker hacker = this.hackerService.loggedHacker();
@@ -75,42 +80,40 @@ public class ApplicationService {
 
 	public Application reconstruct(Application application, BindingResult binding) {
 		Application result = new Application();
-		if (application.getCurriculum().getTitle() == "" || application.getPosition().getTitle() == "") {
-			application.setCurriculum(null);
-			application.setPosition(null);
+		Curriculum copyCur = this.curriculumService.copyCurriculum(application.getCurriculum());
+
+		if (application.getId() == 0) {
+			result = this.createApplication();
+			List<Problem> problems = application.getPosition().getProblems();
+			Random rand = new Random();
+			Problem p = problems.get(rand.nextInt(problems.size()));
+			result.setProblem(p);
+			result.setCurriculum(copyCur);
+			result.setPosition(application.getPosition());
 		} else {
+			Application copy = this.findOne(application.getId());
 
-			if (application.getId() == 0) {
-				result = this.createApplication();
-				List<Problem> problems = application.getPosition().getProblems();
-				Random rand = new Random();
-				Problem p = problems.get(rand.nextInt(problems.size()));
-				result.setProblem(p);
-				result.setCurriculum(application.getCurriculum());
-				result.setPosition(application.getPosition());
-			} else {
-				Application copy = this.findOne(application.getId());
-
-				result.setVersion(copy.getVersion());
-				result.setCreationMoment(copy.getCreationMoment());
-				result.setLink(copy.getLink());
-				result.setExplication(copy.getExplication());
-				result.setSubmitMoment(copy.getSubmitMoment());
-				result.setStatus(copy.getStatus());
-				result.setProblem(copy.getProblem());
-				result.setPosition(copy.getPosition());
-				result.setCurriculum(application.getCurriculum());
-				result.setHacker(copy.getHacker());
-				result.setId(copy.getId());
-			}
+			result.setVersion(copy.getVersion());
+			result.setCreationMoment(copy.getCreationMoment());
+			result.setLink(copy.getLink());
+			result.setExplication(copy.getExplication());
+			result.setSubmitMoment(copy.getSubmitMoment());
+			result.setStatus(copy.getStatus());
+			result.setProblem(copy.getProblem());
+			result.setPosition(copy.getPosition());
+			result.setCurriculum(application.getCurriculum());
+			result.setHacker(copy.getHacker());
+			result.setId(copy.getId());
 		}
-
+		
 		this.validator.validate(result, binding);
 		return result;
+
 	}
 
-	//----------------------------------------CRUD METHODS--------------------------
-	//------------------------------------------------------------------------------
+	// ----------------------------------------CRUD
+	// METHODS--------------------------
+	// ------------------------------------------------------------------------------
 	public List<Application> getApplicationsCompany(int positionId) {
 		return this.applicationRepository.getApplicationsCompany(positionId);
 	}
@@ -123,10 +126,11 @@ public class ApplicationService {
 		return this.applicationRepository.save(application);
 	}
 
-	//---------------------------------EDIT AS COMPANY-------------------------------
-	//-------------------------------------------------------------------------------
+	// ---------------------------------EDIT AS
+	// COMPANY-------------------------------
+	// -------------------------------------------------------------------------------
 	public void editApplicationCompany(Application application, boolean accept) {
-		//Security
+		// Security
 		Company loggedCompany = this.companyService.loggedCompany();
 		List<Position> positions = loggedCompany.getPositions();
 		Position position = application.getPosition();
@@ -134,13 +138,13 @@ public class ApplicationService {
 		Assert.isTrue(positions.contains(position));
 		Assert.isTrue(application.getStatus() == Status.SUBMITTED);
 
-		//position.getApplications().remove(application);
-		//		positions.remove(position);
+		// position.getApplications().remove(application);
+		// positions.remove(position);
 		//
-		//		position.setIsCancelled(true);
-		//		Position saved = this.save(position);
-		//		positions.add(saved);
-		//		loggedCompany.setPositions(positions);
+		// position.setIsCancelled(true);
+		// Position saved = this.save(position);
+		// positions.add(saved);
+		// loggedCompany.setPositions(positions);
 		if (accept)
 			application.setStatus(Status.ACCEPTED);
 		else
@@ -153,8 +157,8 @@ public class ApplicationService {
 		this.companyService.save(loggedCompany);
 
 	}
-	
-	public List<Application> getSubmittedApplicationCompany(Integer positionId){
+
+	public List<Application> getSubmittedApplicationCompany(Integer positionId) {
 		return this.applicationRepository.getSubmittedApplicationsCompany(positionId);
 	}
 }
