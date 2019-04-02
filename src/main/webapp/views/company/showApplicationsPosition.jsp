@@ -46,12 +46,13 @@
 	</display:column>
 	
 	<display:column>
+	
 		<jstl:if test="${row.status == 'SUBMITTED'}">
-			<a href="position/company/application/accept.do?applicationId=${row.id}">
+			<a href="position/company/application/accept.do?applicationId=${row.id}" onclick="return confirm('<spring:message code="company.confirmChangeStatus" />')">
 				<spring:message code="application.accept" />
 			</a>
 			<br />
-			<a href="position/company/application/reject.do?applicationId=${row.id}">
+			<a href="position/company/application/reject.do?applicationId=${row.id}"  onclick="return confirm('<spring:message code="company.confirmChangeStatus" />')">
 				<spring:message code="application.reject" />
 			</a>
 		</jstl:if>
