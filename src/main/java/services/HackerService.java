@@ -14,6 +14,7 @@ import repositories.HackerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Application;
 import domain.Company;
 import domain.Curriculum;
 import domain.Hacker;
@@ -28,6 +29,9 @@ public class HackerService {
 	@Autowired
 	private CurriculumService curriculumService;
 
+	@Autowired
+	private ApplicationService applicationService;
+
 	// Auxiliar methods
 	public Hacker securityAndHacker() {
 		UserAccount userAccount = LoginService.getPrincipal();
@@ -38,6 +42,34 @@ public class HackerService {
 		Assert.isTrue(authorities.get(0).toString().equals("HACKER"));
 
 		return loggedHacker;
+	}
+
+	public Hacker loggedHacker() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
+		Assert.isTrue(authorities.get(0).toString().equals("HACKER"));
+		return this.hackerRepository.getHackerByUsername(userAccount.getUsername());
+	}
+
+	public void loggedAsHacker() {
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
+		Assert.isTrue(authorities.get(0).toString().equals("HACKER"));
+
+	}
+
+	public void addApplication(Application p) {
+		Hacker hacker = this.loggedHacker();
+		Assert.isTrue(p.getId() == 0);
+
+		p.setHacker(hacker);
+		Application application = this.applicationService.save(p);
+		List<Application> applications = hacker.getApplications();
+		applications.add(application);
+		hacker.setApplications(applications);
+		this.save(hacker);
 	}
 	
 	public Hacker getHackerByUsername(String username) {
@@ -61,5 +93,4 @@ public class HackerService {
 			this.save(hacker);
 		}
 	}
-	
 }

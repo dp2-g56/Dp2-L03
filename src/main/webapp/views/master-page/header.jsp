@@ -26,6 +26,7 @@
 					<li class="arrow"></li>
 					<li><a href="administrator/administrator/create.do"><spring:message code="master.page.administrator.createAdmin" /></a></li>		
 					<li><a href="statistics/administrator/show.do"><spring:message code="master.page.administrator.statistics" /></a></li>
+					<li><a href="configuration/administrator/list.do"><spring:message code="master.page.administrator.configuration" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -46,6 +47,7 @@
 					<li class="arrow"></li>
 					<li><a href="finder/hacker/list.do"><spring:message code="master.page.hacker.finder" /></a></li>
 					<li><a href="curriculum/hacker/list.do"><spring:message code="master.page.hacker.curriculums" /></a></li>
+					<li><a href="application/hacker/list.do"><spring:message code="master.page.hacker.application" /></a></li>			
 				</ul>
 			</li>
 		</security:authorize>

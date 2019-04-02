@@ -82,6 +82,8 @@
     
     
     <display:column titleKey="position.applications">
+    
+             <jstl:if test="${!row.isDraftMode}">
     	
     		<jstl:set var="applicationsSize" value="${row.applications.size()}" />
     		
@@ -94,10 +96,13 @@
              <jstl:out value="${viewApplications1}(${applicationsSize})" />   
         	</a>
         	
+        	</jstl:if>
+        	
     </display:column>
     
     <display:column titleKey="position.problems">
-    	
+   
+
     		<jstl:set var="problemsSize" value="${row.problems.size()}" />
     		
        		<spring:url var="problemsUrl" value="/position/company/problem/list.do?positionId={positionId}">
@@ -108,6 +113,7 @@
               <spring:message var ="viewProblems1" code="position.viewProblems" />
              <jstl:out value="${viewProblems1}(${problemsSize})" />   
         	</a>
+
         	
     </display:column>
     
