@@ -26,6 +26,31 @@
 		<put-attribute name="body" value="/views/hacker/finder.jsp" />
 	</definition>
 	
+	<definition name="hacker/curriculums" extends="master.page">	
+		<put-attribute name="title" value="Curriculums" />
+		<put-attribute name="body" value="/views/hacker/curriculums.jsp" />
+	</definition>
+	
+	<definition name="hacker/curriculum" extends="master.page">	
+		<put-attribute name="title" value="Curriculum" />
+		<put-attribute name="body" value="/views/hacker/curriculum.jsp" />
+	</definition>
+	
+	<definition name="hacker/attachments" extends="master.page">	
+		<put-attribute name="title" value="Adjuntos" />
+		<put-attribute name="body" value="/views/hacker/attachments.jsp" />
+	</definition>
+	
+	<definition name="hacker/createCurriculum" extends="master.page">	
+		<put-attribute name="title" value="Crear curriculum" />
+		<put-attribute name="body" value="/views/hacker/createEditCurriculum.jsp" />
+	</definition>
+	
+	<definition name="hacker/editCurriculum" extends="master.page">	
+		<put-attribute name="title" value="Editar curriculum" />
+		<put-attribute name="body" value="/views/hacker/createEditCurriculum.jsp" />
+	</definition>
+	
 	<definition name="application/hacker/list"
 		extends="master.page">
 		<put-attribute name="title" value="Aplicaciones" />

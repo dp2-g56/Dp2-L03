@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -102,7 +103,7 @@ public class Application extends DomainEntity {
 		this.position = position;
 	}
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@NotNull
 	public Curriculum getCurriculum() {
 		return this.curriculum;
