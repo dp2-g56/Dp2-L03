@@ -8,9 +8,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
 import domain.Curriculum;
 import domain.Hacker;
+import domain.PersonalData;
+import forms.FormObjectCurriculumPersonalData;
 import repositories.CurriculumRepository;
 
 @Service
@@ -42,6 +45,25 @@ public class CurriculumService {
 		Curriculum curriculum = this.findOne(curriculumId);
 		Assert.isTrue(hacker.getCurriculums().contains(curriculum));
 		return curriculum;
+	}
+
+	public Curriculum reconstruct(FormObjectCurriculumPersonalData formObject, BindingResult binding, PersonalData personalData) {
+		Curriculum curriculum = new Curriculum();
+		
+		if(formObject.getId() > 0) {
+			Curriculum curriculumFounded = this.findOne(formObject.getId());
+			
+			curriculum.setId(curriculumFounded.getId());
+			curriculum.setVersion(curriculumFounded.getVersion());
+		} 
+		curriculum.setTitle(formObject.getTitle());
+		curriculum.setPersonalData(personalData);
+		
+		return curriculum;
+	}
+
+	public Curriculum save(Curriculum curriculum) {
+		return this.curriculumRepository.save(curriculum);
 	}
 	
 }

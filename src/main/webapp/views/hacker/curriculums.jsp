@@ -18,12 +18,22 @@
 			<spring:url var="currUrl" value="/curriculum/hacker/show.do">
 				<spring:param name="curriculumId" value="${row.id}"/>
 			</spring:url>
-			<a href="${currUrl}">
-				<spring:message code="curriculum.show" var="show" />
-				<jstl:out value="${show}"/>
-			</a>
-		</display:column> 
+			<spring:url var="currEditUrl" value="/curriculum/hacker/edit.do">
+				<spring:param name="curriculumId" value="${row.id}"/>
+			</spring:url>
+			
+			<spring:message code="curriculum.show" var="show" />
+			<spring:message code="curriculum.edit"	var="edit"/>
+			
+			<a href="${currUrl}"><jstl:out value="${show}"/></a> / <a href="${currEditUrl}"><jstl:out value="${edit}"/></a>
+		</display:column>
 	
 	</display:table>
-
+	
+	<spring:url var="newCurrUrl" value="/curriculum/hacker/new.do"/>
+	<p><a href="${newCurrUrl}">
+		<spring:message code="curriculum.new" var="newCurriculum" />
+		<jstl:out value="${newCurriculum}"/>
+	</a></p>
+	
 </security:authorize>

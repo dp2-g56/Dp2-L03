@@ -346,6 +346,7 @@ public class PositionService {
 
 	public List<Position> getFinalPositions() {
 		return this.positionRepository.getFinalPositions();
+	}
 	
 	//--------------------------------------AUXILIAR METHODS-------------------------//
 	
