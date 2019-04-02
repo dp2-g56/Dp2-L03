@@ -25,7 +25,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="administrator/administrator/create.do"><spring:message code="master.page.administrator.createAdmin" /></a></li>		
-					
+					<li><a href="statistics/administrator/show.do"><spring:message code="master.page.administrator.statistics" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -62,6 +62,7 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>				
+					<li><a href="authenticated/showProfile.do"><spring:message code="master.page.myProfile" /> </a></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
@@ -71,8 +72,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.termsAndConditions" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="/anonymous/termsAndConditionsEN.do"><spring:message code="master.page.termsAndConditionsEN" /></a></li>
-					<li><a href="/anonymous/termsAndConditionsES.do"><spring:message code="master.page.termsAndConditionsES" /></a></li>					
+					<li><a href="anonymous/termsAndConditionsEN.do"><spring:message code="master.page.termsAndConditionsEN" /></a></li>
+					<li><a href="anonymous/termsAndConditionsES.do"><spring:message code="master.page.termsAndConditionsES" /></a></li>					
 				</ul>
 			</li>
 		</security:authorize>

@@ -10,12 +10,16 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+
 
 import repositories.ProblemRepository;
 import domain.Company;
 import domain.Problem;
+
+
 import forms.FormObjectPositionProblemCheckbox;
 
 @Service
@@ -24,6 +28,7 @@ public class ProblemService {
 
 	@Autowired
 	private ProblemRepository	problemRepository;
+
 	@Autowired
 	private CompanyService		companyService;
 
@@ -44,6 +49,7 @@ public class ProblemService {
 
 	public List<Problem> findAll() {
 		return this.problemRepository.findAll();
+
 	}
 
 	public Problem save(Problem problem) {
@@ -82,6 +88,7 @@ public class ProblemService {
 
 	public List<Problem> showProblems() {
 		Company company = this.companyService.loggedCompany();
+
 		List<Problem> problems = new ArrayList<Problem>();
 		problems = this.problemRepository.getProblemsByCompany(company);
 		return problems;
@@ -110,6 +117,7 @@ public class ProblemService {
 			this.save(problem);
 		}
 
+
 	}
 
 	public Boolean isUrl(String url) {
@@ -120,6 +128,8 @@ public class ProblemService {
 			return false;
 		}
 	}
+
+
 
 	public Problem reconstruct(Problem problem, BindingResult binding) {
 		Problem result = new Problem();
@@ -173,5 +183,6 @@ public class ProblemService {
 		problem.setAttachments(attachments);
 		this.save(problem);
 	}
+
 
 }

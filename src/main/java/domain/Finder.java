@@ -38,6 +38,7 @@ public class Finder extends DomainEntity {
 		this.keyWord = keyWord;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@Future
 	public Date getDeadLine() {
@@ -57,6 +58,7 @@ public class Finder extends DomainEntity {
 		this.minSalary = minSalary;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@Future
 	public Date getMaxDeadLine() {
@@ -69,7 +71,6 @@ public class Finder extends DomainEntity {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Valid
-	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getLastEdit() {
 		return this.lastEdit;

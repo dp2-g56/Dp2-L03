@@ -622,491 +622,468 @@
 	<!-- FIN CREDIT CARD -->
 
 	<!-- SOCIAL PROFILES -->
-	<!-- ADMIN -->
-	<!-- ADMIN1 -->
-	<bean class="domain.SocialProfile" id="socialProfile1">
-		<property value="Administrador1" name="nick" />
-		<property value="Facebook" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<bean class="domain.SocialProfile" id="socialProfile2">
-		<property value="Administrador1" name="nick" />
-		<property value="Twitter" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<!-- ADMIN2 -->
-	<bean class="domain.SocialProfile" id="socialProfile3">
-		<property value="Administrador2" name="nick" />
-		<property value="Facebook" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<bean class="domain.SocialProfile" id="socialProfile4">
-		<property value="Administrador2" name="nick" />
-		<property value="Twitter" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-	<!-- FIN ADMIN -->
-
-	<!-- COMPANY -->
-
-	<!-- COMPANY1 -->
-	<bean class="domain.SocialProfile" id="socialProfile5">
-		<property value="Company1" name="nick" />
-		<property value="Facebook" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<bean class="domain.SocialProfile" id="socialProfile6">
-		<property value="Company1" name="nick" />
-		<property value="Twitter" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<!-- COMPANY2 -->
-	<bean class="domain.SocialProfile" id="socialProfile7">
-		<property value="Company2" name="nick" />
-		<property value="Facebook" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<bean class="domain.SocialProfile" id="socialProfile8">
-		<property value="Company2" name="nick" />
-		<property value="Twitter" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<!-- COMPANY3 -->
-	<bean class="domain.SocialProfile" id="socialProfile9">
-		<property value="Company3" name="nick" />
-		<property value="Facebook" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<bean class="domain.SocialProfile" id="socialProfile10">
-		<property value="Company3" name="nick" />
-		<property value="Twitter" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<!-- COMPANY 4 NO TIENE -->
-
-	<!-- FIN COMPANY -->
-
-	<!-- HACKER -->
-
-	<!-- HACKER1 -->
-	<bean class="domain.SocialProfile" id="socialProfile11">
-		<property value="Hacker1" name="nick" />
-		<property value="Facebook" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<bean class="domain.SocialProfile" id="socialProfile12">
-		<property value="Hacker1" name="nick" />
-		<property value="Twitter" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<!-- HACKER2 -->
-	<bean class="domain.SocialProfile" id="socialProfile13">
-		<property value="Hacker2" name="nick" />
-		<property value="Facebook" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<!-- HACKER3 -->
-	<bean class="domain.SocialProfile" id="socialProfile14">
-		<property value="Hacker3" name="nick" />
-		<property value="Facebook" name="name" />
-		<property value="https://www.social1.com/link1"
-			name="profileLink" />
-	</bean>
-
-	<!-- HACKER4 NO TIENE -->
-
-	<!-- FIN HACKER -->
-
+		<!-- ADMIN -->
+			<!-- ADMIN1 -->
+				<bean class="domain.SocialProfile" id="socialProfile1">
+					<property value="Administrador1" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile2">
+					<property value="Administrador1" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- ADMIN2 -->
+				<bean class="domain.SocialProfile" id="socialProfile3">
+					<property value="Administrador2" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile4">
+					<property value="Administrador2" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+		<!-- FIN ADMIN -->		
+		
+		<!-- COMPANY -->
+		
+			<!-- COMPANY1 -->
+				<bean class="domain.SocialProfile" id="socialProfile5">
+					<property value="Company1" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile6">
+					<property value="Company1" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- COMPANY2 -->
+				<bean class="domain.SocialProfile" id="socialProfile7">
+					<property value="Company2" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile8">
+					<property value="Company2" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- COMPANY3 -->
+				<bean class="domain.SocialProfile" id="socialProfile9">
+					<property value="Company3" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile10">
+					<property value="Company3" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- COMPANY 4 NO TIENE -->
+			
+		<!-- FIN COMPANY -->
+		
+		<!-- HACKER -->
+		
+			<!-- HACKER1 -->
+				<bean class="domain.SocialProfile" id="socialProfile11">
+					<property value="Hacker1" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+				<bean class="domain.SocialProfile" id="socialProfile12">
+					<property value="Hacker1" name="nick" />
+					<property value="Twitter" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+			
+			<!-- HACKER2 -->
+				<bean class="domain.SocialProfile" id="socialProfile13">
+					<property value="Hacker2" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- HACKER3 -->
+				<bean class="domain.SocialProfile" id="socialProfile14">
+					<property value="Hacker3" name="nick" />
+					<property value="Facebook" name="name" />
+					<property value="https://www.social1.com/link1" name="profileLink" />
+				</bean>
+				
+			<!-- HACKER4 NO TIENE -->
+				
+		<!-- FIN HACKER -->
+	
 	<!-- FIN SOCIAL PROFILES -->
-
+	
 	<!-- MESSAGES -->
 	<!-- FIN MESSAGES -->
-
+	
 	<!-- CURRICULUM -->
-	<!-- HACKER1 -->
-	<bean id="curriculum1" class="domain.Curriculum">
-		<property name="title" value="curriculum1" />
-		<property name="personalData" ref="personalData1" />
-
-		<property name="positionData">
-			<list>
-				<ref bean="positionData1" />
-				<ref bean="positionData2" />
-			</list>
-		</property>
-
-		<property name="educationData">
-			<list>
-				<ref bean="educationData1" />
-				<ref bean="educationData2" />
-			</list>
-		</property>
-
-		<property name="miscellaneousData">
-			<list>
-				<ref bean="miscellaneousData1" />
-				<ref bean="miscellaneousData2" />
-			</list>
-		</property>
-	</bean>
-
-	<!-- HACKER1 -->
-	<bean id="curriculum2" class="domain.Curriculum">
-		<property name="title" value="curriculum2" />
-		<property name="personalData" ref="personalData2" />
-
-		<property name="positionData">
-			<list>
-				<ref bean="positionData3" />
-				<ref bean="positionData4" />
-			</list>
-		</property>
-
-		<property name="educationData">
-			<list>
-				<ref bean="educationData3" />
-				<ref bean="educationData4" />
-			</list>
-		</property>
-
-		<property name="miscellaneousData">
-			<list>
-				<ref bean="miscellaneousData3" />
-				<ref bean="miscellaneousData4" />
-			</list>
-		</property>
-	</bean>
-	<!-- COPIAS DE CURRICULUM PARA APPLICATION -->
-	<!-- ############################################# -->
-	<bean id="curriculum5" class="domain.Curriculum">
-		<property name="title" value="curriculum1Copy" />
-		<property name="personalData" ref="personalData5" />
-
-		<property name="positionData">
-			<list>
-			</list>
-		</property>
-
-		<property name="educationData">
-			<list>
-			</list>
-		</property>
-
-		<property name="miscellaneousData">
-			<list>
-			</list>
-		</property>
-	</bean>
-
-	<!-- HACKER2 -->
-	<bean id="curriculum3" class="domain.Curriculum">
-		<property name="title" value="curriculum3" />
-		<property name="personalData" ref="personalData3" />
-
-		<property name="positionData">
-			<list>
-				<ref bean="positionData5" />
-			</list>
-		</property>
-
-		<property name="educationData">
-			<list>
-				<ref bean="educationData5" />
-			</list>
-		</property>
-
-		<property name="miscellaneousData">
-			<list>
-			</list>
-		</property>
-	</bean>
-
-	<!-- HACKER3 -->
-	<bean id="curriculum4" class="domain.Curriculum">
-		<property name="title" value="curriculum4" />
-		<property name="personalData" ref="personalData4" />
-
-		<property name="positionData">
-			<list>
-
-			</list>
-		</property>
-
-		<property name="educationData">
-			<list>
-			</list>
-		</property>
-
-		<property name="miscellaneousData">
-			<list>
-			</list>
-		</property>
-	</bean>
+		<!-- HACKER1 -->
+			 	<bean id="curriculum1" class="domain.Curriculum">
+					<property name="title" value="curriculum1" />
+					<property name="personalData" ref ="personalData1" />
+					
+					<property name="positionData">
+						<list>
+							<ref bean="positionData1" />
+							<ref bean="positionData2" />
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+							<ref bean="educationData1" />
+							<ref bean="educationData2" />
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+							<ref bean="miscellaneousData1" />
+							<ref bean="miscellaneousData2" />
+						</list>
+					</property>
+				</bean>	
+	
+		<!-- HACKER1 -->
+			 	<bean id="curriculum2" class="domain.Curriculum">
+					<property name="title" value="curriculum2" />
+					<property name="personalData" ref ="personalData2" />
+					
+					<property name="positionData">
+						<list>
+							<ref bean="positionData3" />
+							<ref bean="positionData4" />
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+							<ref bean="educationData3" />
+							<ref bean="educationData4" />
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+							<ref bean="miscellaneousData3" />
+							<ref bean="miscellaneousData4" />
+						</list>
+					</property>
+				</bean>
+				<!-- COPIAS DE CURRICULUM PARA APPLICATION -->
+				<!-- ############################################# -->
+					<bean id="curriculum5" class="domain.Curriculum">
+					<property name="title" value="curriculum1Copy" />
+					<property name="personalData" ref ="personalData5" />
+					
+					<property name="positionData">
+						<list>
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+						</list>
+					</property>
+				</bean>
+				
+		<!-- HACKER2 -->
+			 	<bean id="curriculum3" class="domain.Curriculum">
+					<property name="title" value="curriculum3" />
+					<property name="personalData" ref ="personalData3" />
+					
+					<property name="positionData">
+						<list>
+							<ref bean="positionData5" />
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+							<ref bean="educationData5" />
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+						</list>
+					</property>
+				</bean>
+				
+		<!-- HACKER3 -->
+			 	<bean id="curriculum4" class="domain.Curriculum">
+					<property name="title" value="curriculum4" />
+					<property name="personalData" ref ="personalData4" />
+					
+					<property name="positionData">
+						<list>
+						
+						</list>
+					</property>
+					
+					<property name="educationData">
+						<list>
+						</list>
+					</property>
+					
+					<property name="miscellaneousData">
+						<list>
+						</list>
+					</property>
+				</bean>
 	<!-- FIN CURRICULUM -->
-
+	
 	<!-- DATA FROM CURRICULUM -->
-	<!-- CURRICULUM1 -->
-	<!-- PERSONALDATA -->
-	<bean id="personalData1" class="domain.PersonalData">
-		<property name="fullName" value="Bruno Buccellati" />
-		<property name="statement" value="Sticky fingers" />
-		<property name="phoneNumber" value="+34609236920" />
-		<property name="gitHubProfile"
-			value="https://github.com/JuanCarlosAlonsoValenzuela" />
-		<property name="linkedinProfile"
-			value="https://github.com/JuanCarlosAlonsoValenzuela" />
-	</bean>
-
-	<!-- POSITIONDATA -->
-	<bean id="positionData1" class="domain.PositionData">
-		<property name="title" value="title1" />
-		<property name="description" value="Sticky fingers" />
-		<property name="startDate" value="02/01/2015 11:30" />
-		<property name="endDate" value="02/01/2018 11:30" />
-	</bean>
-
-	<bean id="positionData2" class="domain.PositionData">
-		<property name="title" value="title2" />
-		<property name="description" value="Sticky fingers" />
-		<property name="startDate" value="02/01/2012 11:30" />
-		<property name="endDate" value="02/01/2014 11:30" />
-	</bean>
-
-	<!-- EDUCATIONDATA -->
-	<bean id="educationData1" class="domain.EducationData">
-		<property name="degree" value="degree1" />
-		<property name="institution" value="Institution1" />
-		<property name="mark" value="A" />
-		<property name="startDate" value="02/01/2009 11:30" />
-		<property name="endDate" value="02/01/2013 11:30" />
-	</bean>
-
-	<bean id="educationData2" class="domain.EducationData">
-		<property name="degree" value="degree2" />
-		<property name="institution" value="Institution2" />
-		<property name="mark" value="B" />
-		<property name="startDate" value="02/01/2005 11:30" />
-		<property name="endDate" value="02/01/2009 11:30" />
-	</bean>
-
-	<!-- MISCELLANEOUSDATA -->
-	<bean id="miscellaneousData1" class="domain.MiscellaneousData">
-		<property name="freeText" value="freeText1" />
-		<property name="attachments">
-			<list>
-				<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
-				<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="miscellaneousData2" class="domain.MiscellaneousData">
-		<property name="freeText" value="freeText2" />
-		<property name="attachments">
-			<list>
-				<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
-				<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
-			</list>
-		</property>
-	</bean>
-
-	<!-- CURRICULUM2 -->
-	<!-- PERSONALDATA -->
-	<bean id="personalData2" class="domain.PersonalData">
-		<property name="fullName" value="Giorno Giovanna" />
-		<property name="statement" value="Golden Experience Requiem" />
-		<property name="phoneNumber" value="+34609236921" />
-		<property name="gitHubProfile"
-			value="https://github.com/Alegomcab1" />
-		<property name="linkedinProfile"
-			value="https://github.com/Alegomcab1" />
-	</bean>
-
-	<!-- POSITIONDATA -->
-	<bean id="positionData3" class="domain.PositionData">
-		<property name="title" value="title3" />
-		<property name="description"
-			value="Golden Experience Requiem" />
-		<property name="startDate" value="02/01/2015 11:30" />
-		<property name="endDate" value="02/01/2018 11:30" />
-	</bean>
-
-	<bean id="positionData4" class="domain.PositionData">
-		<property name="title" value="title4" />
-		<property name="description"
-			value="Golden Experience Requiem" />
-		<property name="startDate" value="02/01/2012 11:30" />
-		<property name="endDate" value="02/01/2014 11:30" />
-	</bean>
-
-	<!-- EDUCATIONDATA -->
-	<bean id="educationData3" class="domain.EducationData">
-		<property name="degree" value="degree3" />
-		<property name="institution" value="Institution3" />
-		<property name="mark" value="A" />
-		<property name="startDate" value="02/01/2009 11:30" />
-		<property name="endDate" value="02/01/2013 11:30" />
-	</bean>
-
-	<bean id="educationData4" class="domain.EducationData">
-		<property name="degree" value="degree4" />
-		<property name="institution" value="Institution4" />
-		<property name="mark" value="B" />
-		<property name="startDate" value="02/01/2005 11:30" />
-		<property name="endDate" value="02/01/2009 11:30" />
-	</bean>
-
-	<!-- MISCELLANEOUSDATA -->
-	<bean id="miscellaneousData3" class="domain.MiscellaneousData">
-		<property name="freeText" value="freeText3" />
-		<property name="attachments">
-			<list>
-				<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
-				<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="miscellaneousData4" class="domain.MiscellaneousData">
-		<property name="freeText" value="freeText4" />
-		<property name="attachments">
-			<list>
-				<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
-				<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
-			</list>
-		</property>
-	</bean>
-
-	<!-- CURRICULUM3 -->
-	<!-- PERSONALDATA -->
-	<bean id="personalData3" class="domain.PersonalData">
-		<property name="fullName" value="Leone Abbacchio" />
-		<property name="statement" value="Moody Blues" />
-		<property name="phoneNumber" value="+34690236921" />
-		<property name="gitHubProfile"
-			value="https://github.com/RobertoHermoso" />
-		<property name="linkedinProfile"
-			value="https://github.com/RobertoHermoso" />
-	</bean>
-
-	<!-- POSITIONDATA -->
-	<bean id="positionData5" class="domain.PositionData">
-		<property name="title" value="title5" />
-		<property name="description" value="Moody Blues" />
-		<property name="startDate" value="02/01/2015 11:30" />
-		<property name="endDate" value="02/01/2018 11:30" />
-	</bean>
-
-	<!-- EDUCATIONDATA -->
-	<bean id="educationData5" class="domain.EducationData">
-		<property name="degree" value="degree5" />
-		<property name="institution" value="Institution5" />
-		<property name="mark" value="A" />
-		<property name="startDate" value="02/01/2009 11:30" />
-		<property name="endDate" value="02/01/2013 11:30" />
-	</bean>
-
-	<!-- CURRICULUM4 -->
-	<!-- PERSONALDATA -->
-	<bean id="personalData4" class="domain.PersonalData">
-		<property name="fullName" value="Narancia Ghirga" />
-		<property name="statement" value="Aerosmith" />
-		<property name="phoneNumber" value="+34690236921" />
-		<property name="gitHubProfile"
-			value="https://github.com/DaviidGilB" />
-		<property name="linkedinProfile"
-			value="https://github.com/DaviidGilB" />
-	</bean>
-
-	<!-- CURRICULUM5 (COPY CURRICULUM1) -->
-	<bean id="personalData5" class="domain.PersonalData">
-		<property name="fullName" value="Bruno Buccellati" />
-		<property name="statement" value="Sticky fingers" />
-		<property name="phoneNumber" value="+34609236920" />
-		<property name="gitHubProfile"
-			value="https://github.com/JuanCarlosAlonsoValenzuela" />
-		<property name="linkedinProfile"
-			value="https://github.com/JuanCarlosAlonsoValenzuela" />
-	</bean>
-
+		<!-- CURRICULUM1 -->
+			<!-- PERSONALDATA -->
+				<bean id ="personalData1" class="domain.PersonalData">
+					<property name="fullName" value="Bruno Buccellati" />
+					<property name="statement" value="Sticky fingers" />
+					<property name="phoneNumber" value="+34609236920" />
+					<property name="gitHubProfile" value="https://github.com/JuanCarlosAlonsoValenzuela" />
+					<property name="linkedinProfile" value="https://github.com/JuanCarlosAlonsoValenzuela" />
+				</bean>
+				
+			<!-- POSITIONDATA -->
+				<bean id ="positionData1" class="domain.PositionData">
+					<property name="title" value="title1" />
+					<property name="description" value="Sticky fingers" />
+					<property name="startDate" value="02/01/2015 11:30" />
+					<property name="endDate" value="02/01/2018 11:30" />
+				</bean>
+				
+				<bean id ="positionData2" class="domain.PositionData">
+					<property name="title" value="title2" />
+					<property name="description" value="Sticky fingers" />
+					<property name="startDate" value="02/01/2012 11:30" />
+					<property name="endDate" value="02/01/2014 11:30" />
+				</bean>
+				
+			<!-- EDUCATIONDATA -->
+				<bean id ="educationData1" class="domain.EducationData">
+					<property name="degree" value="degree1" />
+					<property name="institution" value="Institution1" />
+					<property name="mark" value="A" />
+					<property name="startDate" value="02/01/2009 11:30" />
+					<property name="endDate" value="02/01/2013 11:30" />
+				</bean>
+				
+				<bean id ="educationData2" class="domain.EducationData">
+					<property name="degree" value="degree2" />
+					<property name="institution" value="Institution2" />
+					<property name="mark" value="B" />
+					<property name="startDate" value="02/01/2005 11:30" />
+					<property name="endDate" value="02/01/2009 11:30" />
+				</bean>
+				
+			<!-- MISCELLANEOUSDATA -->
+				<bean id ="miscellaneousData1" class="domain.MiscellaneousData">
+					<property name="freeText" value="freeText1" />
+					<property name="attachments">
+						<list>
+							<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
+							<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
+						</list>
+					</property>	
+				</bean>
+				
+				<bean id ="miscellaneousData2" class="domain.MiscellaneousData">
+					<property name="freeText" value="freeText2" />
+					<property name="attachments">
+						<list>
+							<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
+							<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
+						</list>
+					</property>	
+				</bean>
+				
+		<!-- CURRICULUM2 -->
+			<!-- PERSONALDATA -->
+				<bean id ="personalData2" class="domain.PersonalData">
+					<property name="fullName" value="Giorno Giovanna" />
+					<property name="statement" value="Golden Experience Requiem" />
+					<property name="phoneNumber" value="+34609236921" />
+					<property name="gitHubProfile" value="https://github.com/Alegomcab1" />
+					<property name="linkedinProfile" value="https://github.com/Alegomcab1" />
+				</bean>
+				
+			<!-- POSITIONDATA -->
+				<bean id ="positionData3" class="domain.PositionData">
+					<property name="title" value="title3" />
+					<property name="description" value="Golden Experience Requiem" />
+					<property name="startDate" value="02/01/2015 11:30" />
+					<property name="endDate" value="02/01/2018 11:30" />
+				</bean>
+				
+				<bean id ="positionData4" class="domain.PositionData">
+					<property name="title" value="title4" />
+					<property name="description" value="Golden Experience Requiem" />
+					<property name="startDate" value="02/01/2012 11:30" />
+					<property name="endDate" value="02/01/2014 11:30" />
+				</bean>
+				
+			<!-- EDUCATIONDATA -->
+				<bean id ="educationData3" class="domain.EducationData">
+					<property name="degree" value="degree3" />
+					<property name="institution" value="Institution3" />
+					<property name="mark" value="A" />
+					<property name="startDate" value="02/01/2009 11:30" />
+					<property name="endDate" value="02/01/2013 11:30" />
+				</bean>
+				
+				<bean id ="educationData4" class="domain.EducationData">
+					<property name="degree" value="degree4" />
+					<property name="institution" value="Institution4" />
+					<property name="mark" value="B" />
+					<property name="startDate" value="02/01/2005 11:30" />
+					<property name="endDate" value="02/01/2009 11:30" />
+				</bean>
+				
+			<!-- MISCELLANEOUSDATA -->
+				<bean id ="miscellaneousData3" class="domain.MiscellaneousData">
+					<property name="freeText" value="freeText3" />
+					<property name="attachments">
+						<list>
+							<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
+							<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
+						</list>
+					</property>	
+				</bean>
+				
+				<bean id ="miscellaneousData4" class="domain.MiscellaneousData">
+					<property name="freeText" value="freeText4" />
+					<property name="attachments">
+						<list>
+							<value>https://www.youtube.com/watch?v=BQGRN0D1SDA</value>
+							<value>https://www.youtube.com/watch?v=dv13gl0a-FA</value>
+						</list>
+					</property>	
+				</bean>
+				
+		<!-- CURRICULUM3 -->
+			<!-- PERSONALDATA -->
+				<bean id ="personalData3" class="domain.PersonalData">
+					<property name="fullName" value="Leone Abbacchio" />
+					<property name="statement" value="Moody Blues" />
+					<property name="phoneNumber" value="+34690236921" />
+					<property name="gitHubProfile" value="https://github.com/RobertoHermoso" />
+					<property name="linkedinProfile" value="https://github.com/RobertoHermoso" />
+				</bean>	
+				
+			<!-- POSITIONDATA -->
+				<bean id ="positionData5" class="domain.PositionData">
+					<property name="title" value="title5" />
+					<property name="description" value="Moody Blues" />
+					<property name="startDate" value="02/01/2015 11:30" />
+					<property name="endDate" value="02/01/2018 11:30" />
+				</bean>
+				
+			<!-- EDUCATIONDATA -->
+				<bean id ="educationData5" class="domain.EducationData">
+					<property name="degree" value="degree5" />
+					<property name="institution" value="Institution5" />
+					<property name="mark" value="A" />
+					<property name="startDate" value="02/01/2009 11:30" />
+					<property name="endDate" value="02/01/2013 11:30" />
+				</bean>
+				
+		<!-- CURRICULUM4 -->
+			<!-- PERSONALDATA -->
+				<bean id ="personalData4" class="domain.PersonalData">
+					<property name="fullName" value="Narancia Ghirga" />
+					<property name="statement" value="Aerosmith" />
+					<property name="phoneNumber" value="+34690236921" />
+					<property name="gitHubProfile" value="https://github.com/DaviidGilB" />
+					<property name="linkedinProfile" value="https://github.com/DaviidGilB" />
+				</bean>	
+				
+		<!-- CURRICULUM5 (COPY CURRICULUM1) -->
+		<bean id ="personalData5" class="domain.PersonalData">
+					<property name="fullName" value="Bruno Buccellati" />
+					<property name="statement" value="Sticky fingers" />
+					<property name="phoneNumber" value="+34609236920" />
+					<property name="gitHubProfile" value="https://github.com/JuanCarlosAlonsoValenzuela" />
+					<property name="linkedinProfile" value="https://github.com/JuanCarlosAlonsoValenzuela" />
+				</bean>
+				
 	<!-- FIN DATA FROM CURRICULUM -->
-
+	
 	<!-- APPLICATION -->
-
-
-	<bean id="application1" class="domain.Application">
-		<property name="creationMoment" value="02/01/2017 11:30" />
-		<property name="link"
-			value="https://www.youtube.com/watch?v=SVfovID6QU8" />
-		<property name="explication" value="Explication 1" />
-		<property name="submitMoment" value="02/01/2018 11:30" />
-
-		<property name="status" value="SUBMITTED" />
-		<property name="problem" ref="problem2" />
-		<property name="position" ref="position1" />
-		<property name="curriculum" ref="curriculum5" />
-		<property name="hacker" ref="hacker1" />
-	</bean>
+	
+	
+			<bean id ="application1" class="domain.Application">
+				<property name="creationMoment" value="02/01/2017 11:30" />
+				<property name="link" value="https://www.youtube.com/watch?v=SVfovID6QU8" />
+				<property name="explication" value="Explication 1" />
+				<property name="submitMoment" value="02/01/2018 11:30" />
+				
+				<property name="status" value="SUBMITTED" />
+				<property name="problem" ref="problem2" />
+				<property name="position" ref="position1" />
+				<property name="curriculum" ref="curriculum5" />
+				<property name="hacker" ref="hacker1" />
+			</bean>
 	<!-- FIN APPLICATION -->
-
+			
 	<!-- FINDER -->
-	<!-- HACKER1 -->
-	<bean id="finder1" class="domain.Finder">
-		<property name="keyWord" value="" />
-		<property name="deadLine" value="02/01/2025 11:30" />
-		<property name="minSalary" value="" />
-		<property name="maxDeadLine" value="02/01/2025 11:30" />
-	</bean>
-
-	<!-- HACKER2 -->
-	<bean id="finder2" class="domain.Finder">
-		<property name="keyWord" value="" />
-		<property name="deadLine" value="02/01/2025 11:30" />
-		<property name="minSalary" value="" />
-		<property name="maxDeadLine" value="02/01/2025 11:30" />
-	</bean>
-
-	<!-- HACKER3 -->
-	<bean id="finder3" class="domain.Finder">
-		<property name="keyWord" value="" />
-		<property name="deadLine" value="02/01/2025 11:30" />
-		<property name="minSalary" value="" />
-		<property name="maxDeadLine" value="02/01/2025 11:30" />
-	</bean>
-
-	<!-- HACKER4 -->
-	<bean id="finder4" class="domain.Finder">
-		<property name="keyWord" value="" />
-		<property name="deadLine" value="02/01/2025 11:30" />
-		<property name="minSalary" value="" />
-		<property name="maxDeadLine" value="02/01/2025 11:30" />
-	</bean>
-
+		<!-- HACKER1 -->
+			<bean id ="finder1" class="domain.Finder">
+				<property name="keyWord" value="" />
+				<property name="deadLine" value="02/01/2025 11:30" />
+				<property name="minSalary" value="" />
+				<property name="maxDeadLine" value="02/01/2025 11:30" />
+				<property name="lastEdit" value="01/04/2019 01:00" />
+			</bean>
+			
+		<!-- HACKER2 -->
+			<bean id ="finder2" class="domain.Finder">
+				<property name="keyWord" value="" />
+				<property name="deadLine" value="02/01/2025 11:30" />
+				<property name="minSalary" value="" />
+				<property name="maxDeadLine" value="02/01/2025 11:30" />
+				<property name="lastEdit" value="02/01/2018 11:30" />
+			</bean>
+			
+		<!-- HACKER3 -->
+			<bean id ="finder3" class="domain.Finder">
+				<property name="keyWord" value="" />
+				<property name="deadLine" value="02/01/2025 11:30" />
+				<property name="minSalary" value="" />
+				<property name="maxDeadLine" value="02/01/2025 11:30" />
+				<property name="lastEdit" value="02/01/2018 11:30" />
+			</bean>
+			
+		<!-- HACKER4 -->
+			<bean id ="finder4" class="domain.Finder">
+				<property name="keyWord" value="" />
+				<property name="deadLine" value="02/01/2025 11:30" />
+				<property name="minSalary" value="" />
+				<property name="maxDeadLine" value="02/01/2025 11:30" />
+				<property name="lastEdit" value="02/01/2018 11:30" />
+			</bean>
+			
 	<!-- FIN FINDER -->
 
 	<!-- POSITION -->

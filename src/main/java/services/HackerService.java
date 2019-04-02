@@ -73,5 +73,12 @@ public class HackerService {
 		hacker.setApplications(applications);
 		this.save(hacker);
 	}
+	
+	public Hacker getHackerByUsername(String username) {
+		return this.hackerRepository.getHackerByUsername(username);
+	}
 
+	public Hacker save(Hacker hacker) {
+		return this.hackerRepository.save(hacker);
+	}
 }

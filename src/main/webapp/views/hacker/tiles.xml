@@ -9,7 +9,6 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-
 	<definition name="customer/action-1" extends="master.page">
 		<put-attribute name="title" value="Customer: Action 1" />
 		<put-attribute name="body"
@@ -35,5 +34,15 @@
 		<put-attribute name="body"
 			value="/views/hacker/editApplication.jsp" />
 	</definition>
-
+	
+	<definition name="hacker/finderResult" extends="master.page">	
+		<put-attribute name="title" value="Finder results" />
+		<put-attribute name="body" value="/views/hacker/finderResult.jsp" />
+	</definition>
+	
+		<definition name="hacker/finder" extends="master.page">	
+		<put-attribute name="title" value="Finder" />
+		<put-attribute name="body" value="/views/hacker/finder.jsp" />
+	</definition>
+	
 </tiles-definitions>

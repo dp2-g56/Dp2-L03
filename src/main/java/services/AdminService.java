@@ -19,8 +19,11 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Admin;
+import domain.Company;
 import domain.CreditCard;
+import domain.Hacker;
 import domain.Message;
+import domain.Position;
 import domain.SocialProfile;
 import forms.FormObjectAdmin;
 
@@ -36,6 +39,9 @@ public class AdminService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+
+	@Autowired
+	private FinderService			finderService;
 
 
 	//----------------------------------------CRUD METHODS--------------------------
@@ -213,6 +219,94 @@ public class AdminService {
 	public void saveNewAdmin(Admin admin) {
 		this.loggedAsAdmin();
 		this.adminRepository.save(admin);
+	}
+
+	public List<Float> showStatisticsOfFinder() {
+
+		this.finderService.updateAllFinders();
+
+		List<Float> statistics = new ArrayList<Float>();
+
+		statistics.add(this.adminRepository.minResultFinders());
+		statistics.add(this.adminRepository.maxResultFinders());
+		statistics.add(this.adminRepository.avgResultFinders());
+		statistics.add(this.adminRepository.stddevResultFinders());
+
+		if (this.adminRepository.ratioEmptyFinder() == null) {
+			statistics.add((float) 0);
+		} else {
+			statistics.add(this.adminRepository.ratioEmptyFinder());
+		}
+
+		return statistics;
+
+	}
+
+	public List<Float> showStatisticsOfCurriculum() {
+
+		List<Float> statistics = new ArrayList<Float>();
+
+		statistics.add(this.adminRepository.minCurriculumPerHacker());
+		statistics.add(this.adminRepository.maxCurriculumPerHacker());
+		statistics.add(this.adminRepository.avgCurriculumPerHacker());
+		statistics.add(this.adminRepository.stddevCurriculumPerHacker());
+
+		return statistics;
+	}
+
+	public List<Float> showStatisticsOfPositionsPerCompany() {
+
+		List<Float> statistics = new ArrayList<Float>();
+
+		statistics.add(this.adminRepository.minPositionsCompany());
+		statistics.add(this.adminRepository.maxPositionsCompany());
+		statistics.add(this.adminRepository.avgPositionsCompany());
+		statistics.add(this.adminRepository.stddevPositionsCompany());
+
+		return statistics;
+
+	}
+
+	public List<Float> showStatisticsOfApplicationsPerHacker() {
+
+		List<Float> statistics = new ArrayList<Float>();
+
+		statistics.add(this.adminRepository.minApplicationsHacker());
+		statistics.add(this.adminRepository.maxApplicationsHacker());
+		statistics.add(this.adminRepository.avgApplicationsHacker());
+		statistics.add(this.adminRepository.stddevApplicationsHacker());
+
+		return statistics;
+
+	}
+
+	public List<Float> showStatisticsOfSalaries() {
+
+		List<Float> statistics = new ArrayList<Float>();
+
+		statistics.add(this.adminRepository.minSalary());
+		statistics.add(this.adminRepository.maxSalary());
+		statistics.add(this.adminRepository.avgSalaries());
+		statistics.add(this.adminRepository.stddevSalaries());
+
+		return statistics;
+
+	}
+
+	public List<Company> companiesMorePositions() {
+		return this.adminRepository.companiesMorePositions();
+	}
+
+	public List<Hacker> hackersMoreApplications() {
+		return this.adminRepository.hackersMoreApplications();
+	}
+
+	public List<Position> bestSalaryPositions() {
+		return this.adminRepository.bestSalaryPositions();
+	}
+
+	public List<Position> worstSalaryPositions() {
+		return this.adminRepository.worstSalaryPositions();
 	}
 
 }

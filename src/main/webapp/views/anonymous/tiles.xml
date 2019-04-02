@@ -20,8 +20,4 @@
 		<put-attribute name="body" value="/views/anonymous/termsAndConditionsEN.jsp" />
 	</definition>
 	
-	<definition name="termsAndConditionsES" extends="master.page">	
-		<put-attribute name="body" value="/views/anonymous/termsAndConditionsES.jsp" />
-	</definition>	
-	
 </tiles-definitions>

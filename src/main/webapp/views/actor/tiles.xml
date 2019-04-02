@@ -3,7 +3,7 @@
 <!-- 
  * tiles.xml
  *
- * Copyright (C) 2019 Universidad de Sevilla
+ * Copyright (C) 2018 Universidad de Sevilla
  * 
  * The use of this project is hereby constrained to the conditions of the 
  * TDG Licence, a copy of which you may download from 
@@ -16,14 +16,15 @@
        
 <tiles-definitions>
 
-	<definition name="administrator/administrator/create" extends="master.page">	
-		<put-attribute name="title" value="Create a new Administrator" />
-		<put-attribute name="body" value="/views/administrator/createAdmin.jsp" />
+	<definition name="authenticated/showProfile" extends="master.page">	
+		<put-attribute name="title" value="My profile" />
+		<put-attribute name="body" value="/views/actor/listSocialProfiles.jsp" />
 	</definition>
 	
-	<definition name="statistics/administrator/show" extends="master.page">	
-		<put-attribute name="title" value="Statistics" />
-		<put-attribute name="body" value="/views/administrator/statistics.jsp" />
+	<definition name="authenticated/socialProfile/create" extends="master.page">	
+		<put-attribute name="title" value="Create/Edit Social Profile" />
+		<put-attribute name="body" value="/views/actor/editSocialProfile.jsp" />
 	</definition>
+	
 	
 </tiles-definitions>
