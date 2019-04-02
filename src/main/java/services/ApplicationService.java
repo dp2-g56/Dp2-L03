@@ -71,4 +71,8 @@ public class ApplicationService {
 		this.companyService.save(loggedCompany);
 
 	}
+	
+	public List<Application> getSubmittedApplicationCompany(Integer positionId){
+		return this.applicationRepository.getSubmittedApplicationsCompany(positionId);
+	}
 }
