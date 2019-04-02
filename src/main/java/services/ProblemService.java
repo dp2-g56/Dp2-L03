@@ -153,22 +153,20 @@ public class ProblemService {
 	}
 
 	public void updateProblem(Problem problem) {
+		Problem pro = this.findOne(problem.getId());
 		Company loggedCompany = this.companyService.loggedCompany();
-		Assert.isTrue(loggedCompany.getProblems().contains(problem) && problem.getIsDraftMode());
+		Assert.isTrue(loggedCompany.getProblems().contains(problem) && pro.getIsDraftMode());
 		this.save(problem);
 
 	}
 
 	public void deleteProblem(Problem problem) {
 		Company loggedCompany = this.companyService.loggedCompany();
+
 		Assert.isTrue(loggedCompany.getProblems().contains(problem));
 		Assert.isTrue(problem.getIsDraftMode());
 
-		List<Problem> problems = loggedCompany.getProblems();
-		problems.remove(problem);
-		loggedCompany.setProblems(problems);
-
-		this.companyService.save(loggedCompany);
+		loggedCompany.getProblems().remove(problem);
 
 		this.problemRepository.delete(problem);
 
