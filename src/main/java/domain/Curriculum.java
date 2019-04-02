@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -22,7 +25,8 @@ public class Curriculum extends DomainEntity {
 	private List<EducationData>		educationData;
 	private List<MiscellaneousData>	miscellaneousData;
 
-
+	@NotBlank
+	@Valid
 	public String getTitle() {
 		return this.title;
 	}
@@ -31,8 +35,9 @@ public class Curriculum extends DomainEntity {
 		this.title = title;
 	}
 
-	@OneToOne(optional = true, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	@Valid
+	@NotNull
 	public PersonalData getPersonalData() {
 		return this.personalData;
 	}

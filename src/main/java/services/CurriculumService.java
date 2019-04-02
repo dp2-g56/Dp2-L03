@@ -1,12 +1,14 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
 import domain.Curriculum;
 import domain.EducationData;
@@ -14,6 +16,9 @@ import domain.Mark;
 import domain.MiscellaneousData;
 import domain.PersonalData;
 import domain.PositionData;
+import domain.Hacker;
+import forms.FormObjectCurriculumPersonalData;
+
 import repositories.CurriculumRepository;
 
 @Service
@@ -34,6 +39,9 @@ public class CurriculumService {
 
 	@Autowired
 	private EducationDataService educationDataService;
+	
+	@Autowired
+	private HackerService hackerService;
 
 	public Curriculum findOne(int id) {
 		return curriculumRepository.findOne(id);
@@ -103,5 +111,42 @@ public class CurriculumService {
 
 		return saved;
 	}
+	
+	public List<Curriculum> getCurriculumsOfHacker(int hackerId) {
+		return this.curriculumRepository.getCurriculumsOfHacker(hackerId);
+	}
 
+	public List<Curriculum> getCurriculumsOfLoggedHacker() {
+		Hacker hacker = this.hackerService.securityAndHacker();
+		List<Curriculum> curriculums = this.getCurriculumsOfHacker(hacker.getId());
+		
+		return curriculums;
+	}
+
+	public Curriculum findOne(int curriculumId) {
+		return this.curriculumRepository.findOne(curriculumId);
+	}
+
+	public Curriculum getCurriculumOfLoggedHacker(int curriculumId) {
+		Hacker hacker = this.hackerService.securityAndHacker();
+		Curriculum curriculum = this.findOne(curriculumId);
+		Assert.isTrue(hacker.getCurriculums().contains(curriculum));
+		return curriculum;
+	}
+
+	public Curriculum reconstruct(FormObjectCurriculumPersonalData formObject, BindingResult binding, PersonalData personalData) {
+		Curriculum curriculum = new Curriculum();
+		
+		if(formObject.getId() > 0) {
+			Curriculum curriculumFounded = this.findOne(formObject.getId());
+			
+			curriculum.setId(curriculumFounded.getId());
+			curriculum.setVersion(curriculumFounded.getVersion());
+		} 
+		curriculum.setTitle(formObject.getTitle());
+		curriculum.setPersonalData(personalData);
+		
+		return curriculum;
+	}
+	
 }
