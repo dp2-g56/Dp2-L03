@@ -26,4 +26,14 @@
 		<put-attribute name="body" value="/views/administrator/statistics.jsp" />
 	</definition>
 	
+	<definition name="administrator/configuration" extends="master.page">	
+		<put-attribute name="title" value="Configuración" /> 
+		<put-attribute name="body" value="/views/administrator/configuration.jsp" />
+	</definition>
+	
+	<definition name="administrator/editConfiguration" extends="master.page">	
+		<put-attribute name="title" value="Editar Configuración" /> 
+		<put-attribute name="body" value="/views/administrator/editConfiguration.jsp" />
+	</definition>
+	
 </tiles-definitions>
