@@ -104,4 +104,7 @@ public class ActorService {
 		return actor;
 	}
 
+	public List<String> usernamesOfActors() {
+		return this.actorRepository.usernamesOfActors();
+	}
 }

@@ -29,6 +29,7 @@
 		<value>/views/profile/tiles.xml</value>
 		<value>/views/actor/tiles.xml</value>
 		<value>/views/hacker/tiles.xml</value>
+		<value>/views/message/tiles.xml</value>
 
 		
 	</util:list>

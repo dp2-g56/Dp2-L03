@@ -58,6 +58,7 @@
 
 		<!-- AUTHENTICATED -->
 		<security:intercept-url pattern="/authenticated/**" access="isAuthenticated()" />
+			<security:intercept-url pattern="/message/actor/**" access="isAuthenticated()" /> 
 		
 		<!-- TERMS AND CONDITIONS -->
 		<security:intercept-url pattern="/anonymous/termsAndConditionsEN.do" access="permitAll" /> 
