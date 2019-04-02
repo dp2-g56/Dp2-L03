@@ -21,7 +21,7 @@ public class Hacker extends Actor {
 
 
 	@Valid
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public List<Curriculum> getCurriculums() {
 		return this.curriculums;
 	}

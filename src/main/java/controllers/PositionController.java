@@ -142,7 +142,7 @@ public class PositionController extends AbstractController {
 		return this.list();
 	}
 
-	// ACCEPT APPLICATION
+	// REJECT APPLICATION
 	@RequestMapping(value = "/application/reject", method = RequestMethod.GET)
 	public ModelAndView rejectApplication(@RequestParam int applicationId) {
 		ModelAndView result;

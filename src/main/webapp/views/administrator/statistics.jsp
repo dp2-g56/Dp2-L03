@@ -72,6 +72,115 @@
 </table>
 <br />
 
+<spring:message code="statistics.statisticsPositionsCompany" />	
+<table style="width: 100%">
+	<tr> 
+		<td><b><spring:message code="statistics.average" /></b></td> 
+		<td><jstl:out value="${statisticsPositionsCompany.get(0)}" /> </td>
+	</tr>
+	<tr>
+		<td><b><spring:message code="statistics.minimum"/></b></td> 
+		<td><jstl:out value="${statisticsPositionsCompany.get(1)}" /> </td>
+	</tr>
+	<tr>
+		<td><b><spring:message code="statistics.maximum"/></b></td> 
+		<td><jstl:out value="${statisticsPositionsCompany.get(2)}" /> </td>
+	</tr>
+	<tr>
+		<td><b><spring:message code="statistics.standardDeviation"/></b></td> 
+		<td><jstl:out value="${statisticsPositionsCompany.get(3)}" /> </td>
+	</tr>
+</table>
+<br />
+
+<spring:message code="statistics.statisticsApplicationsHacker" />	
+<table style="width: 100%">
+	<tr> 
+		<td><b><spring:message code="statistics.average" /></b></td> 
+		<td><jstl:out value="${statisticsApplicationsHacker.get(0)}" /> </td>
+	</tr>
+	<tr>
+		<td><b><spring:message code="statistics.minimum"/></b></td> 
+		<td><jstl:out value="${statisticsApplicationsHacker.get(1)}" /> </td>
+	</tr>
+	<tr>
+		<td><b><spring:message code="statistics.maximum"/></b></td> 
+		<td><jstl:out value="${statisticsApplicationsHacker.get(2)}" /> </td>
+	</tr>
+	<tr>
+		<td><b><spring:message code="statistics.standardDeviation"/></b></td> 
+		<td><jstl:out value="${statisticsApplicationsHacker.get(3)}" /> </td>
+	</tr>
+</table>
+<br />
+
+<spring:message code="statistics.statisticsSalaries" />	
+<table style="width: 100%">
+	<tr> 
+		<td><b><spring:message code="statistics.average" /></b></td> 
+		<td><jstl:out value="${statisticsSalaries.get(0)}" /> </td>
+	</tr>
+	<tr>
+		<td><b><spring:message code="statistics.minimum"/></b></td> 
+		<td><jstl:out value="${statisticsSalaries.get(1)}" /> </td>
+	</tr>
+	<tr>
+		<td><b><spring:message code="statistics.maximum"/></b></td> 
+		<td><jstl:out value="${statisticsSalaries.get(2)}" /> </td>
+	</tr>
+	<tr>
+		<td><b><spring:message code="statistics.standardDeviation"/></b></td> 
+		<td><jstl:out value="${statisticsSalaries.get(3)}" /> </td>
+	</tr>
+</table>
+<br />
+
+<table style="width: 100%">
+		<tr>
+			<td><b><spring:message code="statistics.companiesMorePositions" />:</b></td>
+		</tr>
+		<jstl:forEach items="${companiesMorePositions}" var="company">
+			<tr>
+				<td><jstl:out value="${company.companyName}" /></td>
+			</tr>
+		</jstl:forEach>
+</table>
+<br />
+
+<table style="width: 100%">
+		<tr>
+			<td><b><spring:message code="statistics.hackersMoreApplications" />:</b></td>
+		</tr>
+		<jstl:forEach items="${hackersMoreApplications}" var="hacker">
+			<tr>
+				<td><jstl:out value="${hacker.name } ${hacker.surname}" /></td>
+			</tr>
+		</jstl:forEach>
+</table>
+<br />
+
+<table style="width: 100%">
+		<tr>
+			<td><b><spring:message code="statistics.bestPositionsSalary" />:</b></td>
+		</tr>
+		<jstl:forEach items="${bestPositionsSalary}" var="bSalary">
+			<tr>
+				<td><jstl:out value="${bSalary.title}" /></td>
+			</tr>
+		</jstl:forEach>
+		<tr>
+			<td><b><spring:message
+						code="statistics.worstPositionsSalary" />:</b></td>
+		</tr>
+		<jstl:forEach items="${worstPositionsSalary}" var="wSalary">
+			<tr>
+				<td><jstl:out value="${wSalary.title}" /></td>
+			</tr>
+		</jstl:forEach>
+
+</table>
+<br />
+
 
 </security:authorize>
 

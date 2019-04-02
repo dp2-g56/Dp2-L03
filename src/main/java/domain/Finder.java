@@ -71,7 +71,6 @@ public class Finder extends DomainEntity {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Valid
-	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getLastEdit() {
 		return this.lastEdit;

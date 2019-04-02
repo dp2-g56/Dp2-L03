@@ -21,6 +21,7 @@ import domain.Application;
 import domain.Company;
 import domain.Position;
 import domain.Problem;
+import domain.Status;
 import forms.FormObjectPositionProblemCheckbox;
 
 @Service
@@ -28,13 +29,16 @@ import forms.FormObjectPositionProblemCheckbox;
 public class PositionService {
 
 	@Autowired
-	private PositionRepository	positionRepository;
+	private PositionRepository		positionRepository;
 
 	@Autowired
-	private CompanyService		companyService;
+	private CompanyService			companyService;
 
 	@Autowired
-	private ProblemService		problemService;
+	private ProblemService			problemService;
+	
+	@Autowired
+	private ApplicationService		applicationService;
 
 
 	public List<Position> findAll() {
@@ -189,8 +193,15 @@ public class PositionService {
 		Assert.isTrue(positions.contains(position));
 		Assert.isTrue(!position.getIsDraftMode());
 		Assert.isTrue(!position.getIsCancelled());
-
+		
 		positions.remove(position);
+		
+		List<Application> submittedApplication = this.applicationService.getSubmittedApplicationCompany(position.getId());
+		
+		for(Application a: submittedApplication) {
+			a.setStatus(Status.REJECTED);
+			this.applicationService.save(a);
+		}
 
 		position.setIsCancelled(true);
 		Position saved = this.save(position);
@@ -306,6 +317,10 @@ public class PositionService {
 			Position positionFounded = this.findOne(position.getId());
 			Assert.isTrue(positionFounded.getIsDraftMode() && loggedCompany.getPositions().contains(positionFounded));
 		}
+		
+		if(!position.getIsDraftMode()) {
+			Assert.isTrue(problems.size()>=2);
+		}
 
 		position.setProblems(problems);
 		Position saved = new Position();
@@ -338,6 +353,16 @@ public class PositionService {
 
 		this.positionRepository.delete(position);
 
+	}
+
+	public List<Position> getFinalPositions() {
+		return this.positionRepository.getFinalPositions();
+	}
+	
+	//--------------------------------------AUXILIAR METHODS-------------------------//
+	
+	public void flush() {
+		this.positionRepository.flush();
 	}
 
 }

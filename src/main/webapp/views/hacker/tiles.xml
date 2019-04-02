@@ -1,30 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- 
- * tiles.xml
- *
- * Copyright (C) 2019 Universidad de Sevilla
- * 
- * The use of this project is hereby constrained to the conditions of the 
- * TDG Licence, a copy of which you may download from 
- * http://www.tdg-seville.info/License.html
- -->
+<!-- * tiles.xml * * Copyright (C) 2019 Universidad de Sevilla * * The use 
+	of this project is hereby constrained to the conditions of the * TDG Licence, 
+	a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
-<tiles-definitions>
 
-	<definition name="customer/action-1" extends="master.page">	
+<tiles-definitions>
+	<definition name="customer/action-1" extends="master.page">
 		<put-attribute name="title" value="Customer: Action 1" />
-		<put-attribute name="body" value="/views/customer/action-1.jsp" />
+		<put-attribute name="body"
+			value="/views/customer/action-1.jsp" />
 	</definition>
-	
-	<definition name="customer/action-2" extends="master.page">	
+
+	<definition name="customer/action-2" extends="master.page">
 		<put-attribute name="title" value="Customer: Action 2" />
-		<put-attribute name="body" value="/views/customer/action-2.jsp" />
+		<put-attribute name="body"
+			value="/views/customer/action-2.jsp" />
+	</definition>
+
+	<definition name="application/hacker/list"
+		extends="master.page">
+		<put-attribute name="title" value="Applications" />
+		<put-attribute name="body"
+			value="/views/hacker/applications.jsp" />
 	</definition>
 	
+	<definition name="application/hacker/edit"
+		extends="master.page">
+		<put-attribute name="title" value="Edit application" />
+		<put-attribute name="body"
+			value="/views/hacker/editApplication.jsp" />
+	</definition>
+	
+	<definition name="hacker/finderResult" extends="master.page">	
+		<put-attribute name="title" value="Finder results" />
+		<put-attribute name="body" value="/views/hacker/finderResult.jsp" />
+	</definition>
+	
+	<definition name="hacker/finder" extends="master.page">	
+		<put-attribute name="title" value="Finder" />
+		<put-attribute name="body" value="/views/hacker/finder.jsp" />
+	</definition>
+	
+	<definition name="hacker/curriculums" extends="master.page">	
+		<put-attribute name="title" value="Curriculums" />
+		<put-attribute name="body" value="/views/hacker/curriculums.jsp" />
+	</definition>
+	
+	<definition name="hacker/curriculum" extends="master.page">	
+		<put-attribute name="title" value="Curriculum" />
+		<put-attribute name="body" value="/views/hacker/curriculum.jsp" />
+	</definition>
+	
+	<definition name="hacker/attachments" extends="master.page">	
+		<put-attribute name="title" value="Attachments" />
+		<put-attribute name="body" value="/views/hacker/attachments.jsp" />
+	</definition>
+	
+	<definition name="hacker/createCurriculum" extends="master.page">	
+		<put-attribute name="title" value="Create curriculum" />
+		<put-attribute name="body" value="/views/hacker/createEditCurriculum.jsp" />
+	</definition>
+	
+	<definition name="hacker/editCurriculum" extends="master.page">	
+		<put-attribute name="title" value="Edit curriculum" />
+		<put-attribute name="body" value="/views/hacker/createEditCurriculum.jsp" />
+	</definition>
 	
 </tiles-definitions>
