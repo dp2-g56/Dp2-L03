@@ -52,6 +52,7 @@
 
 		<!-- HACKER -->
 		<security:intercept-url pattern="/finder/hacker/**" access="hasRole('HACKER')" /> 
+		<security:intercept-url pattern="/application/hacker/**" access="hasRole('HACKER')" /> 
 
 
 		<!-- AUTHENTICATED -->

@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -21,17 +22,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Application extends DomainEntity {
 
-	private Date		creationMoment;
-	private String		link;
-	private String		explication;
-	private Date		submitMoment;
-	private Status		status;
+	private Date creationMoment;
+	private String link;
+	private String explication;
+	private Date submitMoment;
+	private Status status;
 
-	private Problem		problem;
-	private Position	position;
-	private Curriculum	curriculum;
-	private Hacker		hacker;
-
+	private Problem problem;
+	private Position position;
+	private Curriculum curriculum;
+	private Hacker hacker;
 
 	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -45,7 +45,7 @@ public class Application extends DomainEntity {
 	}
 
 	@URL
-	@NotBlank
+	@Valid
 	public String getLink() {
 		return this.link;
 	}
@@ -54,7 +54,7 @@ public class Application extends DomainEntity {
 		this.link = link;
 	}
 
-	@NotBlank
+	@Valid
 	public String getExplication() {
 		return this.explication;
 	}
@@ -93,6 +93,7 @@ public class Application extends DomainEntity {
 	}
 
 	@ManyToOne
+	@NotNull
 	public Position getPosition() {
 		return this.position;
 	}
@@ -102,6 +103,7 @@ public class Application extends DomainEntity {
 	}
 
 	@OneToOne
+	@NotNull
 	public Curriculum getCurriculum() {
 		return this.curriculum;
 	}
