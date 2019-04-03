@@ -1,4 +1,3 @@
-
 package services;
 
 import java.util.List;
@@ -18,11 +17,15 @@ import repositories.MiscellaneousDataRepository;
 @Service
 @Transactional
 public class MiscellaneousDataService {
-
+	
 	@Autowired
 	private MiscellaneousDataRepository miscellaneousDataRepository;
 	@Autowired
 	private HackerService hackerService;
+	
+	public void save(MiscellaneousData m) {
+		this.miscellaneousDataRepository.save(m);
+	}
 	
 	public MiscellaneousData findOne(int miscellaneousDataId) {
 		return this.miscellaneousDataRepository.findOne(miscellaneousDataId);
@@ -34,5 +37,4 @@ public class MiscellaneousDataService {
 		Assert.isTrue(this.miscellaneousDataRepository.getMiscellaneousDataOfHacker(hacker.getId()).contains(miscellaneousData));
 		return miscellaneousData;
 	}
-	
 }

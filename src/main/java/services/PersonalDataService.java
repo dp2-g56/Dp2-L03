@@ -1,4 +1,3 @@
-
 package services;
 
 import javax.transaction.Transactional;
@@ -23,6 +22,10 @@ public class PersonalDataService {
 	private CurriculumService curriculumService;
 	@Autowired
 	private ConfigurationService configurationService;
+
+	public void save(PersonalData p) {
+		this.personalDataRepository.save(p);
+	}
 
 	public PersonalData reconstruct(FormObjectCurriculumPersonalData formObject, BindingResult binding) {
 		PersonalData personalData = new PersonalData();
@@ -50,6 +53,4 @@ public class PersonalDataService {
 		
 		return personalData;
 	}
-
-	
 }

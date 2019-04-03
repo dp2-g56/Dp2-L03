@@ -6,8 +6,6 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -22,8 +20,8 @@ public class Message extends DomainEntity {
 	private String	body;
 	private String	tags;
 
-	private Actor	sender;
-	private Actor	receiver;
+	private String	sender;
+	private String	receiver;
 
 
 	public Message() {		//For Json purposes
@@ -66,23 +64,21 @@ public class Message extends DomainEntity {
 		this.tags = tags;
 	}
 
-	@NotNull
-	@ManyToOne(optional = false)
-	public Actor getSender() {
+	@NotBlank
+	public String getSender() {
 		return this.sender;
 	}
 
-	public void setSender(Actor sender) {
+	public void setSender(String sender) {
 		this.sender = sender;
 	}
 
-	@NotNull
-	@ManyToOne
-	public Actor getReceiver() {
+	@NotBlank
+	public String getReceiver() {
 		return this.receiver;
 	}
 
-	public void setReceiver(Actor receiver) {
+	public void setReceiver(String receiver) {
 		this.receiver = receiver;
 	}
 
