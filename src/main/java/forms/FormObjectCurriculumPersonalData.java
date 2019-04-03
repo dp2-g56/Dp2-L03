@@ -65,7 +65,6 @@ public class FormObjectCurriculumPersonalData {
 		this.statement = statement;
 	}
 
-	@NotBlank
 	@Valid
 	public String getPhoneNumber() {
 		return phoneNumber;

@@ -11,10 +11,8 @@
 
   function phonenumberval() {
 	  
-  var phoneNumber;
-  phoneNumber = document.getElementById("phoneNumber").value;
+  var number = document.getElementById("phoneNumber").value;
 
-		
   var res = false;
  
   if (/(\+[0-9]{1,3})(\([0-9]{1,3}\))([0-9]{4,})$/.test(phoneNumber)) {
@@ -23,10 +21,10 @@
   if (/(\+[0-9]{3})([0-9]{4,})$/.test(phoneNumber)) {
 	    res = true;
   }
-  if(phone == ""){
+  if(phoneNumber == ""){
 	  alert("<spring:message code="admin.alertSave" />");
   }
-  if(res == false && phone != "") {
+  if(res == false && phoneNumber != "") {
 	  
     confirm("<spring:message code="admin.confirmationPhone" />");
   }
@@ -72,10 +70,10 @@
 		<br />
 		
 		<jstl:if test="${formObject.id>0}">
-			<acme:submit code="curriculum.updateButton" name="save" />
+			<input type="submit" name="save" value="<spring:message code="curriculum.updateButton" />" onclick="phonenumberval();"/> 
 		</jstl:if>
 		<jstl:if test="${formObject.id==0}">
-			<acme:submit code="curriculum.createButton" name="save" />
+			<input type="submit" name="save" value="<spring:message code="curriculum.createButton" />" onclick="phonenumberval();"/> 
 		</jstl:if>
 		<acme:cancel url="/curriculum/hacker/list.do" code="curriculum.cancelButton" /> 
 		

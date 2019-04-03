@@ -106,14 +106,7 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView deleteCurriculum(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		Hacker hacker = this.hackerService.securityAndHacker();
-		Curriculum curriculum = this.curriculumService.findOne(curriculumId);
-		List<Curriculum> curriculums = hacker.getCurriculums();
-		Assert.isTrue(curriculums.contains(curriculum));
-		curriculums.remove(curriculum);
-		hacker.setCurriculums(curriculums);
-		this.hackerService.save(hacker);
-		this.curriculumService.delete(curriculum);
+		this.curriculumService.deleteCurriculumAsHacker(curriculumId);
 		
 		result = new ModelAndView("redirect:list.do");
 		
