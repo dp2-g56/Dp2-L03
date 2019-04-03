@@ -34,14 +34,12 @@ public class ConfigurationService {
 	@Autowired
 	private Validator				validator;
 
-	private Object					cont;
-
 
 	public Configuration getConfiguration() {
 		return this.configurationRepository.findAll().get(0);
 	}
 
-	public Configuration save(final Configuration configuration) {
+	public Configuration save(Configuration configuration) {
 		return this.configurationRepository.save(configuration);
 	}
 
@@ -49,15 +47,15 @@ public class ConfigurationService {
 		return this.configurationRepository.spamWords();
 	}
 
-	public Boolean isStringSpam(final String s, final List<String> spamWords) {
+	public Boolean isStringSpam(String s, List<String> spamWords) {
 		Boolean result = false;
 
 		List<String> trimmedString = new ArrayList<String>();
 		trimmedString = Arrays.asList(s.split("\\+|(?=[,.¿?;!¡])"));
 
 		// ("\\s*(=>|,|\\s)\\s*"));
-		for (final String g : spamWords) {
-			for (final String c : trimmedString) {
+		for (String g : spamWords) {
+			for (String c : trimmedString) {
 				if (g.equals(c) || g.equalsIgnoreCase(c)) {
 					result = true;
 					break;
@@ -103,25 +101,25 @@ public class ConfigurationService {
 
 	public List<String> showGoodWordsList() {
 		this.adminService.loggedAsAdmin();
-		final String goodWordString = this.configurationRepository.goodWords();
+		String goodWordString = this.configurationRepository.goodWords();
 
-		final List<String> goodWordsList = Arrays.asList(goodWordString.split(",[ ]*"));
+		List<String> goodWordsList = Arrays.asList(goodWordString.split(",[ ]*"));
 
 		return goodWordsList;
 	}
 
 	public List<String> showBadWordsList() {
 		this.adminService.loggedAsAdmin();
-		final String badWordString = this.configurationRepository.badWords();
+		String badWordString = this.configurationRepository.badWords();
 
-		final List<String> badWordsList = Arrays.asList(badWordString.split(",[ ]*"));
+		List<String> badWordsList = Arrays.asList(badWordString.split(",[ ]*"));
 
 		return badWordsList;
 	}
 
-	public String addGoodWords(final String word) {
+	public String addGoodWords(String word) {
 		this.adminService.loggedAsAdmin();
-		final Configuration configuration = this.configurationRepository.configuration();
+		Configuration configuration = this.configurationRepository.configuration();
 		String goodWords = configuration.getGoodWords();
 		configuration.setGoodWords(goodWords = goodWords + "," + word);
 		this.configurationRepository.save(configuration);
@@ -129,9 +127,9 @@ public class ConfigurationService {
 		return configuration.getGoodWords();
 	}
 
-	public String addBadWords(final String word) {
+	public String addBadWords(String word) {
 		this.adminService.loggedAsAdmin();
-		final Configuration configuration = this.configurationRepository.configuration();
+		Configuration configuration = this.configurationRepository.configuration();
 		String badWords = configuration.getBadWords();
 		configuration.setBadWords(badWords = badWords + "," + word);
 		this.configurationRepository.save(configuration);
@@ -139,20 +137,20 @@ public class ConfigurationService {
 		return configuration.getBadWords();
 	}
 
-	public String editWord(final String word, final String originalWord) {
+	public String editWord(String word, String originalWord) {
 		this.adminService.loggedAsAdmin();
 		String result = "";
-		final String goodWords = this.showGoodWords();
-		final String badWords = this.showBadWords();
-		final Configuration configuration = this.configurationRepository.configuration();
-		final List<String> goodWordsList = Arrays.asList(goodWords.split(",[ ]*"));
-		final List<String> badWordsList = Arrays.asList(badWords.split(",[ ]*"));
+		String goodWords = this.showGoodWords();
+		String badWords = this.showBadWords();
+		Configuration configuration = this.configurationRepository.configuration();
+		List<String> goodWordsList = Arrays.asList(goodWords.split(",[ ]*"));
+		List<String> badWordsList = Arrays.asList(badWords.split(",[ ]*"));
 
 		Integer cont = 0;
 
 		if (goodWordsList.contains(originalWord)) {
 
-			for (final String s : goodWordsList) {
+			for (String s : goodWordsList) {
 				if (s.equals(originalWord)) {
 					goodWordsList.set(cont, word);
 				}
@@ -169,7 +167,7 @@ public class ConfigurationService {
 			configuration.setGoodWords(result);
 
 		} else {
-			for (final String s : badWordsList) {
+			for (String s : badWordsList) {
 				if (s.equals(originalWord)) {
 					badWordsList.set(cont, word);
 				}
@@ -191,12 +189,12 @@ public class ConfigurationService {
 		return configuration.getGoodWords();
 	}
 
-	public void deleteGoodWord(final String word) {
+	public void deleteGoodWord(String word) {
 		this.adminService.loggedAsAdmin();
-		final String goodWords = this.showGoodWords();
-		final Configuration configuration = this.configurationRepository.configuration();
+		String goodWords = this.showGoodWords();
+		Configuration configuration = this.configurationRepository.configuration();
 
-		final List<String> goodWordsList = new ArrayList<String>();
+		List<String> goodWordsList = new ArrayList<String>();
 		goodWordsList.addAll(Arrays.asList(goodWords.split(",[ ]*")));
 
 		if (goodWordsList.contains(word)) {
@@ -217,12 +215,12 @@ public class ConfigurationService {
 		this.configurationRepository.save(configuration);
 	}
 
-	public void deleteBadWord(final String word) {
+	public void deleteBadWord(String word) {
 		this.adminService.loggedAsAdmin();
-		final String badWords = this.showBadWords();
-		final Configuration configuration = this.configurationRepository.configuration();
+		String badWords = this.showBadWords();
+		Configuration configuration = this.configurationRepository.configuration();
 
-		final List<String> badWordsList = new ArrayList<String>();
+		List<String> badWordsList = new ArrayList<String>();
 		badWordsList.addAll(Arrays.asList(badWords.split(",[ ]*")));
 
 		if (badWordsList.contains(word)) {
