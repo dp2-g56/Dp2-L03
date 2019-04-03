@@ -65,5 +65,9 @@ public class CurriculumService {
 	public Curriculum save(Curriculum curriculum) {
 		return this.curriculumRepository.save(curriculum);
 	}
+
+	public void delete(Curriculum curriculum) {
+		this.curriculumRepository.delete(curriculum);
+	}
 	
 }

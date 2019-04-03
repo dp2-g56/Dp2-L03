@@ -82,7 +82,7 @@ public class HackerService {
 
 	public void addCurriculum(Curriculum curriculum) {
 		Hacker hacker = this.securityAndHacker();
-		
+
 		if(curriculum.getId() > 0) {
 			Assert.isTrue(hacker.getCurriculums().contains(this.curriculumService.findOne(curriculum.getId())));
 			this.curriculumService.save(curriculum);

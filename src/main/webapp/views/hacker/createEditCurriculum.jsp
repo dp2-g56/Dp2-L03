@@ -7,6 +7,33 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme"  tagdir="/WEB-INF/tags"%>
 
+<script type="text/javascript">
+
+  function phonenumberval() {
+	  
+  var phoneNumber;
+  phoneNumber = document.getElementById("phoneNumber").value;
+
+		
+  var res = false;
+ 
+  if (/(\+[0-9]{1,3})(\([0-9]{1,3}\))([0-9]{4,})$/.test(phoneNumber)) {
+    res = true;
+  }
+  if (/(\+[0-9]{3})([0-9]{4,})$/.test(phoneNumber)) {
+	    res = true;
+  }
+  if(phone == ""){
+	  alert("<spring:message code="admin.alertSave" />");
+  }
+  if(res == false && phone != "") {
+	  
+    confirm("<spring:message code="admin.confirmationPhone" />");
+  }
+ 
+}
+   </script>
+
 <security:authorize access="hasRole('HACKER')">
 
 	<form:form action="curriculum/hacker/save.do" modelAttribute="formObject" >
