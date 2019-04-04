@@ -138,8 +138,6 @@ public class Position extends DomainEntity {
 
 	@ManyToMany
 	@Valid
-	@NotEmpty
-	@Size(min = 2)
 	public List<Problem> getProblems() {
 		return this.problems;
 	}
