@@ -112,11 +112,14 @@ public class ApplicationHackerController extends AbstractController {
 	public ModelAndView editApplication(@RequestParam int applicationId) {
 		ModelAndView result;
 
-		this.hackerService.loggedAsHacker();
+		Hacker h = this.hackerService.loggedHacker();
 
 		Application application = this.applicationService.findOne(applicationId);
 
-		result = this.createEditModelAndView(application);
+		if (h.getApplications().contains(application) && application.getStatus().equals(Status.PENDING))
+			result = this.createEditModelAndView(application);
+		else
+			result = new ModelAndView("redirect:list.do");
 
 		return result;
 	}
