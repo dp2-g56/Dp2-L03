@@ -90,12 +90,15 @@ public class ProblemController extends AbstractController {
 		ModelAndView result;
 
 		Problem problem = this.problemService.findOne(problemId);
+		List<Problem> problems = this.problemService.findAll();
 
-		result = this.createEditModelAndView(problem);
+		if (problems.contains(problem))
+			result = this.createEditModelAndView(problem);
+		else
+			result = new ModelAndView("redirect:list.do");
 
 		return result;
 	}
-
 
 	@RequestMapping(value = "/company/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Problem problem, BindingResult binding) {

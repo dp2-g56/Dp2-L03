@@ -29,6 +29,7 @@
 		<value>/views/company/messages</value>
 		<value>/views/actor/messages</value>
 		<value>/views/hacker/messages</value>
+		<value>/views/message/messages</value>
 
 	</util:list>
 

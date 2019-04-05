@@ -47,10 +47,6 @@ public class CurriculumService {
 		return curriculumRepository.findOne(id);
 	}
 
-	public Curriculum save(Curriculum curriculum) {
-		return curriculumRepository.save(curriculum);
-	}
-
 	public Curriculum copyCurriculum(Curriculum curriculum) {
 		Curriculum copy = new Curriculum();
 		PersonalData copyP = new PersonalData();
@@ -143,6 +139,25 @@ public class CurriculumService {
 		curriculum.setPersonalData(personalData);
 		
 		return curriculum;
+	}
+
+	public Curriculum save(Curriculum curriculum) {
+		return this.curriculumRepository.save(curriculum);
+	}
+
+	public void delete(Curriculum curriculum) {
+		this.curriculumRepository.delete(curriculum);
+	}
+
+	public void deleteCurriculumAsHacker(int curriculumId) {
+		Hacker hacker = this.hackerService.securityAndHacker();
+		Curriculum curriculum = this.findOne(curriculumId);
+		List<Curriculum> curriculums = hacker.getCurriculums();
+		Assert.isTrue(curriculums.contains(curriculum));
+		curriculums.remove(curriculum);
+		hacker.setCurriculums(curriculums);
+		this.hackerService.save(hacker);
+		this.delete(curriculum);
 	}
 	
 }

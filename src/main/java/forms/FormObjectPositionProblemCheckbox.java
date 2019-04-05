@@ -109,8 +109,6 @@ public class FormObjectPositionProblemCheckbox {
 	}
 
 	@ElementCollection(targetClass = Integer.class)
-	@Size(min = 2)
-	@NotEmpty
 	public List<Integer> getProblems() {
 		return this.problems;
 	}
