@@ -14,6 +14,7 @@ import repositories.HackerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 import domain.Application;
 import domain.Company;
 import domain.Curriculum;
@@ -28,6 +29,8 @@ public class HackerService {
 	private HackerRepository hackerRepository;
 	@Autowired
 	private CurriculumService curriculumService;
+	@Autowired
+	private ActorService actorService;
 
 	@Autowired
 	private ApplicationService applicationService;
@@ -43,12 +46,16 @@ public class HackerService {
 
 		return loggedHacker;
 	}
+	
+	public Boolean isHacker(Actor actor) {
+		List<Authority> authorities = (List<Authority>) actor.getUserAccount().getAuthorities();
+		return authorities.get(0).toString().equals("HACKER");
+	}
 
 	public Hacker loggedHacker() {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
-		Assert.isTrue(authorities.get(0).toString().equals("HACKER"));
 		return this.hackerRepository.getHackerByUsername(userAccount.getUsername());
 	}
 

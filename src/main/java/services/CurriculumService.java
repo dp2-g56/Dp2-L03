@@ -118,11 +118,14 @@ public class CurriculumService {
 		
 		return curriculums;
 	}
+	
+	public Curriculum getCurriculumOfHacker(int hackerId, int curriculumId) {
+		return this.curriculumRepository.getCurriculumOfHacker(hackerId, curriculumId);
+	}
 
 	public Curriculum getCurriculumOfLoggedHacker(int curriculumId) {
 		Hacker hacker = this.hackerService.securityAndHacker();
-		Curriculum curriculum = this.findOne(curriculumId);
-		Assert.isTrue(hacker.getCurriculums().contains(curriculum));
+		Curriculum curriculum = this.getCurriculumOfHacker(hacker.getId(), curriculumId);
 		return curriculum;
 	}
 

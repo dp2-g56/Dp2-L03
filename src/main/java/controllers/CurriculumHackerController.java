@@ -106,8 +106,9 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView deleteCurriculum(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		this.curriculumService.deleteCurriculumAsHacker(curriculumId);
-		
+		if(this.curriculumService.findOne(curriculumId)!=null) {
+			this.curriculumService.deleteCurriculumAsHacker(curriculumId);
+		}
 		result = new ModelAndView("redirect:list.do");
 		
 		return result;	
