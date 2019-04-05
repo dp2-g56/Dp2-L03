@@ -32,77 +32,77 @@
 	</form>
 
 	<br />
-	
-	<display:table pagesize="5" name="applications" id="row" class="displaytag" 
-					requestURI="${requestURI}">
-					
+
+	<display:table pagesize="5" name="applications" id="row"
+		class="displaytag" requestURI="${requestURI}">
+
 		<jstl:choose>
 			<jstl:when test="${row.status.toString()=='ACCEPTED'}">
 				<jstl:set var="color" value="green" />
 			</jstl:when>
-			
+
 			<jstl:when test="${row.status.toString()=='REJECTED'}">
 				<jstl:set var="color" value="red" />
 			</jstl:when>
-				
+
 			<jstl:when test="${row.status.toString()=='PENDING'}">
 				<jstl:set var="color" value="grey" />
 			</jstl:when>
-			
+
 			<jstl:when test="${row.status.toString()=='SUBMITTED'}">
-				<jstl:set var="color" value="yellow" />
+				<jstl:set var="color" value="orange" />
 			</jstl:when>
-				
+
 			<jstl:otherwise>
 				<jstl:set var="color" value="black" />
 			</jstl:otherwise>
 		</jstl:choose>
-		
-		<display:column titleKey="application.problemTitle" style="color:${color}">
-			<jstl:out value="${row.problem.title}"/>
+
+		<display:column titleKey="application.problemTitle"
+			style="color:${color}">
+			<jstl:out value="${row.problem.title}" />
 		</display:column>
-		
-		<display:column titleKey="application.creationMoment" style="color:${color}">
-			<jstl:out value="${row.creationMoment}"/>
+
+		<display:column titleKey="application.creationMoment"
+			style="color:${color}">
+			<jstl:out value="${row.creationMoment}" />
 		</display:column>
-					
-		<display:column property="link" titleKey="request.link" style="color:${color}"/>
-		
-		<display:column property="explication" titleKey="request.explication" style="color:${color}"/>
-		
-		<display:column property="submitMoment" titleKey="request.submitMoment" style="color:${color}"/>
-			
-		<display:column property="status" titleKey="request.status" style="color:${color}"/>
-		
+
+		<display:column property="link" titleKey="request.link"
+			style="color:${color}" />
+
+		<display:column property="explication" titleKey="request.explication"
+			style="color:${color}" />
+
+		<display:column property="submitMoment"
+			titleKey="request.submitMoment" style="color:${color}" />
+
+		<display:column property="status" titleKey="request.status"
+			style="color:${color}" />
+
 		<display:column titleKey="application.position" style="color:${color}">
-			<jstl:out value="${row.position.title}"/>
+			<jstl:out value="${row.position.title}" />
 		</display:column>
-		
-		<display:column titleKey="application.curriculum" style="color:${color}">
-			<jstl:out value="${row.curriculum.title}"/>
+
+		<display:column titleKey="application.curriculum"
+			style="color:${color}">
+			<jstl:out value="${row.curriculum.title}" />
 		</display:column>
-		
-		<%-- <display:column titleKey="action">
-			<jstl:if test="${row.status.toString()!='REJECTED'}">
-				<spring:url var="editRequest" value="/request/brotherhood/edit.do">
-					<spring:param name="requestId" value="${row.id}" />
+
+		<display:column>
+			<jstl:if test="${row.status.toString()=='PENDING'}">
+				<spring:url var="editApplication"
+					value="/application/hacker/edit.do">
+					<spring:param name="applicationId" value="${row.id}" />
 				</spring:url>
-				<a href="${editRequest}">
-					<jstl:if test="${row.status.toString()=='APPROVED'}">
-						<spring:message code="request.edit" />
-					</jstl:if>
-					<jstl:if test="${row.status.toString()=='PENDING'}">
-						<spring:message code="request.decide" />	
-					</jstl:if>			
-				</a>
+				<a href="${editApplication}">
+				<spring:message code="application.edit" /></a>
 			</jstl:if>
-			<jstl:if test="${row.status.toString()=='REJECTED'}">
-				<spring:message code="no.action"/>
-			</jstl:if>
-		</display:column> --%>
-	
+		</display:column>
+
 	</display:table>
-	
-	<acme:cancel code="application.create" url="/application/hacker/create.do" />
+
+	<acme:cancel code="application.create"
+		url="/application/hacker/create.do" />
 
 </security:authorize>
