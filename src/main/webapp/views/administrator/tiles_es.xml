@@ -36,4 +36,9 @@
 		<put-attribute name="body" value="/views/administrator/editConfiguration.jsp" />
 	</definition>
 	
+	<definition name="broadcast/administrator/send" extends="master.page">	
+		<put-attribute name="title" value="Emitir notificacion" /> 
+		<put-attribute name="body" value="/views/administrator/broadcast.jsp" />
+	</definition>
+	
 </tiles-definitions>
