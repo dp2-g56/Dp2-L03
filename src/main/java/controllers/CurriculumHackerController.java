@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -97,6 +98,17 @@ public class CurriculumHackerController extends AbstractController {
 		formObject.setLinkedInProfile(curriculum.getPersonalData().getLinkedinProfile());
 		
 		result = this.createEditModelAndView("hacker/editCurriculum", formObject);
+		
+		return result;	
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView deleteCurriculum(@RequestParam int curriculumId) {
+		ModelAndView result;
+		
+		this.curriculumService.deleteCurriculumAsHacker(curriculumId);
+		
+		result = new ModelAndView("redirect:list.do");
 		
 		return result;	
 	}

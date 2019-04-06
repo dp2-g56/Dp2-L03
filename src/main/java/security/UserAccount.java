@@ -59,7 +59,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		return this.isNotLocked;
 	}
 
-	public void setIsNotLocked(final boolean isNotLocked) {
+	public void setIsNotLocked(boolean isNotLocked) {
 		this.isNotLocked = isNotLocked;
 	}
 

@@ -21,11 +21,15 @@
 			<spring:url var="currEditUrl" value="/curriculum/hacker/edit.do">
 				<spring:param name="curriculumId" value="${row.id}"/>
 			</spring:url>
+			<spring:url var="currDeleteUrl" value="/curriculum/hacker/delete.do">
+				<spring:param name="curriculumId" value="${row.id}"/>
+			</spring:url>
 			
 			<spring:message code="curriculum.show" var="show" />
 			<spring:message code="curriculum.edit"	var="edit"/>
+			<spring:message code="curriculum.delete" var="delete" />
 			
-			<a href="${currUrl}"><jstl:out value="${show}"/></a> / <a href="${currEditUrl}"><jstl:out value="${edit}"/></a>
+			<a href="${currUrl}"><jstl:out value="${show}"/></a> / <a href="${currEditUrl}"><jstl:out value="${edit}"/></a> / <a href="${currDeleteUrl}" onclick="return confirm('<spring:message code="curriculum.delete.confirmation" />')"><jstl:out value="${delete}"/></a>
 		</display:column>
 	
 	</display:table>

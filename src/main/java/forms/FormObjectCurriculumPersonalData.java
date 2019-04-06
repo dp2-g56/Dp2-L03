@@ -3,14 +3,16 @@ package forms;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
 public class FormObjectCurriculumPersonalData {
 
 	//Atributos de Curriculum
-	private int				id;
-	private String			title;
+	private int		id;
+	private String	title;
 
 	//Atributos de Personal Data
 	private String fullName;
@@ -63,7 +65,6 @@ public class FormObjectCurriculumPersonalData {
 		this.statement = statement;
 	}
 
-	@NotBlank
 	@Valid
 	public String getPhoneNumber() {
 		return phoneNumber;
