@@ -13,31 +13,36 @@
 
 <security:authorize access="hasRole('HACKER')">
 
-	<form:form modelAttribute="application" action="application/hacker/edit.do">
+	<form:form modelAttribute="application"
+		action="application/hacker/edit.do">
 		<!--Hidden Attributes -->
 		<form:hidden path="id" />
 		<form:hidden path="version" />
 
-		<acme:selectNotPred code="application.curriculum" path="curriculum"
-			items="${curriculums}" itemLabel="title" />
-		<br />
-		
-		<acme:selectNotPred code="application.position" path="position"
-			items="${positions}" itemLabel="title" />
-		<br />
+		<jstl:choose>
+			<jstl:when test="${application.id == 0}">
+				<acme:selectNotPred code="application.curriculum" path="curriculum"
+					items="${curriculums}" itemLabel="title" />
+				<br />
+				<acme:selectNotPred code="application.position" path="position"
+					items="${positions}" itemLabel="title" />
+				<br />
+			</jstl:when>
+			<jstl:otherwise>
+				<acme:textarea code="application.explication" path="explication" />
+				<acme:textbox code="application.link" path="link" />
+			</jstl:otherwise>
+		</jstl:choose>
 
 
 		<jstl:choose>
 			<jstl:when test="${application.id != 0}">
 				<acme:submit name="edit" code="hacker.edit" />
-				<acme:submit name="delete" code="hacker.delete" />
 			</jstl:when>
 			<jstl:otherwise>
 				<acme:submit name="save" code="hacker.save" />
 			</jstl:otherwise>
 		</jstl:choose>
-
-
 
 	</form:form>
 

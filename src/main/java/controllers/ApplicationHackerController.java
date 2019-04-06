@@ -112,11 +112,14 @@ public class ApplicationHackerController extends AbstractController {
 	public ModelAndView editApplication(@RequestParam int applicationId) {
 		ModelAndView result;
 
-		this.hackerService.loggedAsHacker();
+		Hacker h = this.hackerService.loggedHacker();
 
 		Application application = this.applicationService.findOne(applicationId);
 
-		result = this.createEditModelAndView(application);
+		if (h.getApplications().contains(application) && application.getStatus().equals(Status.PENDING))
+			result = this.createEditModelAndView(application);
+		else
+			result = new ModelAndView("redirect:list.do");
 
 		return result;
 	}
@@ -131,7 +134,7 @@ public class ApplicationHackerController extends AbstractController {
 		Hacker hacker = this.hackerService.loggedHacker();
 
 		List<Position> positions = this.positionService.findAll();
-		
+
 		List<Curriculum> curriculums = hacker.getCurriculums();
 
 		p = this.applicationService.reconstruct(application, binding);
@@ -151,6 +154,28 @@ public class ApplicationHackerController extends AbstractController {
 				result = this.createEditModelAndView(application, "hacker.commit.error");
 				result.addObject("curriculums", curriculums);
 				result.addObject("positions", positions);
+			}
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "edit")
+	public ModelAndView edit(@ModelAttribute("application") Application application, BindingResult binding) {
+
+		ModelAndView result;
+
+		Application p = new Application();
+
+		p = this.applicationService.reconstruct(application, binding);
+
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(p);
+		} else {
+			try {
+				this.applicationService.save(p);
+				result = new ModelAndView("redirect:list.do");
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(application, "hacker.commit.error");
 			}
 		}
 		return result;
