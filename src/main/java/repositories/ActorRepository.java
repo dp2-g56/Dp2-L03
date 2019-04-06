@@ -20,4 +20,7 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
 	@Query("select u.username from Actor a join a.userAccount u")
 	public List<String> usernamesOfActors();
+
+	@Query("select a from Actor a join a.userAccount b where b.username != ?1")
+	public List<Actor> getActorsExceptOne(String username);
 }
