@@ -154,12 +154,32 @@ public class CurriculumService {
 
 	public void deleteCurriculumAsHacker(int curriculumId) {
 		Hacker hacker = this.hackerService.securityAndHacker();
-		Curriculum curriculum = this.findOne(curriculumId);
+		
+		Curriculum curriculum = this.getCurriculumOfHacker(hacker.getId(), curriculumId);
+		Assert.notNull(curriculum);
+		
 		List<Curriculum> curriculums = hacker.getCurriculums();
-		Assert.isTrue(curriculums.contains(curriculum));
+
 		curriculums.remove(curriculum);
 		hacker.setCurriculums(curriculums);
 		this.hackerService.save(hacker);
+		
+//		PersonalData personalData = curriculum.getPersonalData();
+//		List<PositionData> positionData = curriculum.getPositionData();
+//		List<EducationData> educationData = curriculum.getEducationData();
+//		List<MiscellaneousData> miscellaneousData = curriculum.getMiscellaneousData();
+//		
+//		curriculum.setPersonalData(null);
+//		curriculum.setPositionData(new ArrayList<PositionData>());
+//		curriculum.setEducationData(new ArrayList<EducationData>());
+//		curriculum.setMiscellaneousData(new ArrayList<MiscellaneousData>());
+//		this.save(curriculum);
+//		
+//		this.personalDataService.delete(personalData);
+//		this.positionDataService.deleteInBatch(positionData);
+//		this.educationDataService.deleteInBatch(educationData);
+//		this.miscellaneousDataService.deleteInBatch(miscellaneousData);
+		
 		this.delete(curriculum);
 	}
 	

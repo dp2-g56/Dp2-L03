@@ -72,7 +72,6 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView newCurriculum() {
 		ModelAndView result;
 		
-		this.hackerService.securityAndHacker();
 		FormObjectCurriculumPersonalData formObject = new FormObjectCurriculumPersonalData();
 		
 		result = this.createEditModelAndView("hacker/createCurriculum", formObject);
@@ -84,7 +83,6 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView editCurriculum(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		this.hackerService.securityAndHacker();
 		FormObjectCurriculumPersonalData formObject = new FormObjectCurriculumPersonalData();
 		
 		Curriculum curriculum = this.curriculumService.findOne(curriculumId);

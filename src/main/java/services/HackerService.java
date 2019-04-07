@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -18,7 +19,11 @@ import domain.Actor;
 import domain.Application;
 import domain.Company;
 import domain.Curriculum;
+import domain.EducationData;
 import domain.Hacker;
+import domain.MiscellaneousData;
+import domain.PersonalData;
+import domain.PositionData;
 import domain.Problem;
 
 @Service
@@ -31,6 +36,8 @@ public class HackerService {
 	private CurriculumService curriculumService;
 	@Autowired
 	private ActorService actorService;
+	@Autowired
+	private PersonalDataService personalDataService;
 
 	@Autowired
 	private ApplicationService applicationService;
@@ -55,7 +62,6 @@ public class HackerService {
 	public Hacker loggedHacker() {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
 		return this.hackerRepository.getHackerByUsername(userAccount.getUsername());
 	}
 
@@ -91,9 +97,17 @@ public class HackerService {
 		Hacker hacker = this.securityAndHacker();
 
 		if(curriculum.getId() > 0) {
-			Assert.isTrue(hacker.getCurriculums().contains(this.curriculumService.findOne(curriculum.getId())));
+			Assert.notNull(this.curriculumService.getCurriculumOfHacker(hacker.getId(), curriculum.getId()));
 			this.curriculumService.save(curriculum);
 		} else {
+//			PersonalData personalDataSaved = this.personalDataService.save(curriculum.getPersonalData());
+//			
+//			curriculum.setPersonalData(personalDataSaved);
+//			curriculum.setPositionData(new ArrayList<PositionData>());
+//			curriculum.setEducationData(new ArrayList<EducationData>());
+//			curriculum.setMiscellaneousData(new ArrayList<MiscellaneousData>());
+//			Curriculum curriculumSaved = this.curriculumService.save(curriculum);
+			
 			List<Curriculum> curriculums = hacker.getCurriculums();
 			curriculums.add(curriculum);
 			hacker.setCurriculums(curriculums);
