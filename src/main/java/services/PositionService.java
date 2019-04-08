@@ -358,11 +358,15 @@ public class PositionService {
 	public List<Position> getFinalPositions() {
 		return this.positionRepository.getFinalPositions();
 	}
-	
+
 	//--------------------------------------AUXILIAR METHODS-------------------------//
-	
+
 	public void flush() {
 		this.positionRepository.flush();
+	}
+
+	public List<Problem> getProblemsOfPosition(int idPosition) {
+		return this.positionRepository.getProblemsOfPosition(idPosition);
 	}
 
 }

@@ -64,6 +64,10 @@
 		<security:intercept-url pattern="/anonymous/termsAndConditionsEN.do" access="permitAll" /> 
 		<security:intercept-url pattern="/anonymous/termsAndConditionsES.do" access="permitAll" /> 
 		
+		<!-- REGISTER -->
+		
+		<security:intercept-url pattern="/anonymous/**" access="isAnonymous()" /> 
+		
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 		

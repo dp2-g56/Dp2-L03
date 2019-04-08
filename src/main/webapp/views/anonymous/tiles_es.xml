@@ -20,4 +20,47 @@
 		<put-attribute name="body" value="/views/anonymous/termsAndConditionsES.jsp" />
 	</definition>
 	
+	<definition name="anonymous/hacker/create" extends="master.page">	
+		<put-attribute name="title" value="Registrarse como hacker" />
+		<put-attribute name="body" value="/views/anonymous/createHacker.jsp" />
+	</definition>
+	
+	<definition name="anonymous/position/list" extends="master.page">	
+		<put-attribute name="title" value="Situaciones publicas" />
+		<put-attribute name="body" value="/views/anonymous/publicPositions.jsp" />
+	</definition>
+	
+	<definition name="anonymous/problem/list" extends="master.page">	
+		<put-attribute name="title" value="Situaciones publicas" />
+		<put-attribute name="body" value="/views/company/problemList.jsp" />
+	</definition>
+	
+	<definition name="anonymous/application/list" extends="master.page">	
+		<put-attribute name="title" value="Aplicaciones" />
+		<put-attribute name="body" value="/views/company/showApplicationsPosition.jsp" />
+	</definition>
+	
+	<definition name="anonymous/company/listOne" extends="master.page">	
+		<put-attribute name="title" value="Compania" />
+		<put-attribute name="body" value="/views/actor/listSocialProfiles.jsp" />
+	</definition>
+	
+	<definition name="anonymous/company/list" extends="master.page">	
+		<put-attribute name="title" value="Companias" />
+		<put-attribute name="body" value="/views/anonymous/listOfCompanies.jsp" />
+	</definition>
+	
+	<definition name="anonymous/attachement/list" extends="master.page">	
+		<put-attribute name="title" value="Archivos adjuntos" />
+		<put-attribute name="body" value="/views/company/showAttachments.jsp" />
+	</definition>
+	
+	<definition name="anonymous/company/positions" extends="master.page">	
+		<put-attribute name="title" value="Lista de situaciones" />
+		<put-attribute name="body" value="/views/anonymous/publicPositions.jsp" />
+	</definition>
+	
+	
+	
+	
 </tiles-definitions>
