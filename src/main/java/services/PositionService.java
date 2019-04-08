@@ -369,4 +369,8 @@ public class PositionService {
 		return this.positionRepository.getProblemsOfPosition(idPosition);
 	}
 
+	public List<Position> positionsFiltered(String word) {
+		return this.positionRepository.positionsFiltered("%" + word + "%");
+	}
+
 }

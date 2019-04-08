@@ -27,7 +27,7 @@
 	
 	<definition name="anonymous/position/list" extends="master.page">	
 		<put-attribute name="title" value="Public positions" />
-		<put-attribute name="body" value="/views/anonymous/publicPositions.jsp" />
+		<put-attribute name="body" value="/views/anonymous/filteredPositions.jsp" />
 	</definition>
 	
 	<definition name="anonymous/problem/list" extends="master.page">	
@@ -58,6 +58,16 @@
 	<definition name="anonymous/company/positions" extends="master.page">	
 		<put-attribute name="title" value="Positions list" />
 		<put-attribute name="body" value="/views/anonymous/publicPositions.jsp" />
+	</definition>
+	
+	<definition name="anonymous/filtered/create" extends="master.page">	
+		<put-attribute name="title" value="Filtered Positions" />
+		<put-attribute name="body" value="/views/anonymous/filteredPositions.jsp" />
+	</definition>
+	
+	<definition name="anonymous/filtered/positions" extends="master.page">	
+		<put-attribute name="title" value="Filtered Positions" />
+		<put-attribute name="body" value="/views/anonymous/filteredPositions.jsp" />
 	</definition>
 	
 </tiles-definitions>

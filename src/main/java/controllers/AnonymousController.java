@@ -255,4 +255,32 @@ public class AnonymousController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/filtered/create", method = RequestMethod.GET)
+	public ModelAndView newWord() {
+		ModelAndView result;
+
+		List<Position> filteredPositions = new ArrayList<Position>();
+		filteredPositions = this.companyService.AllPositionsInFinal();
+
+		result = new ModelAndView("anonymous/filtered/positions");
+		result.addObject("publicPositions", filteredPositions);
+		result.addObject("requestURI", "anonymous/filtered/positions.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/filtered/positions", method = RequestMethod.POST, params = "save")
+	public ModelAndView listPositionsOfCompany(String word) {
+
+		ModelAndView result;
+		List<Position> filteredPositions = new ArrayList<Position>();
+
+		filteredPositions = this.positionService.positionsFiltered(word);
+
+		result = new ModelAndView("anonymous/filtered/positions");
+		result.addObject("publicPositions", filteredPositions);
+		result.addObject("requestURI", "anonymous/filtered/positions.do");
+
+		return result;
+	}
 }
