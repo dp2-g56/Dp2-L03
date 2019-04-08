@@ -270,18 +270,27 @@ public class PositionController extends AbstractController {
 		Position position;
 		position = this.positionService.findOne(positionId);
 		Company company = this.companyService.loggedCompany();
+		
+		if(company.getPositions().contains(position)) {
 
-		if (!position.getIsDraftMode() || position.getIsCancelled()) {
-			return this.list();
+			if (!position.getIsDraftMode() || position.getIsCancelled()) {
+				return this.list();
+			}
+	
+			if (!(company.getPositions().contains(position))) {
+				return this.list();
+			}
+	
+			FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox
+			= this.positionService.prepareFormObjectPositionProblemCheckbox(positionId);
+	
+			result = this.createEditModelAndView(formObjectPositionProblemCheckbox);
+			
+		} else {
+			
+			result = new ModelAndView("redirect:list.do");
+			
 		}
-
-		if (!(company.getPositions().contains(position))) {
-			return this.list();
-		}
-
-		FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox = this.positionService.prepareFormObjectPositionProblemCheckbox(positionId);
-
-		result = this.createEditModelAndView(formObjectPositionProblemCheckbox);
 
 		return result;
 	}
@@ -307,22 +316,30 @@ public class PositionController extends AbstractController {
 
 	//SAVE POSITION
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox, BindingResult binding) {
+	public ModelAndView save(@Valid FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox,
+			BindingResult binding) {
 
 		ModelAndView result;
 
 		Position position = new Position();
 		position = this.positionService.createPosition();
-
-		if (binding.hasErrors()) {
+		List<Problem> problems = new ArrayList<>();
+		
+		problems = this.problemService.reconstructList(formObjectPositionProblemCheckbox);
+		position = this.positionService.reconstructCheckBox(formObjectPositionProblemCheckbox, binding);
+		Boolean errorProblems = false;
+		
+		if(!formObjectPositionProblemCheckbox.getIsDraftMode()) {
+			errorProblems = !(problems.size()>=2);
+		}
+		
+		if (binding.hasErrors() || errorProblems) {
 			result = this.createEditModelAndView(position);
+			if(errorProblems) {
+				result.addObject("message", "position.problemsError");
+			}
 		} else {
 			try {
-
-				List<Problem> problems = this.problemService.reconstructList(formObjectPositionProblemCheckbox);
-
-				position = this.positionService.reconstructCheckBox(formObjectPositionProblemCheckbox, binding);
-
 				this.positionService.saveAssignList(position, problems);
 
 				result = new ModelAndView("redirect:/position/company/list.do");
@@ -401,27 +418,5 @@ public class PositionController extends AbstractController {
 		}
 		return result;
 	}
-
-	//	// MODEL AND VIEW APPLICATION
-	//	protected ModelAndView createEditModelAndView(Application application) {
-	//		ModelAndView result;
-	//
-	//		result = this.createEditModelAndView(application, null);
-	//
-	//		return result;
-	//	}
-	//
-	//	protected ModelAndView createEditModelAndView(Application application, String messageCode) {
-	//		ModelAndView result;
-	//
-	//		List<Status> listStatus = Arrays.asList(Status.values());
-	//		result = new ModelAndView("CREAR MODEL AND VIEW CON NOMBRE GRACIOSO");
-	//		result.addObject("application", application);
-	//		result.addObject("message", messageCode);
-	//		result.addObject("listStatus", listStatus);
-	//		//		result.addObject("positionId", formObjectPositionProblemCheckbox.getId());
-	//
-	//		return result;
-	//	}
 
 }

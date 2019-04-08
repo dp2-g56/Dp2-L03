@@ -1,5 +1,6 @@
 package services;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
 import domain.Hacker;
@@ -80,9 +82,11 @@ public class ApplicationService {
 
 	public Application reconstruct(Application application, BindingResult binding) {
 		Application result = new Application();
-		Curriculum copyCur = this.curriculumService.copyCurriculum(application.getCurriculum());
+		Date thisMoment = new Date();
+		thisMoment.setTime(thisMoment.getTime() - 1);
 
 		if (application.getId() == 0) {
+			Curriculum copyCur = this.curriculumService.copyCurriculum(application.getCurriculum());
 			result = this.createApplication();
 			List<Problem> problems = application.getPosition().getProblems();
 			Random rand = new Random();
@@ -95,20 +99,34 @@ public class ApplicationService {
 
 			result.setVersion(copy.getVersion());
 			result.setCreationMoment(copy.getCreationMoment());
-			result.setLink(copy.getLink());
-			result.setExplication(copy.getExplication());
-			result.setSubmitMoment(copy.getSubmitMoment());
-			result.setStatus(copy.getStatus());
+
+			if (isUrl(application.getLink()) || application.getLink() == "")
+				result.setLink(application.getLink());
+			else {
+				binding.rejectValue("link", "Isn't an URL");
+			}
+			result.setExplication(application.getExplication());
+			result.setSubmitMoment(thisMoment);
+			result.setStatus(Status.SUBMITTED);
 			result.setProblem(copy.getProblem());
 			result.setPosition(copy.getPosition());
-			result.setCurriculum(application.getCurriculum());
+			result.setCurriculum(copy.getCurriculum());
 			result.setHacker(copy.getHacker());
 			result.setId(copy.getId());
 		}
-		
+
 		this.validator.validate(result, binding);
 		return result;
 
+	}
+
+	public Boolean isUrl(String url) {
+		try {
+			new URL(url).toURI();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	// ----------------------------------------CRUD

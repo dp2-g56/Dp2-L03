@@ -74,6 +74,7 @@ public class ProblemService {
 
 		List<Problem> problems = new ArrayList<>();
 
+		if(ids!=null) {
 		for (Integer id : ids) {
 
 			Problem problem = this.problemRepository.findOne(id);
@@ -82,6 +83,7 @@ public class ProblemService {
 
 			problems.add(problem);
 
+			}
 		}
 		return problems;
 	}

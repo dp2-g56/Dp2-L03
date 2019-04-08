@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import domain.Configuration;
 import domain.Curriculum;
 import domain.PersonalData;
 import forms.FormObjectCurriculumPersonalData;
@@ -19,7 +20,9 @@ public class PersonalDataService {
 	private PersonalDataRepository personalDataRepository;
 	@Autowired
 	private CurriculumService curriculumService;
-	
+	@Autowired
+	private ConfigurationService configurationService;
+
 	public void save(PersonalData p) {
 		this.personalDataRepository.save(p);
 	}
@@ -34,6 +37,14 @@ public class PersonalDataService {
 			personalData.setId(personalDataFounded.getId());
 			personalData.setVersion(personalDataFounded.getVersion());
 		} 
+		
+		Configuration configuration = this.configurationService.getConfiguration();
+		String prefix = configuration.getSpainTelephoneCode();
+		
+		if(formObject.getPhoneNumber().matches("([0-9]{4,})$")) {
+			formObject.setPhoneNumber(prefix + formObject.getPhoneNumber());
+		}
+		
 		personalData.setFullName(formObject.getFullName());
 		personalData.setPhoneNumber(formObject.getPhoneNumber());
 		personalData.setStatement(formObject.getStatement());

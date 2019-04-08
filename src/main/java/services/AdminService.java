@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -13,11 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.Validator;
 
 import repositories.AdminRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 import domain.Admin;
 import domain.Company;
 import domain.CreditCard;
@@ -43,16 +46,26 @@ public class AdminService {
 	@Autowired
 	private FinderService			finderService;
 
+	@Autowired
+	private MessageService			messageService;
 
-	//----------------------------------------CRUD METHODS--------------------------
-	//------------------------------------------------------------------------------
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private Validator				validator;
+
+
+	// ----------------------------------------CRUD
+	// METHODS--------------------------
+	// ------------------------------------------------------------------------------
 
 	public Admin save(Admin admin) {
 		return this.adminRepository.save(admin);
 	}
 
-	//-----------------------------------------SECURITY-----------------------------
-	//------------------------------------------------------------------------------
+	// -----------------------------------------SECURITY-----------------------------
+	// ------------------------------------------------------------------------------
 
 	/**
 	 * LoggedAdmin now contains the security of loggedAsAdmin
@@ -165,30 +178,38 @@ public class AdminService {
 
 		String locale = LocaleContextHolder.getLocale().getLanguage().toUpperCase();
 
-		//Confirmacion contrasena
+		// Confirmacion contrasena
 		if (!formObjectAdmin.getPassword().equals(formObjectAdmin.getConfirmPassword())) {
 			if (locale.contains("ES")) {
-				binding.addError(new FieldError("formObjectAdmin", "password", formObjectAdmin.getPassword(), false, null, null, "Las contrasenas no coinciden"));
+				binding.addError(new FieldError("formObjectAdmin", "password", formObjectAdmin.getPassword(), false,
+						null, null, "Las contrasenas no coinciden"));
 			} else {
-				binding.addError(new FieldError("formObjectAdmin", "password", formObjectAdmin.getPassword(), false, null, null, "Passwords don't match"));
+				binding.addError(new FieldError("formObjectAdmin", "password", formObjectAdmin.getPassword(), false,
+						null, null, "Passwords don't match"));
 			}
 		}
 
-		//Confirmacion terminos y condiciones
+		// Confirmacion terminos y condiciones
 		if (!formObjectAdmin.getTermsAndConditions()) {
 			if (locale.contains("ES")) {
-				binding.addError(new FieldError("formObjectAdmin", "termsAndConditions", formObjectAdmin.getTermsAndConditions(), false, null, null, "Debe aceptar los terminos y condiciones"));
+				binding.addError(
+						new FieldError("formObjectAdmin", "termsAndConditions", formObjectAdmin.getTermsAndConditions(),
+								false, null, null, "Debe aceptar los terminos y condiciones"));
 			} else {
-				binding.addError(new FieldError("formObjectAdmin", "termsAndConditions", formObjectAdmin.getTermsAndConditions(), false, null, null, "You must accept the terms and conditions"));
+				binding.addError(
+						new FieldError("formObjectAdmin", "termsAndConditions", formObjectAdmin.getTermsAndConditions(),
+								false, null, null, "You must accept the terms and conditions"));
 			}
 		}
 
 		if (card.getNumber() != null) {
 			if (!this.creditCardService.validateNumberCreditCard(card)) {
 				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
-					binding.addError(new FieldError("formObject", "number", formObjectAdmin.getNumber(), false, null, null, "El numero de la tarjeta es invalido"));
+					binding.addError(new FieldError("formObject", "number", formObjectAdmin.getNumber(), false, null,
+							null, "El numero de la tarjeta es invalido"));
 				} else {
-					binding.addError(new FieldError("formObject", "number", formObjectAdmin.getNumber(), false, null, null, "The card number is invalid"));
+					binding.addError(new FieldError("formObject", "number", formObjectAdmin.getNumber(), false, null,
+							null, "The card number is invalid"));
 				}
 			}
 		}
@@ -196,9 +217,11 @@ public class AdminService {
 		if (card.getExpirationMonth() != null && card.getExpirationYear() != null) {
 			if (!this.creditCardService.validateDateCreditCard(card)) {
 				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
-					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "La tarjeta no puede estar caducada"));
+					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false,
+							null, null, "La tarjeta no puede estar caducada"));
 				} else {
-					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "The credit card can not be expired"));
+					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false,
+							null, null, "The credit card can not be expired"));
 				}
 			}
 		}
@@ -207,9 +230,11 @@ public class AdminService {
 
 		if (!cardType.contains(result.getCreditCard().getBrandName())) {
 			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
-				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "Tarjeta no admitida"));
+				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null,
+						"Tarjeta no admitida"));
 			} else {
-				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "The credit card is not accepted"));
+				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null,
+						"The credit card is not accepted"));
 			}
 		}
 
@@ -307,6 +332,64 @@ public class AdminService {
 
 	public List<Position> worstSalaryPositions() {
 		return this.adminRepository.worstSalaryPositions();
+	}
+
+	public void broadcastMessage(Message message) {
+		Admin sender = this.loggedAdmin();
+
+		String username = sender.getUserAccount().getUsername();
+		String newTag = message.getTags();
+		if (!newTag.contains("SYSTEM")) {
+			newTag = newTag.trim() + " SYSTEM";
+			message.setTags(newTag.trim());
+		}
+
+		List<Actor> actors = new ArrayList<Actor>();
+		actors = this.actorService.allActorsExceptOne(username);
+
+		Message message2 = this.messageService.createCopy(message.getSubject(), message.getBody(), message.getTags(), "BROADCAST");
+
+		for (Actor a : actors) {
+
+			message.setReceiver(a.getUserAccount().getUsername());
+			a.getMessages().add(message);
+			this.actorService.save(a);
+
+		}
+		sender.getMessages().add(message2);
+		this.save(sender);
+
+	}
+
+	public Message reconstruct(Message message, BindingResult binding) {
+
+		String username = LoginService.getPrincipal().getUsername();
+
+		domain.Message result;
+		result = this.messageService.create();
+		if (message.getId() == 0) {
+			result = message;
+			result.setSender(username);
+			Date thisMoment = new Date();
+			thisMoment.setTime(thisMoment.getTime() - 1000);
+			result.setMoment(thisMoment);
+			result.setReceiver(username);
+
+		} else {
+			result = this.messageService.findOne(message.getId());
+
+			result.setBody(message.getBody());
+			result.setTags(message.getTags());
+			result.setSubject(message.getSubject());
+			result.setReceiver(username);
+			result.setSender(username);
+
+		}
+
+		this.validator.validate(result, binding);
+
+		return result;
+
 	}
 
 }

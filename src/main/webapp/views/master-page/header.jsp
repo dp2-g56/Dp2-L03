@@ -14,7 +14,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <div>
-	<a href="#"><img src="images/logo.png" alt="Acme Hacker-Rank Co., Inc." /></a>
+	<a href="#"><img src="${imageURL}" height= 150px width= 500px alt="Acme Hacker-Rank Co., Inc." /></a>
 </div>
 
 <div>
@@ -27,6 +27,7 @@
 					<li><a href="administrator/administrator/create.do"><spring:message code="master.page.administrator.createAdmin" /></a></li>		
 					<li><a href="statistics/administrator/show.do"><spring:message code="master.page.administrator.statistics" /></a></li>
 					<li><a href="configuration/administrator/list.do"><spring:message code="master.page.administrator.configuration" /></a></li>
+					<li><a href="broadcast/administrator/send.do"><spring:message code="master.page.administrator.broadcast" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

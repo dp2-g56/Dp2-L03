@@ -276,7 +276,6 @@ public class PositionService {
 			result.setTicker(this.generateTicker());
 		} else {
 			result = this.positionRepository.findOne(formObjectPositionProblemCheckbox.getId());
-			Assert.isTrue(result.getIsDraftMode() && !result.getIsCancelled());
 		}
 		Position result2 = this.createPosition();
 		result2.setId(result.getId());
@@ -325,9 +324,10 @@ public class PositionService {
 		position.setProblems(problems);
 		Position saved = new Position();
 		saved = this.positionRepository.save(position);
-
-		loggedCompany.getPositions().remove(position); // NUEVO
+		
+		loggedCompany.getPositions().remove(position); 
 		loggedCompany.getPositions().add(saved);
+
 		this.companyService.save(loggedCompany);
 
 		return saved;
