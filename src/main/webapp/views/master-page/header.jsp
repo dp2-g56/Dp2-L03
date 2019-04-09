@@ -27,6 +27,7 @@
 					<li><a href="administrator/administrator/create.do"><spring:message code="master.page.administrator.createAdmin" /></a></li>		
 					<li><a href="statistics/administrator/show.do"><spring:message code="master.page.administrator.statistics" /></a></li>
 					<li><a href="configuration/administrator/list.do"><spring:message code="master.page.administrator.configuration" /></a></li>
+					<li><a href="broadcast/administrator/send.do"><spring:message code="master.page.administrator.broadcast" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -54,6 +55,14 @@
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="anonymous/hacker/create.do"><spring:message code="master.page.createHacker" /></a></li>				
+				</ul>
+			</li>
+			<li><a href="anonymous/position/list.do"><spring:message code="master.page.publicPositions" /></a></li>
+			<li><a href="anonymous/company/list.do"><spring:message code="master.page.publicCompanies" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
@@ -69,6 +78,8 @@
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>
+			
+			
 		</security:authorize>
 		
 		<security:authorize access="permitAll">

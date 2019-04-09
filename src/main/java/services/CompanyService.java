@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,9 +15,8 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Company;
-
+import domain.Position;
 import domain.Problem;
-
 
 @Service
 @Transactional
@@ -24,7 +24,7 @@ public class CompanyService {
 
 	@Autowired
 	private CompanyRepository	companyRepository;
-		
+
 	@Autowired
 	private ProblemService		problemService;
 
@@ -49,7 +49,6 @@ public class CompanyService {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
-		Assert.isTrue(authorities.get(0).toString().equals("COMPANY"));
 		return this.companyRepository.getCompanyByUsername(userAccount.getUsername());
 	}
 
@@ -72,5 +71,39 @@ public class CompanyService {
 		this.save(loggedCompany);
 	}
 
+	public Company findOne(int idCompany) {
+		return this.companyRepository.findOne(idCompany);
+	}
 
+	public List<Position> AllPositionsInFinal() {
+		List<Position> finalPositions = new ArrayList<Position>();
+
+		finalPositions = this.companyRepository.positionsInFinal();
+
+		return finalPositions;
+	}
+
+	public Company companyOfRespectivePosition(int idPosition) {
+		Company company = new Company();
+		company = this.companyRepository.companyByPosition(idPosition);
+
+		return company;
+	}
+
+	public List<Company> allCompanies() {
+		List<Company> allCompaniesList = new ArrayList<Company>();
+		allCompaniesList = this.companyRepository.allCompanies();
+
+		return allCompaniesList;
+
+	}
+
+	public List<Position> positionOfRespectiveCompany(int idCompany) {
+		List<Position> positions = new ArrayList<Position>();
+
+		positions = this.companyRepository.positionsOfCompany(idCompany);
+
+		return positions;
+
+	}
 }

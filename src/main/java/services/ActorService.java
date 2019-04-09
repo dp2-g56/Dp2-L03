@@ -107,4 +107,8 @@ public class ActorService {
 	public List<String> usernamesOfActors() {
 		return this.actorRepository.usernamesOfActors();
 	}
+
+	public List<Actor> allActorsExceptOne(String username) {
+		return this.actorRepository.getActorsExceptOne(username);
+	}
 }

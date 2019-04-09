@@ -154,12 +154,12 @@ public class MessageService {
 		return messageSaved;
 	}
 
-	public domain.Message reconstruct(domain.Message messageTest, BindingResult binding) {
+	public Message reconstruct(Message messageTest, BindingResult binding) {
 
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
 
-		domain.Message result;
+		Message result;
 
 		if (messageTest.getId() == 0) {
 			result = messageTest;

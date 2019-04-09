@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -13,11 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.Validator;
 
 import repositories.AdminRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 import domain.Admin;
 import domain.Company;
 import domain.CreditCard;
@@ -32,16 +35,26 @@ import forms.FormObjectAdmin;
 public class AdminService {
 
 	@Autowired
-	private AdminRepository adminRepository;
+	private AdminRepository			adminRepository;
 
 	@Autowired
-	private CreditCardService creditCardService;
+	private CreditCardService		creditCardService;
 
 	@Autowired
-	private ConfigurationService configurationService;
+	private ConfigurationService	configurationService;
 
 	@Autowired
-	private FinderService finderService;
+	private FinderService			finderService;
+
+	@Autowired
+	private MessageService			messageService;
+
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private Validator				validator;
+
 
 	// ----------------------------------------CRUD
 	// METHODS--------------------------
@@ -319,6 +332,64 @@ public class AdminService {
 
 	public List<Position> worstSalaryPositions() {
 		return this.adminRepository.worstSalaryPositions();
+	}
+
+	public void broadcastMessage(Message message) {
+		Admin sender = this.loggedAdmin();
+
+		String username = sender.getUserAccount().getUsername();
+		String newTag = message.getTags();
+		if (!newTag.contains("SYSTEM")) {
+			newTag = newTag.trim() + " SYSTEM";
+			message.setTags(newTag.trim());
+		}
+
+		List<Actor> actors = new ArrayList<Actor>();
+		actors = this.actorService.allActorsExceptOne(username);
+
+		Message message2 = this.messageService.createCopy(message.getSubject(), message.getBody(), message.getTags(), "BROADCAST");
+
+		for (Actor a : actors) {
+
+			message.setReceiver(a.getUserAccount().getUsername());
+			a.getMessages().add(message);
+			this.actorService.save(a);
+
+		}
+		sender.getMessages().add(message2);
+		this.save(sender);
+
+	}
+
+	public Message reconstruct(Message message, BindingResult binding) {
+
+		String username = LoginService.getPrincipal().getUsername();
+
+		domain.Message result;
+		result = this.messageService.create();
+		if (message.getId() == 0) {
+			result = message;
+			result.setSender(username);
+			Date thisMoment = new Date();
+			thisMoment.setTime(thisMoment.getTime() - 1000);
+			result.setMoment(thisMoment);
+			result.setReceiver(username);
+
+		} else {
+			result = this.messageService.findOne(message.getId());
+
+			result.setBody(message.getBody());
+			result.setTags(message.getTags());
+			result.setSubject(message.getSubject());
+			result.setReceiver(username);
+			result.setSender(username);
+
+		}
+
+		this.validator.validate(result, binding);
+
+		return result;
+
 	}
 
 }
