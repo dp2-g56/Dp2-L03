@@ -168,8 +168,10 @@ public class ApplicationHackerController extends AbstractController {
 
 		p = this.applicationService.reconstruct(application, binding);
 
-		if (binding.hasErrors()) {
+		if (binding.hasErrors()
+				|| !(this.applicationService.isUrl(application.getLink()) || application.getLink() == "")) {
 			result = this.createEditModelAndView(p);
+			result.addObject("message", "hacker.url.error");
 		} else {
 			try {
 				this.applicationService.save(p);
