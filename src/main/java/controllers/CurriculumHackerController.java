@@ -64,6 +64,7 @@ public class CurriculumHackerController extends AbstractController {
 		result.addObject("positionData", curriculum.getPositionData());
 		result.addObject("educationData", curriculum.getEducationData());
 		result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
+		result.addObject("requestURI", "/curriculum/hacker/show.do");
 		
 		return result;	
 	}
