@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -248,20 +249,33 @@ public class AdminService {
 
 	public List<Float> showStatisticsOfFinder() {
 
-		this.finderService.updateAllFinders();
-
 		List<Float> statistics = new ArrayList<Float>();
 
-		statistics.add(this.adminRepository.minResultFinders());
-		statistics.add(this.adminRepository.maxResultFinders());
-		statistics.add(this.adminRepository.avgResultFinders());
-		statistics.add(this.adminRepository.stddevResultFinders());
+		Date thisMoment = new Date();
 
-		if (this.adminRepository.ratioEmptyFinder() == null) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(thisMoment);
+		calendar.add(Calendar.HOUR_OF_DAY, -this.configurationService.getConfiguration().getTimeFinder());
+
+		if (this.adminRepository.numberNonEmptyFinders(calendar.getTime()) == 0) {
+
 			statistics.add((float) 0);
+			statistics.add((float) 0);
+			statistics.add((float) 0);
+			statistics.add((float) 0);
+
 		} else {
-			statistics.add(this.adminRepository.ratioEmptyFinder());
+			statistics.add(this.adminRepository.avgResultFinders(calendar.getTime()));
+			statistics.add(this.adminRepository.minResultFinders(calendar.getTime()));
+			statistics.add(this.adminRepository.maxResultFinders(calendar.getTime()));
+			statistics.add(this.adminRepository.stddevResultFinders(calendar.getTime()));
+
 		}
+
+		if (this.adminRepository.ratioEmptyFinder(calendar.getTime()) == null)
+			statistics.add((float) 0);
+		else
+			statistics.add(this.adminRepository.ratioEmptyFinder(calendar.getTime()));
 
 		return statistics;
 
@@ -271,9 +285,9 @@ public class AdminService {
 
 		List<Float> statistics = new ArrayList<Float>();
 
+		statistics.add(this.adminRepository.avgCurriculumPerHacker());
 		statistics.add(this.adminRepository.minCurriculumPerHacker());
 		statistics.add(this.adminRepository.maxCurriculumPerHacker());
-		statistics.add(this.adminRepository.avgCurriculumPerHacker());
 		statistics.add(this.adminRepository.stddevCurriculumPerHacker());
 
 		return statistics;
@@ -283,9 +297,9 @@ public class AdminService {
 
 		List<Float> statistics = new ArrayList<Float>();
 
+		statistics.add(this.adminRepository.avgPositionsCompany());
 		statistics.add(this.adminRepository.minPositionsCompany());
 		statistics.add(this.adminRepository.maxPositionsCompany());
-		statistics.add(this.adminRepository.avgPositionsCompany());
 		statistics.add(this.adminRepository.stddevPositionsCompany());
 
 		return statistics;
@@ -296,9 +310,9 @@ public class AdminService {
 
 		List<Float> statistics = new ArrayList<Float>();
 
+		statistics.add(this.adminRepository.avgApplicationsHacker());
 		statistics.add(this.adminRepository.minApplicationsHacker());
 		statistics.add(this.adminRepository.maxApplicationsHacker());
-		statistics.add(this.adminRepository.avgApplicationsHacker());
 		statistics.add(this.adminRepository.stddevApplicationsHacker());
 
 		return statistics;
@@ -309,9 +323,9 @@ public class AdminService {
 
 		List<Float> statistics = new ArrayList<Float>();
 
+		statistics.add(this.adminRepository.avgSalaries());
 		statistics.add(this.adminRepository.minSalary());
 		statistics.add(this.adminRepository.maxSalary());
-		statistics.add(this.adminRepository.avgSalaries());
 		statistics.add(this.adminRepository.stddevSalaries());
 
 		return statistics;

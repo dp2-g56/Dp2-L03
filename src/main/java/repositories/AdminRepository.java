@@ -1,6 +1,7 @@
 
 package repositories;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,23 +39,23 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	 * number of results in the finders.
 	 */
 
-	@Query("select min(a.positions.size) from Finder a")
-	public Float minResultFinders();
+	@Query("select min(a.positions.size) from Finder a where a.lastEdit > ?1")
+	public Float minResultFinders(Date date);
 
-	@Query("select max(a.positions.size) from Finder a")
-	public Float maxResultFinders();
+	@Query("select max(a.positions.size) from Finder a where a.lastEdit > ?1")
+	public Float maxResultFinders(Date date);
 
-	@Query("select avg(a.positions.size) from Finder a")
-	public Float avgResultFinders();
+	@Query("select avg(a.positions.size) from Finder a where a.lastEdit > ?1")
+	public Float avgResultFinders(Date date);
 
-	@Query("select stddev(a.positions.size) from Finder a")
-	public Float stddevResultFinders();
+	@Query("select stddev(a.positions.size) from Finder a where a.lastEdit > ?1")
+	public Float stddevResultFinders(Date date);
 
-	@Query("select (cast((select count(a) from Finder a where a.positions.size = 0) as float)/(select count(c) from Finder c where c.positions.size > 0)) from Configuration b")
-	public Float ratioEmptyFinder();
+	@Query("select (cast((select count(a) from Finder a where a.positions.size = 0 AND a.lastEdit > ?1) as float)/(select count(c) from Finder c where c.positions.size > 0 AND c.lastEdit > ?1)) from Configuration b")
+	public Float ratioEmptyFinder(Date date);
 
-	@Query("select count(c) from Finder c where c.positions.size > 0")
-	public Integer numberNonEmptyFinders();
+	@Query("select count(c) from Finder c where c.lastEdit > ?1")
+	public Integer numberNonEmptyFinders(Date date);
 
 	/*
 	 * The minimum, the maximum, the average, and the standard deviation of the
