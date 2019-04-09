@@ -164,22 +164,6 @@ public class CurriculumService {
 		hacker.setCurriculums(curriculums);
 		this.hackerService.save(hacker);
 		
-//		PersonalData personalData = curriculum.getPersonalData();
-//		List<PositionData> positionData = curriculum.getPositionData();
-//		List<EducationData> educationData = curriculum.getEducationData();
-//		List<MiscellaneousData> miscellaneousData = curriculum.getMiscellaneousData();
-//		
-//		curriculum.setPersonalData(null);
-//		curriculum.setPositionData(new ArrayList<PositionData>());
-//		curriculum.setEducationData(new ArrayList<EducationData>());
-//		curriculum.setMiscellaneousData(new ArrayList<MiscellaneousData>());
-//		this.save(curriculum);
-//		
-//		this.personalDataService.delete(personalData);
-//		this.positionDataService.deleteInBatch(positionData);
-//		this.educationDataService.deleteInBatch(educationData);
-//		this.miscellaneousDataService.deleteInBatch(miscellaneousData);
-		
 		this.delete(curriculum);
 	}
 	

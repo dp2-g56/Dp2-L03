@@ -7,8 +7,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme"  tagdir="/WEB-INF/tags"%>
 
-<security:authorize access="hasRole('HACKER')">
-
 	<spring:message code="curriculum.title" var="title"/>
 	<h3><jstl:out value="${title}: ${curriculum.title}"/></h3>
 	
@@ -29,7 +27,7 @@
 	<h4><jstl:out value="${posData}"/></h4>
 	
 	<display:table name="positionData" id="row" pagesize="5" class="displaytag" 
-					requestURI="/curriculum/hacker/list.do">
+					requestURI="${requestURI}">
 			
 		<display:column property="title" titleKey="positionData.title" /> 
 		<display:column property="description" titleKey="positionData.description" /> 
@@ -38,11 +36,21 @@
 	
 	</display:table>
 	
+	<spring:url var="newPositionData" value="/positionData/hacker/new.do">
+		<spring:param name="curriculumId" value="${curriculum.id}"/>
+	</spring:url>
+	<p>
+		<a href="${newPositionData}">
+			<spring:message code="positionData.new" var="newPositionDataMessage" />
+			<jstl:out value="${newPositionDataMessage}"/>
+		</a>
+	</p>
+	
 	<spring:message code="educationData" var="eduData"/>
 	<h4><jstl:out value="${eduData}"/></h4>
 	
 	<display:table name="educationData" id="row" pagesize="5" class="displaytag" 
-					requestURI="/curriculum/hacker/list.do">
+					requestURI="${requestURI}">
 			
 		<display:column property="degree" titleKey="educationData.degree" /> 
 		<display:column property="institution" titleKey="educationData.institution" /> 
@@ -56,7 +64,7 @@
 	<h4><jstl:out value="${misData}"/></h4>
 	
 	<display:table name="miscellaneousData" id="row" pagesize="5" class="displaytag" 
-					requestURI="/curriculum/hacker/list.do">
+					requestURI="${requestURI}">
 			
 		<display:column property="freeText" titleKey="miscellaneousData.freeText" /> 
 		<display:column titleKey="miscellaneousData.action">
@@ -70,5 +78,3 @@
 		</display:column>
 		
 	</display:table>
-
-</security:authorize>

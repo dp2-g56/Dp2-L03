@@ -99,15 +99,7 @@ public class HackerService {
 		if(curriculum.getId() > 0) {
 			Assert.notNull(this.curriculumService.getCurriculumOfHacker(hacker.getId(), curriculum.getId()));
 			this.curriculumService.save(curriculum);
-		} else {
-//			PersonalData personalDataSaved = this.personalDataService.save(curriculum.getPersonalData());
-//			
-//			curriculum.setPersonalData(personalDataSaved);
-//			curriculum.setPositionData(new ArrayList<PositionData>());
-//			curriculum.setEducationData(new ArrayList<EducationData>());
-//			curriculum.setMiscellaneousData(new ArrayList<MiscellaneousData>());
-//			Curriculum curriculumSaved = this.curriculumService.save(curriculum);
-			
+		} else {			
 			List<Curriculum> curriculums = hacker.getCurriculums();
 			curriculums.add(curriculum);
 			hacker.setCurriculums(curriculums);
