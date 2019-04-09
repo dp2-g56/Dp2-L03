@@ -11,7 +11,7 @@
 
 
 <br/>
-<security:authorize access="isAuthenticated()">
+
 
 	<table>
 		<tr>
@@ -78,6 +78,9 @@
 
 		<display:column property="profileLink"
 			titleKey="socialProfile.profileLink" />
+			
+			
+<security:authorize access="isAuthenticated()">			
 
 		<display:column>
 
@@ -88,10 +91,17 @@
 
 		</display:column>
 		
+</security:authorize>		
+		
 	</display:table>
+	
+	<security:authorize access="isAuthenticated()">		
 
 	<a href="authenticated/socialProfile/create.do"><spring:message
 			code="socialProfile.create" /></a>
+	</security:authorize>	
+	<br/>
+  <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
+  	<a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
+  </security:authorize>
 
-
-</security:authorize>
