@@ -1119,7 +1119,7 @@
 			<bean id ="finder1" class="domain.Finder">
 				<property name="keyWord" value="" />
 				<property name="deadLine" value="02/01/2025 11:30" />
-				<property name="minSalary" value="" />
+				<property name="minSalary" value="0" />
 				<property name="maxDeadLine" value="02/01/2025 11:30" />
 				<property name="lastEdit" value="01/04/2019 01:00" />
 			</bean>
@@ -1128,7 +1128,7 @@
 			<bean id ="finder2" class="domain.Finder">
 				<property name="keyWord" value="" />
 				<property name="deadLine" value="02/01/2025 11:30" />
-				<property name="minSalary" value="" />
+				<property name="minSalary" value="0" />
 				<property name="maxDeadLine" value="02/01/2025 11:30" />
 				<property name="lastEdit" value="02/01/2018 11:30" />
 			</bean>
@@ -1137,7 +1137,7 @@
 			<bean id ="finder3" class="domain.Finder">
 				<property name="keyWord" value="" />
 				<property name="deadLine" value="02/01/2025 11:30" />
-				<property name="minSalary" value="" />
+				<property name="minSalary" value="0" />
 				<property name="maxDeadLine" value="02/01/2025 11:30" />
 				<property name="lastEdit" value="02/01/2018 11:30" />
 			</bean>
@@ -1146,7 +1146,7 @@
 			<bean id ="finder4" class="domain.Finder">
 				<property name="keyWord" value="" />
 				<property name="deadLine" value="02/01/2025 11:30" />
-				<property name="minSalary" value="" />
+				<property name="minSalary" value="0" />
 				<property name="maxDeadLine" value="02/01/2025 11:30" />
 				<property name="lastEdit" value="02/01/2018 11:30" />
 			</bean>
