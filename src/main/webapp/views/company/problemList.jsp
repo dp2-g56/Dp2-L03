@@ -102,7 +102,7 @@
   </security:authorize>  
   
   <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
-  <a href="anonymous/filtered/positions.do"><spring:message code="position.back" /></a>
+  <a href="anonymous/filtered/create.do"><spring:message code="position.back" /></a>
   </security:authorize>
     
     
