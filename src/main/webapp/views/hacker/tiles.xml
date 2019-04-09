@@ -70,4 +70,6 @@
 		<put-attribute name="body" value="/views/hacker/createEditCurriculum.jsp" />
 	</definition>
 	
+	
+	
 </tiles-definitions>

@@ -10,8 +10,10 @@ import java.util.Random;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
@@ -100,11 +102,7 @@ public class ApplicationService {
 			result.setVersion(copy.getVersion());
 			result.setCreationMoment(copy.getCreationMoment());
 
-			if (isUrl(application.getLink()) || application.getLink() == "")
-				result.setLink(application.getLink());
-			else {
-				binding.rejectValue("link", "Isn't an URL");
-			}
+			result.setLink(application.getLink());
 			result.setExplication(application.getExplication());
 			result.setSubmitMoment(thisMoment);
 			result.setStatus(Status.SUBMITTED);

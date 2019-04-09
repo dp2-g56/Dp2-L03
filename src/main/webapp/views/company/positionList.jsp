@@ -10,7 +10,7 @@
 
 <p><spring:message code="company.position.list" /></p>
 
-<security:authorize access="hasRole('COMPANY')">
+
 	
 	
 	
@@ -117,7 +117,7 @@
         	
     </display:column>
     
-      
+      <security:authorize access="hasRole('COMPANY')">
 
 	<display:column>
 		<jstl:if test="${row.isDraftMode && !row.isCancelled}">
@@ -133,12 +133,13 @@
 		</jstl:if>
 
 	</display:column>
+	</security:authorize>
 									
 </display:table>
 
-
+<security:authorize access="hasRole('COMPANY')">
 <br />		
 	<a href="position/company/create.do"><spring:message code="position.create" /></a>
+	</security:authorize>
 
 	
-</security:authorize>

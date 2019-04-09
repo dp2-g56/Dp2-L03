@@ -11,6 +11,8 @@
 	<display:table
 	pagesize="5" name="problems" id="row"
 	requestURI="${requestURI}" >
+	
+<security:authorize access="hasRole('COMPANY')">
 
 	<display:column  titleKey="problem.edit" >
 		<jstl:if test="${row.isDraftMode}">
@@ -25,13 +27,16 @@
         </jstl:if>
 	</display:column>
 	
+</security:authorize>
+
+	
 	<display:column  property="title" titleKey="problem.title" />
 	
 	<display:column  property="statement" titleKey="problem.statement" />
 	
 	<display:column  property="hint" titleKey="problem.hint" />
     
-    
+    <security:authorize access="hasRole('COMPANY')">
     <display:column titleKey="problem.attachments">
     	
     		<jstl:set var="attachmentsSize" value="${row.attachments.size()}" />
@@ -48,6 +53,29 @@
     	
     </display:column>
     
+    </security:authorize>
+    
+    <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
+    
+      <display:column titleKey="problem.attachments">
+    	
+    		<jstl:set var="attachmentsSize" value="${row.attachments.size()}" />
+    		
+       		<spring:url var="problemUrl" value="/anonymous/attachement/list.do?problemId={problemId}">
+            	<spring:param name="problemId" value="${row.id}"/>
+        	</spring:url>
+        	
+        	<a href="${problemUrl}">
+              <spring:message var ="viewAttachments" code="problem.viewAttachments" />
+              <jstl:out value="${viewAttachments}(${attachmentsSize})" />  
+        	</a>
+        	
+    	
+    </display:column>
+     </security:authorize>
+
+	<security:authorize access="hasRole('COMPANY')">   
+	 
     <display:column titleKey="problem.mode" sortable= "true">
     	<jstl:choose>
 			<jstl:when test="${row.isDraftMode}" >
@@ -59,11 +87,22 @@
 		</jstl:choose>
 	</display:column>
 	
+	</security:authorize>
+	
 												
 </display:table>
+
+<security:authorize access="hasRole('COMPANY')">   
 <br />
 	<spring:url var="createUrl" value="/problem/company/create.do"/>       	
     <a href="${createUrl}">
     	<spring:message var ="create" code="problem.create" />
     	<jstl:out value="${create}" />  
     </a>
+  </security:authorize>  
+  
+  <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
+  <a href="anonymous/filtered/create.do"><spring:message code="position.back" /></a>
+  </security:authorize>
+    
+    

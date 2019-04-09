@@ -10,9 +10,10 @@
 
 <p><spring:message code="brotherhood.position.application.list" /></p>
 
-<security:authorize access="hasRole('COMPANY')">
 
 	<display:table pagesize="5" name="allApplications" id="row" requestURI="${requestURI}" >
+
+
 	
 	<display:column property="creationMoment" titleKey="application.creationMoment" />
 	
@@ -45,6 +46,10 @@
 		<jstl:out value="${row.hacker.userAccount.username}" />
 	</display:column>
 	
+	
+	
+	<security:authorize access="hasRole('COMPANY')">
+	
 	<display:column>
 	
 		<jstl:if test="${row.status == 'SUBMITTED'}">
@@ -59,10 +64,21 @@
 	
 	</display:column>
 	
+	</security:authorize>
+	
 	
 	</display:table>
 	
-<br />
-<a href="position/company/list.do"><spring:message code="position.back" /></a>
 	
+<br />
+
+<security:authorize access="hasRole('COMPANY')">
+<a href="position/company/list.do"><spring:message code="position.back" /></a>
 </security:authorize>
+
+ <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
+  <a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
+  </security:authorize>
+
+
+	

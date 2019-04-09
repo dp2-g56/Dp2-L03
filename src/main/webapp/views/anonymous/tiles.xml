@@ -20,4 +20,55 @@
 		<put-attribute name="body" value="/views/anonymous/termsAndConditionsEN.jsp" />
 	</definition>
 	
+	<definition name="anonymous/hacker/create" extends="master.page">	
+		<put-attribute name="title" value="Register as hacker" />
+		<put-attribute name="body" value="/views/anonymous/createHacker.jsp" />
+	</definition>
+	
+	<definition name="anonymous/position/list" extends="master.page">	
+		<put-attribute name="title" value="Public positions" />
+		<put-attribute name="body" value="/views/anonymous/filteredPositions.jsp" />
+	</definition>
+	
+	<definition name="anonymous/problem/list" extends="master.page">	
+		<put-attribute name="title" value="Public positions" />
+		<put-attribute name="body" value="/views/company/problemList.jsp" />
+	</definition>
+	
+	<definition name="anonymous/application/list" extends="master.page">	
+		<put-attribute name="title" value="Applications" />
+		<put-attribute name="body" value="/views/company/showApplicationsPosition.jsp" />
+	</definition>
+	
+	<definition name="anonymous/company/listOne" extends="master.page">	
+		<put-attribute name="title" value="Aplicaciones" />
+		<put-attribute name="body" value="/views/actor/listSocialProfiles.jsp" />
+	</definition>
+	
+	<definition name="anonymous/company/list" extends="master.page">	
+		<put-attribute name="title" value="Companies" />
+		<put-attribute name="body" value="/views/anonymous/listOfCompanies.jsp" />
+	</definition>
+	
+	<definition name="anonymous/attachement/list" extends="master.page">	
+		<put-attribute name="title" value="Attachments" />
+		<put-attribute name="body" value="/views/company/showAttachments.jsp" />
+	</definition>
+	
+	<definition name="anonymous/company/positions" extends="master.page">	
+		<put-attribute name="title" value="Positions list" />
+		<put-attribute name="body" value="/views/anonymous/publicPositions.jsp" />
+	</definition>
+	
+	<definition name="anonymous/filtered/create" extends="master.page">	
+		<put-attribute name="title" value="Filtered Positions" />
+		<put-attribute name="body" value="/views/anonymous/filteredPositions.jsp" />
+	</definition>
+	
+	<definition name="anonymous/filtered/positions" extends="master.page">	
+		<put-attribute name="title" value="Filtered Positions" />
+		<put-attribute name="body" value="/views/anonymous/filteredPositions.jsp" />
+	</definition>
+	
 </tiles-definitions>
+
