@@ -33,10 +33,17 @@
 <br/>
 </jstl:if>
 
+ <security:authorize access="hasRole('COMPANY')">
 	<input type="button"
 		name="cancel"
 		value="<spring:message code="problem.back"/>" onclick="javascript:relativeRedir('problem/company/list.do');" />
 
-																				
+	</security:authorize>	
+	
+	<security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">		
+	<input type="button"
+		name="cancel"
+		value="<spring:message code="problem.back"/>" onclick="javascript:relativeRedir('anonymous/position/list.do');" />
+	</security:authorize>																
 
 
