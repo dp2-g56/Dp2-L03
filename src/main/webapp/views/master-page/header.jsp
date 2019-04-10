@@ -58,7 +58,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="anonymous/hacker/create.do"><spring:message code="master.page.createHacker" /></a></li>				
+					<li><a href="anonymous/hacker/create.do"><spring:message code="master.page.createHacker" /></a></li>	
+					<li><a href="anonymous/company/create.do"><spring:message code="master.page.createCompany" /></a></li>			
 				</ul>
 			</li>
 			<li><a href="anonymous/position/list.do"><spring:message code="master.page.publicPositions" /></a></li>

@@ -30,6 +30,7 @@ public class AdministratorStatisticsController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView statistics() {
 		ModelAndView result;
+		this.adminService.loggedAsAdmin();
 
 		String locale = LocaleContextHolder.getLocale().getLanguage().toUpperCase();
 
