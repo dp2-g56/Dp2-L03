@@ -27,6 +27,7 @@ import domain.Configuration;
 import domain.Hacker;
 import domain.Position;
 import domain.Problem;
+import forms.FormObjectCompany;
 import forms.FormObjectHacker;
 
 @Controller
@@ -74,6 +75,8 @@ public class AnonymousController extends AbstractController {
 
 		return result;
 	}
+
+	//CREATE HACKER-----------------------------------------------------------------------
 
 	@RequestMapping(value = "/hacker/create", method = RequestMethod.GET)
 	public ModelAndView createAdmin() {
@@ -143,6 +146,81 @@ public class AnonymousController extends AbstractController {
 
 		return result;
 	}
+
+	//END OF CREATE HACKER-----------------------------------------------------------------------
+
+	//CREATE COMPANY-----------------------------------------------------------------------
+
+	@RequestMapping(value = "/company/create", method = RequestMethod.GET)
+	public ModelAndView createCompany() {
+		ModelAndView result;
+
+		FormObjectCompany formObjectCompany = new FormObjectCompany();
+		formObjectCompany.setTermsAndConditions(false);
+
+		result = new ModelAndView("anonymous/company/create");
+
+		result.addObject("formObjectCompany", formObjectCompany);
+
+		return result;
+	}
+
+	@RequestMapping(value = "/company/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(@Valid FormObjectCompany formObjectCompany, BindingResult binding) {
+
+		ModelAndView result;
+
+		Company company = new Company();
+		company = this.companyService.createCompany();
+
+		Configuration configuration = this.configurationService.getConfiguration();
+		String prefix = configuration.getSpainTelephoneCode();
+
+		//Reconstruccion
+		company = this.companyService.reconstruct(formObjectCompany, binding);
+
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(formObjectCompany);
+		else
+			try {
+
+				if (company.getPhone().matches("([0-9]{4,})$"))
+					company.setPhone(prefix + company.getPhone());
+				this.companyService.save(company);
+
+				result = new ModelAndView("redirect:/");
+
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(formObjectCompany, "company.commit.error");
+
+			}
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(FormObjectCompany formObjectCompany) {
+		ModelAndView result;
+
+		result = this.createEditModelAndView(formObjectCompany, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(FormObjectCompany formObjectCompany, String messageCode) {
+		ModelAndView result;
+
+		String locale = LocaleContextHolder.getLocale().getLanguage().toUpperCase();
+		List<String> cardType = this.configurationService.getConfiguration().getCardType();
+
+		result = new ModelAndView("anonymous/company/create");
+		result.addObject("formObjectCompany", formObjectCompany);
+		result.addObject("message", messageCode);
+		result.addObject("locale", locale);
+		result.addObject("cardType", cardType);
+
+		return result;
+	}
+
+	//END OF CREATE COMPANY-----------------------------------------------------------------------
 
 	@RequestMapping(value = "/position/list", method = RequestMethod.GET)
 	public ModelAndView listPositions() {
