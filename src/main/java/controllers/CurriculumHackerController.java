@@ -38,7 +38,7 @@ public class CurriculumHackerController extends AbstractController {
 
 	public CurriculumHackerController() {
 		super();
-	}
+	} 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {

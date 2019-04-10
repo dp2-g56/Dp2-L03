@@ -146,20 +146,27 @@ public class FinderServiceTest extends AbstractTest {
 				/**
 				 * POSITIVE TEST: Hacker is updating his finder
 				 **/
-				{ "hacker1", finder, "Skill", null },
+				{ "hacker1", finder, 1400., null },
 				/**
 				 * NEGATIVE TEST: Hacker is trying to update another finder
 				 **/
-				{ "hacker2", finder, "Skill", IllegalArgumentException.class }
+				{ "hacker2", finder, 1400., IllegalArgumentException.class }
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.finderUpdateTemplate((String) testingData[i][0], (Finder) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
+			this.finderUpdateTemplate((String) testingData[i][0], (Finder) testingData[i][1], (Double) testingData[i][2], (Class<?>) testingData[i][3]);
 
 	}
 
-	private void finderUpdateTemplate(String hacker, Finder finder, String keyWord, Class<?> expected) {
-		finder.setKeyWord(keyWord);
+	private void finderUpdateTemplate(String hacker, Finder finder, Double minSalary, Class<?> expected) {
+		Date date = new Date();
+	
+		finder.setDeadLine(null);
+		finder.setKeyWord("");
+		finder.setLastEdit(date);
+		finder.setMaxDeadLine(null);
+		finder.setMinSalary(minSalary);
+		this.finderService.save(finder);
 		
 		Class<?> caught = null;
 
@@ -168,10 +175,12 @@ public class FinderServiceTest extends AbstractTest {
 			super.authenticate(hacker);
 			
 			this.finderService.filterPositionsByFinder(finder);
+			this.finderService.flush();
 			
-			List<Position> positions = this.finderService.findOne(finder.getId()).getPositions();
+			Finder finderFounded = this.finderService.findOne(finder.getId());
+			List<Position> positions = finderFounded.getPositions();
 			
-			Assert.isTrue(positions.size() == this.finderService.getPositionsByKeyWord(this.finderService.findOne(finder.getId()).getKeyWord()).size());
+			Assert.isTrue(positions.size() == this.finderService.getPositionsByMinSalary(minSalary).size());
 			
 			super.unauthenticate();
 		} catch (Throwable oops) {
