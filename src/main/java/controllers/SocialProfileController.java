@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.CompanyService;
+import services.ConfigurationService;
 import services.SocialProfileService;
 import domain.Actor;
+import domain.Admin;
+import domain.Company;
+import domain.Configuration;
 import domain.SocialProfile;
+
 
 @Controller
 @RequestMapping("/authenticated")
@@ -29,6 +37,12 @@ public class SocialProfileController extends AbstractController {
 
 	@Autowired
 	private SocialProfileService	socialProfileService;
+	
+	@Autowired
+	private CompanyService			companyService;
+	
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	//-------------------------------------------------------------------
@@ -138,7 +152,63 @@ public class SocialProfileController extends AbstractController {
 		}
 		return result;
 	}
+	//---------------------------------------------------------------------
+	//---------------------------EDIT PERSONAL DAT-------------------------
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView editPersonalData() {
+		
+		
+		ModelAndView result = null;
 
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+
+		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
+
+		if (authorities.get(0).toString().equals("COMPANY")) {
+			Company company = this.companyService.loggedCompany();
+			Assert.notNull(company);
+			result = this.createEditModelAndView(company);
+		}
+	
+		if (result == null)
+			result = this.list();
+		
+		return result;
+	}
+	
+	//---------------------------------------------------------------------
+	//---------------------------SAVE PERSONAL DATA------------------------
+	
+	//Company
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveCompany(Company company, BindingResult binding) {
+		ModelAndView result;
+
+		company = this.companyService.reconstructCompany(company, binding);
+		Configuration configuration = this.configurationService.getConfiguration();
+
+		String prefix = configuration.getSpainTelephoneCode();
+
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(company);
+		else
+			try {
+				if (company.getPhone().matches("(\\+[0-9]{1,3})(\\([0-9]{1,3}\\))([0-9]{4,})$") || company.getPhone().matches("(\\+[0-9]{1,3})([0-9]{4,})$"))
+					this.companyService.updateCompany(company);
+				else if (company.getPhone().matches("([0-9]{4,})$")) {
+					company.setPhone(prefix + company.getPhone());
+					this.companyService.updateCompany(company);
+				} else
+					this.companyService.updateCompany(company);
+				result = new ModelAndView("redirect:/authenticated/showProfile.do");
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(company, "socialProfile.commit.error");
+			}
+		return result;
+	}
+	
 	//---------------------------------------------------------------------
 	//---------------------------CREATEEDITMODELANDVIEW--------------------
 
@@ -161,4 +231,29 @@ public class SocialProfileController extends AbstractController {
 
 		return result;
 	}
+	
+	//---------------------------------------------------------------------
+	//-------------------CREATEEDITMODELANDVIEW ACTOR----------------------
+	
+	//Company
+		protected ModelAndView createEditModelAndView(Company company) {
+
+			ModelAndView result;
+
+			result = this.createEditModelAndView(company, null);
+
+			return result;
+		}
+
+		protected ModelAndView createEditModelAndView(Company company, String messageCode) {
+
+			ModelAndView result;
+
+			result = new ModelAndView("authenticated/edit");
+			result.addObject("company", company);
+			result.addObject("message", messageCode);
+
+			return result;
+		}
+
 }
