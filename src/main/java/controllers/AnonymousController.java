@@ -87,7 +87,7 @@ public class AnonymousController extends AbstractController {
 
 		result = new ModelAndView("anonymous/hacker/create");
 
-		result.addObject("formObjectHacker", formObjectHacker);
+		result = this.createEditModelAndView(formObjectHacker);
 
 		return result;
 	}
@@ -160,7 +160,7 @@ public class AnonymousController extends AbstractController {
 
 		result = new ModelAndView("anonymous/company/create");
 
-		result.addObject("formObjectCompany", formObjectCompany);
+		result = this.createEditModelAndView(formObjectCompany);
 
 		return result;
 	}

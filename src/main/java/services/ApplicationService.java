@@ -102,7 +102,10 @@ public class ApplicationService {
 			result.setVersion(copy.getVersion());
 			result.setCreationMoment(copy.getCreationMoment());
 
-			result.setLink(application.getLink());
+			if (this.isUrl(application.getLink()) || application.getLink() == "")
+				result.setLink(application.getLink());
+			else
+				binding.rejectValue("link", "Isn't an URL");
 			result.setExplication(application.getExplication());
 			result.setSubmitMoment(thisMoment);
 			result.setStatus(Status.SUBMITTED);
@@ -176,5 +179,42 @@ public class ApplicationService {
 
 	public List<Application> getSubmittedApplicationCompany(Integer positionId) {
 		return this.applicationRepository.getSubmittedApplicationsCompany(positionId);
+	}
+
+	public void deleteAllApplication() {
+
+		Hacker hacker = new Hacker();
+
+		hacker = this.hackerService.loggedHacker();
+
+		List<Application> applications = new ArrayList<Application>();
+		applications = hacker.getApplications();
+
+		//Quitamos todos los applications de hacker
+
+		for (Application app : applications) {
+			Position pos = new Position();
+			pos = app.getPosition();
+			pos.getApplications().remove(app);
+			app.setHacker(null);
+			app.setPosition(null);
+
+		}
+
+		//hacker.getApplications().removeAll(applications);
+
+		/*
+		 * List<Position> allPositionsOfHacker = new ArrayList<Position>();
+		 * 
+		 * allPositionsOfHacker = this.positionService.positionsOfApplicationOfHacker(hacker);
+		 * 
+		 * for (Position p : allPositionsOfHacker)
+		 * if (Collections.disjoint(p.getApplications(), applications)) {
+		 * 
+		 * }
+		 */
+
+		this.applicationRepository.deleteInBatch(applications);
+
 	}
 }
