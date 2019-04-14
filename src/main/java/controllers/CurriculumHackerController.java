@@ -38,7 +38,7 @@ public class CurriculumHackerController extends AbstractController {
 
 	public CurriculumHackerController() {
 		super();
-	}
+	} 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -64,6 +64,7 @@ public class CurriculumHackerController extends AbstractController {
 		result.addObject("positionData", curriculum.getPositionData());
 		result.addObject("educationData", curriculum.getEducationData());
 		result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
+		result.addObject("requestURI", "/curriculum/hacker/show.do");
 		
 		return result;	
 	}
@@ -72,7 +73,6 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView newCurriculum() {
 		ModelAndView result;
 		
-		this.hackerService.securityAndHacker();
 		FormObjectCurriculumPersonalData formObject = new FormObjectCurriculumPersonalData();
 		
 		result = this.createEditModelAndView("hacker/createCurriculum", formObject);
@@ -84,7 +84,6 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView editCurriculum(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		this.hackerService.securityAndHacker();
 		FormObjectCurriculumPersonalData formObject = new FormObjectCurriculumPersonalData();
 		
 		Curriculum curriculum = this.curriculumService.findOne(curriculumId);
@@ -106,8 +105,9 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView deleteCurriculum(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		this.curriculumService.deleteCurriculumAsHacker(curriculumId);
-		
+		if(this.curriculumService.findOne(curriculumId)!=null) {
+			this.curriculumService.deleteCurriculumAsHacker(curriculumId);
+		}
 		result = new ModelAndView("redirect:list.do");
 		
 		return result;	

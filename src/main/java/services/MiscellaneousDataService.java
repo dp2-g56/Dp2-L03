@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 import domain.Curriculum;
 import domain.Hacker;
 import domain.MiscellaneousData;
+import domain.PersonalData;
 import repositories.CurriculumRepository;
 import repositories.MiscellaneousDataRepository;
 
@@ -36,5 +37,9 @@ public class MiscellaneousDataService {
 		MiscellaneousData miscellaneousData = this.findOne(miscellaneousDataId);
 		Assert.isTrue(this.miscellaneousDataRepository.getMiscellaneousDataOfHacker(hacker.getId()).contains(miscellaneousData));
 		return miscellaneousData;
+	}
+	
+	public void deleteInBatch(Iterable<MiscellaneousData> entities) {
+		this.miscellaneousDataRepository.deleteInBatch(entities);
 	}
 }

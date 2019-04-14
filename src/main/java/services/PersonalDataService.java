@@ -23,8 +23,8 @@ public class PersonalDataService {
 	@Autowired
 	private ConfigurationService configurationService;
 
-	public void save(PersonalData p) {
-		this.personalDataRepository.save(p);
+	public PersonalData save(PersonalData p) {
+		return this.personalDataRepository.save(p);
 	}
 
 	public PersonalData reconstruct(FormObjectCurriculumPersonalData formObject, BindingResult binding) {
@@ -53,4 +53,9 @@ public class PersonalDataService {
 		
 		return personalData;
 	}
+	
+	public void delete(PersonalData personalData) {
+		this.personalDataRepository.delete(personalData);
+	}
+	
 }
