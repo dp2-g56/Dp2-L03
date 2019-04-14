@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.mysql.jdbc.BalanceStrategy;
 
 import security.Authority;
 import security.LoginService;
@@ -26,6 +30,7 @@ import domain.Admin;
 import domain.Company;
 import domain.Configuration;
 import domain.SocialProfile;
+import forms.FormObjectEditCompany;
 
 
 @Controller
@@ -109,6 +114,7 @@ public class SocialProfileController extends AbstractController {
 
 		socialProfile = this.socialProfileService.reconstruct(socialProfile, binding);
 
+		System.out.println(binding);
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(socialProfile);
 		else
@@ -169,11 +175,15 @@ public class SocialProfileController extends AbstractController {
 		if (authorities.get(0).toString().equals("COMPANY")) {
 			Company company = this.companyService.loggedCompany();
 			Assert.notNull(company);
-			result = this.createEditModelAndView(company);
+			FormObjectEditCompany formCompany = this.companyService.getFormObjectEditCompany(company);
+			formCompany.setId(company.getId());
+			result = this.createEditModelAndView(formCompany);
 		}
 	
 		if (result == null)
 			result = this.list();
+		
+		result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
 		
 		return result;
 	}
@@ -183,17 +193,19 @@ public class SocialProfileController extends AbstractController {
 	
 	//Company
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveCompany(Company company, BindingResult binding) {
+	public ModelAndView saveCompany(@Valid FormObjectEditCompany companyForm, BindingResult binding) {
 		ModelAndView result;
 
-		company = this.companyService.reconstructCompany(company, binding);
+		Company company = this.companyService.reconstructCompanyPersonalData(companyForm, binding);
 		Configuration configuration = this.configurationService.getConfiguration();
 
 		String prefix = configuration.getSpainTelephoneCode();
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(company);
-		else
+
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(companyForm);
+			result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
+		}else
 			try {
 				if (company.getPhone().matches("(\\+[0-9]{1,3})(\\([0-9]{1,3}\\))([0-9]{4,})$") || company.getPhone().matches("(\\+[0-9]{1,3})([0-9]{4,})$"))
 					this.companyService.updateCompany(company);
@@ -204,8 +216,10 @@ public class SocialProfileController extends AbstractController {
 					this.companyService.updateCompany(company);
 				result = new ModelAndView("redirect:/authenticated/showProfile.do");
 			} catch (Throwable oops) {
-				result = this.createEditModelAndView(company, "socialProfile.commit.error");
+				result = this.createEditModelAndView(companyForm, "socialProfile.commit.error");
+				result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
 			}
+		
 		return result;
 	}
 	
@@ -236,7 +250,7 @@ public class SocialProfileController extends AbstractController {
 	//-------------------CREATEEDITMODELANDVIEW ACTOR----------------------
 	
 	//Company
-		protected ModelAndView createEditModelAndView(Company company) {
+		protected ModelAndView createEditModelAndView(FormObjectEditCompany company) {
 
 			ModelAndView result;
 
@@ -245,12 +259,12 @@ public class SocialProfileController extends AbstractController {
 			return result;
 		}
 
-		protected ModelAndView createEditModelAndView(Company company, String messageCode) {
+		protected ModelAndView createEditModelAndView(FormObjectEditCompany company, String messageCode) {
 
 			ModelAndView result;
 
 			result = new ModelAndView("authenticated/edit");
-			result.addObject("company", company);
+			result.addObject("formObjectEditCompany", company);
 			result.addObject("message", messageCode);
 
 			return result;

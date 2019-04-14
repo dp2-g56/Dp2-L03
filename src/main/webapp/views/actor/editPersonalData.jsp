@@ -37,42 +37,64 @@
 
 	<!-- Company -->
 	<security:authorize access = "hasRole('COMPANY')">
-		<form:form modelAttribute="company" action="authenticated/edit.do">
+		<form:form modelAttribute="formObjectEditCompany" action="authenticated/edit.do">
 
 
 		<form:hidden path="id"/>
-		<form:hidden path="version"/>
-		<form:hidden path="problems"/>
-		<form:hidden path="positions"/>
-		
+
 		<!-- Actor Attributes -->
 		<fieldset>
     	<legend> <spring:message code="anonymous.personalData" /> </legend>
-		<acme:textbox path="name" code="anonymous.name" />
+		<acme:input path="name" code="anonymous.name" />
 		<br />
 	
-		<acme:textbox path="middleName" code="anonymous.middleName" />
+		<acme:input path="surname" code="anonymous.surname" />
 		<br />
 	
-		<acme:textbox path="surname" code="anonymous.surname" />
+		<acme:input path="photo" code="anonymous.photo" />
 		<br />
 	
-		<acme:textbox path="photo" code="anonymous.photo" />
+		<acme:input path="email" code="anonymous.email" />
+		<br />
+		
+		<acme:textbox path="VATNumber" code="admin.VATNumber" />
 		<br />
 	
-		<acme:textbox path="email" code="anonymous.email" />
+		<acme:input path="phone" code="anonymous.phoneNumber" />
 		<br />
 	
-		<acme:textbox path="phoneNumber" code="anonymous.phoneNumber" />
-		<br />
-	
-		<acme:textbox path="address" code="anonymous.address" />
+		<acme:input path="address" code="anonymous.address" />
 		<br />	
 		
-		<acme:textbox path="companyName" code="company.companyName" />
+		<acme:input  path="companyName" code="company.companyName" />
 		<br />
 		</fieldset>
 			
+			<fieldset>
+	  <legend> <spring:message code="creditCard.data" /> </legend>
+	  
+	  	<br />
+	  
+		<acme:input code="creditCard.holderName" path="holderName"/>	
+		<br />
+		
+		<acme:selectString code="creditCard.brandName" path="brandName" items="${cardType}" itemsName="${cardType}"/>	
+		<br />
+		
+		<acme:input code="creditCard.number" path="number"/>	
+		<br />
+		
+		<acme:input code="creditCard.expirationMonth" path="expirationMonth"/>	
+		<br />
+		
+		<acme:input code="creditCard.expirationYear" path="expirationYear"/>	
+		<br />
+		
+		<acme:input code="creditCard.cvvCode" path="cvvCode"/>	
+		<br />
+		
+	</fieldset>
+				
 		<!-- BOTONES -->	
 		<input type="submit" name="save" value="<spring:message code="anonymous.save" />" 
 		onclick="phonenumberval();validateEmail();"/> 
