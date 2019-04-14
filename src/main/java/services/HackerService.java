@@ -23,6 +23,7 @@ import domain.Application;
 import domain.CreditCard;
 import domain.Curriculum;
 import domain.EducationData;
+import domain.Finder;
 import domain.Hacker;
 import domain.MiscellaneousData;
 import domain.PersonalData;
@@ -53,6 +54,9 @@ public class HackerService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+
+	@Autowired
+	private FinderService			finderService;
 
 
 	// Auxiliar methods
@@ -253,6 +257,28 @@ public class HackerService {
 				binding.addError(new FieldError("member", "email", result.getEmail(), false, null, null, "Dont follow the pattern example@domain.asd or alias <example@domain.asd>"));
 
 		return result;
+	}
+
+	public void deleteHacker() {
+		Hacker hacker = new Hacker();
+
+		hacker = this.loggedHacker();
+
+		Finder finder = hacker.getFinder();
+
+		//Finder se borra solo, hay que quitar la lista de positions
+		finder.getPositions().removeAll(finder.getPositions());
+
+		//Curriculum se borra solo
+
+		//Mensajes se borran solos
+
+		//Socialprofile se borra solo
+
+		this.applicationService.deleteAllApplication();
+
+		this.hackerRepository.delete(hacker);
+
 	}
 
 }

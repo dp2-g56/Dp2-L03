@@ -93,6 +93,11 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasAnyRole('HACKER', 'COMPANY')">
+		<li><a href="authenticated/deleteUser.do" onClick="return confirm('<spring:message code="delete.user.confirmation" />')"><spring:message code="master.page.deleteUser" /> </a></li>
+		</security:authorize>
+		
+		
 	</ul>
 </div>
 
