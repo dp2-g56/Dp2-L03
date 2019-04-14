@@ -1564,4 +1564,275 @@
 
 	<!-- FIN PROBLEM -->
 
+	<!-- NEW HACKERS FOR TESTING-->
+	<!-- HACKER5 -->
+	<bean id="userAccount100" class="security.UserAccount">
+		<property name="username" value="hacker5" />
+		<property name="password"
+			value="c788cf2e81a407a2d33ee178ed79de3e" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<bean id="hacker5" class="domain.Hacker">
+		<property name="name" value="hacker5" />
+		<property name="surname" value="hacker surname" />
+		<property name="VATNumber" value="SE123654321" />
+		<property name="creditCard" ref="creditCard100" />
+		<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+		<property name="email" value="hacker@gmail.com" />
+		<property name="phone" value="+34609235522" />
+		<property name="address" value="hacker1House" />
+		<property name="finder" ref="finder100" />
+		<property name="userAccount" ref="userAccount100" />
+	</bean>
+	
+	<bean id="creditCard100" class="domain.CreditCard">
+		<property name="holderName" value="David" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4880576829512546" />
+		<property name="expirationMonth" value="12" />
+		<property name="expirationYear" value="23" />
+		<property name="cvvCode" value="123" />
+	</bean>
+	
+	<bean id ="finder100" class="domain.Finder">
+		<property name="keyWord" value="" />
+		<property name="deadLine" value="02/01/2025 11:30" />
+		<property name="minSalary" value="0" />
+		<property name="maxDeadLine" value="02/01/2025 11:30" />
+		<property name="lastEdit" value="01/04/2019 01:00" />
+	</bean>
+	
+	<!-- HACKER6 -->
+	<bean id="userAccount101" class="security.UserAccount">
+		<property name="username" value="hacker6" />
+		<property name="password"
+			value="b8f9087a445d02d19b5154dbadbc7efd" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<bean id="hacker6" class="domain.Hacker">
+		<property name="name" value="hacker6" />
+		<property name="surname" value="hacker surname" />
+		<property name="VATNumber" value="SE123654321" />
+		<property name="creditCard" ref="creditCard101" />
+		<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+		<property name="email" value="hacker@gmail.com" />
+		<property name="phone" value="+34609235522" />
+		<property name="address" value="hacker1House" />
+		<property name="finder" ref="finder101" />
+		<property name="userAccount" ref="userAccount101" />
+	</bean>
+	
+	<bean id="creditCard101" class="domain.CreditCard">
+		<property name="holderName" value="David" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4880576829512546" />
+		<property name="expirationMonth" value="12" />
+		<property name="expirationYear" value="23" />
+		<property name="cvvCode" value="123" />
+	</bean>
+	
+	<bean id ="finder101" class="domain.Finder">
+		<property name="keyWord" value="" />
+		<property name="deadLine" value="02/01/2025 11:30" />
+		<property name="minSalary" value="0" />
+		<property name="maxDeadLine" value="02/01/2025 11:30" />
+		<property name="lastEdit" value="01/04/2019 01:00" />
+	</bean>
+	
+	<!-- HACKER7 -->
+	<bean id="userAccount102" class="security.UserAccount">
+		<property name="username" value="hacker7" />
+		<property name="password"
+			value="dc072385108964493854966465072c77" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<bean id="hacker7" class="domain.Hacker">
+		<property name="name" value="hacker7" />
+		<property name="surname" value="hacker surname" />
+		<property name="VATNumber" value="SE123654321" />
+		<property name="creditCard" ref="creditCard102" />
+		<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+		<property name="email" value="hacker@gmail.com" />
+		<property name="phone" value="+34609235522" />
+		<property name="address" value="hacker1House" />
+		<property name="finder" ref="finder102" />
+		<property name="userAccount" ref="userAccount102" />
+	</bean>
+	
+	<bean id="creditCard102" class="domain.CreditCard">
+		<property name="holderName" value="David" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4880576829512546" />
+		<property name="expirationMonth" value="12" />
+		<property name="expirationYear" value="23" />
+		<property name="cvvCode" value="123" />
+	</bean>
+	
+	<bean id ="finder102" class="domain.Finder">
+		<property name="keyWord" value="" />
+		<property name="deadLine" value="02/01/2025 11:30" />
+		<property name="minSalary" value="0" />
+		<property name="maxDeadLine" value="02/01/2025 11:30" />
+		<property name="lastEdit" value="01/04/2019 01:00" />
+	</bean>
+	
+	<!-- HACKER8 -->
+	<bean id="userAccount103" class="security.UserAccount">
+		<property name="username" value="hacker8" />
+		<property name="password"
+			value="917a85f5524799a575bc06e45f7f5e1b" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<bean id="hacker8" class="domain.Hacker">
+		<property name="name" value="hacker8" />
+		<property name="surname" value="hacker surname" />
+		<property name="VATNumber" value="SE123654321" />
+		<property name="creditCard" ref="creditCard103" />
+		<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+		<property name="email" value="hacker@gmail.com" />
+		<property name="phone" value="+34609235522" />
+		<property name="address" value="hacker1House" />
+		<property name="finder" ref="finder103" />
+		<property name="userAccount" ref="userAccount103" />
+	</bean>
+	
+	<bean id="creditCard103" class="domain.CreditCard">
+		<property name="holderName" value="David" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4880576829512546" />
+		<property name="expirationMonth" value="12" />
+		<property name="expirationYear" value="23" />
+		<property name="cvvCode" value="123" />
+	</bean>
+	
+	<bean id ="finder103" class="domain.Finder">
+		<property name="keyWord" value="" />
+		<property name="deadLine" value="02/01/2025 11:30" />
+		<property name="minSalary" value="0" />
+		<property name="maxDeadLine" value="02/01/2025 11:30" />
+		<property name="lastEdit" value="01/04/2019 01:00" />
+	</bean>
+	
+	<!-- HACKER9 -->
+	<bean id="userAccount104" class="security.UserAccount">
+		<property name="username" value="hacker9" />
+		<property name="password"
+			value="8d9faf0956e7eb5f9dc7583a803ec4d2" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<bean id="hacker9" class="domain.Hacker">
+		<property name="name" value="hacker9" />
+		<property name="surname" value="hacker surname" />
+		<property name="VATNumber" value="SE123654321" />
+		<property name="creditCard" ref="creditCard104" />
+		<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+		<property name="email" value="hacker@gmail.com" />
+		<property name="phone" value="+34609235522" />
+		<property name="address" value="hacker1House" />
+		<property name="finder" ref="finder104" />
+		<property name="userAccount" ref="userAccount104" />
+	</bean>
+	
+	<bean id="creditCard104" class="domain.CreditCard">
+		<property name="holderName" value="David" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4880576829512546" />
+		<property name="expirationMonth" value="12" />
+		<property name="expirationYear" value="23" />
+		<property name="cvvCode" value="123" />
+	</bean>
+	
+	<bean id ="finder104" class="domain.Finder">
+		<property name="keyWord" value="" />
+		<property name="deadLine" value="02/01/2025 11:30" />
+		<property name="minSalary" value="0" />
+		<property name="maxDeadLine" value="02/01/2025 11:30" />
+		<property name="lastEdit" value="01/04/2019 01:00" />
+	</bean>
+	
+	<!-- HACKER10 -->
+	<bean id="userAccount105" class="security.UserAccount">
+		<property name="username" value="hacker10" />
+		<property name="password"
+			value="967fcdb90794ee615be9fe0224123156" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<bean id="hacker10" class="domain.Hacker">
+		<property name="name" value="hacker10" />
+		<property name="surname" value="hacker surname" />
+		<property name="VATNumber" value="SE123654321" />
+		<property name="creditCard" ref="creditCard105" />
+		<property name="photo" value="https://trello.com/c/unl0e9cp/1-requisitos" />
+		<property name="email" value="hacker@gmail.com" />
+		<property name="phone" value="+34609235522" />
+		<property name="address" value="hacker1House" />
+		<property name="finder" ref="finder105" />
+		<property name="userAccount" ref="userAccount105" />
+	</bean>
+	
+	<bean id="creditCard105" class="domain.CreditCard">
+		<property name="holderName" value="David" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4880576829512546" />
+		<property name="expirationMonth" value="12" />
+		<property name="expirationYear" value="23" />
+		<property name="cvvCode" value="123" />
+	</bean>
+	
+	<bean id ="finder105" class="domain.Finder">
+		<property name="keyWord" value="" />
+		<property name="deadLine" value="02/01/2025 11:30" />
+		<property name="minSalary" value="0" />
+		<property name="maxDeadLine" value="02/01/2025 11:30" />
+		<property name="lastEdit" value="01/04/2019 01:00" />
+	</bean>
+
 </beans>
