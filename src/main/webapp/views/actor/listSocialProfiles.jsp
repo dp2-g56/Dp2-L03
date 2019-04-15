@@ -55,7 +55,7 @@
 	</security:authorize>
 
 	<security:authorize access="hasAnyRole('HACKER')">
-		<acme:cancel url="/hacker/export.do?id=${actor.id}"
+		<acme:cancel url="/export/hacker.do?id=${actor.id}"
 			code="export" />
 	</security:authorize>
 
