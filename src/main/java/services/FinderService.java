@@ -193,20 +193,22 @@ public class FinderService {
 		this.finderRepository.delete(finder);
 	}
 
-	public void updateFinders() {
+	/*
+	 * public void updateFinders() {
+	 * 
+	 * Date thisMoment = new Date();
+	 * 
+	 * Calendar calendar = Calendar.getInstance();
+	 * calendar.setTime(thisMoment);
+	 * calendar.add(Calendar.HOUR_OF_DAY, -this.configurationService.getConfiguration().getTimeFinder());
+	 * 
+	 * List<Finder> finders = new ArrayList<Finder>();
+	 * finders = this.finderRepository.getFindersNeedToUpdate(calendar.getTime());
+	 * for (Finder f : finders)
+	 * f.setPositions(new ArrayList<Position>());
+	 */
 
-		Date thisMoment = new Date();
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(thisMoment);
-		calendar.add(Calendar.HOUR_OF_DAY, -this.configurationService.getConfiguration().getTimeFinder());
-
-		List<Finder> finders = new ArrayList<Finder>();
-		finders = this.finderRepository.getFindersNeedToUpdate(calendar.getTime());
-		for (Finder f : finders)
-			f.setPositions(new ArrayList<Position>());
-
-	}
+	//}
 
 	public void updateAllFinders() {
 
