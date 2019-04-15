@@ -281,4 +281,24 @@ public class HackerService {
 
 	}
 
+	public Hacker findOne(int id) {
+		return this.hackerRepository.findOne(id);
+	}
+
+	public String SocialProfilesToString() {
+		String res = "";
+		Hacker hacker = this.loggedHacker();
+		List<SocialProfile> socialProfiles = new ArrayList<SocialProfile>();
+		StringBuilder sb = new StringBuilder();
+		socialProfiles = hacker.getSocialProfiles();
+
+		Integer cont = 1;
+
+		for (SocialProfile f : socialProfiles) {
+			sb.append("Profile" + cont + " Name: " + f.getName() + " Nick: " + f.getNick() + " Profile link: " + f.getProfileLink()).append(System.getProperty("line.separator"));
+			cont++;
+		}
+		return sb.toString();
+	}
+
 }

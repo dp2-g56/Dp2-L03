@@ -57,6 +57,9 @@
 		<security:intercept-url pattern="/miscellaneousData/hacker/**" access="hasRole('HACKER')" />
 		<security:intercept-url pattern="/application/hacker/**" access="hasRole('HACKER')" /> 
 		<security:intercept-url pattern="/positionData/hacker/**" access="hasRole('HACKER')" /> 
+		<security:intercept-url pattern="/export/**" access="hasRole('HACKER')" /> 
+		
+		
 
 		<!-- AUTHENTICATED -->
 		<security:intercept-url pattern="/authenticated/**" access="isAuthenticated()" />
