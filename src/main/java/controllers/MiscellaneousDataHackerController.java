@@ -55,33 +55,33 @@ public class MiscellaneousDataHackerController extends AbstractController {
 		return result;	
 	}
 	
-//	@RequestMapping(value = "/edit", method =RequestMethod .GET)
-//	public ModelAndView editPositionData(@RequestParam int positionDataId) {
-//		ModelAndView result;
-//		
-//		PositionData positionData = this.positionDataService.findOne(positionDataId);
-//		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
-//		
-//		result = this.createEditModelAndView("hacker/editPositionData", positionData, curriculum.getId());
-//		
-//		return result;
-//	}
-//	
-//	@RequestMapping(value = "/delete", method =RequestMethod .GET)
-//	public ModelAndView deletePositionData(@RequestParam int positionDataId) {
-//		ModelAndView result = null;
-//		
-//		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
-//		
-//		try {
-//			this.positionDataService.deletePositionDataAsHacker(positionDataId);
-//			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
-//		} catch(Throwable oops) {
-//			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
-//		}
-//		
-//		return result;
-//	}
+	@RequestMapping(value = "/edit", method =RequestMethod .GET)
+	public ModelAndView editMiscellaneousData(@RequestParam int miscellaneousDataId) {
+		ModelAndView result;
+		
+		MiscellaneousData miscellaneousData = this.miscellaneousDataService.findOne(miscellaneousDataId);
+		Curriculum curriculum = this.curriculumService.getCurriculumOfMiscellaneousData(miscellaneousDataId);
+		
+		result = this.createEditModelAndView("hacker/editMiscellaneousData", miscellaneousData, curriculum.getId());
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/delete", method =RequestMethod .GET)
+	public ModelAndView deleteMiscellaneousData(@RequestParam int miscellaneousDataId) {
+		ModelAndView result = null;
+		
+		Curriculum curriculum = this.curriculumService.getCurriculumOfMiscellaneousData(miscellaneousDataId);
+		
+		try {
+			this.miscellaneousDataService.deleteMiscellaneousDataAsHacker(miscellaneousDataId);
+			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
+		}
+		
+		return result;
+	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveMiscellaneousData(@Valid MiscellaneousData miscellaneousData, BindingResult binding, @Valid int curriculumId) {
@@ -94,13 +94,13 @@ public class MiscellaneousDataHackerController extends AbstractController {
 			tiles = "hacker/editMiscellaneousData";
 		}
 		
-		//RECONSTRUCT
+		MiscellaneousData miscellaneousDataReconstructed = this.miscellaneousDataService.reconstruct(miscellaneousData, binding);
 		
 		if(binding.hasErrors()) {
-			result = this.createEditModelAndView(tiles, miscellaneousData, curriculumId);
+			result = this.createEditModelAndView(tiles, miscellaneousDataReconstructed, curriculumId);
 		} else {
 			try {
-				this.miscellaneousDataService.addOrUpdateMiscellaneousDataAsHacker(miscellaneousData, curriculumId);
+				this.miscellaneousDataService.addOrUpdateMiscellaneousDataAsHacker(miscellaneousDataReconstructed, curriculumId);
 				
 				Curriculum curriculum = this.curriculumService.getCurriculumOfLoggedHacker(curriculumId);
 				
@@ -112,7 +112,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 				result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
 				result.addObject("requestURI", "/curriculum/hacker/show.do");
 			} catch(Throwable oops) {
-				result = this.createEditModelAndView(tiles, miscellaneousData, curriculumId, "commit.error");
+				result = this.createEditModelAndView(tiles, miscellaneousDataReconstructed, curriculumId, "commit.error");
 			}
 		}
 		

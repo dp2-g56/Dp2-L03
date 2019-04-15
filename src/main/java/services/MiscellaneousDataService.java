@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,6 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import domain.Curriculum;
 import domain.Hacker;
@@ -26,6 +29,8 @@ public class MiscellaneousDataService {
 	private HackerService hackerService;
 	@Autowired
 	private CurriculumService curriculumService;
+	@Autowired
+	private Validator validator;
 	
 	public void save(MiscellaneousData m) {
 		this.miscellaneousDataRepository.save(m);
@@ -57,5 +62,36 @@ public class MiscellaneousDataService {
 		} else {
 			this.save(miscellaneousData);
 		}
+	}
+
+	public MiscellaneousData reconstruct(MiscellaneousData miscellaneousData, BindingResult binding) {
+		MiscellaneousData miscellaneousDataReconstruct = new MiscellaneousData();
+		
+		if(miscellaneousData.getId()==0) {
+			miscellaneousDataReconstruct.setFreeText(miscellaneousData.getFreeText());
+			miscellaneousDataReconstruct.setAttachments(new ArrayList<String>());
+		} else {
+			MiscellaneousData miscellaneousDataFounded = this.findOne(miscellaneousData.getId());
+			miscellaneousDataReconstruct.setId(miscellaneousDataFounded.getId());
+			miscellaneousDataReconstruct.setVersion(miscellaneousDataFounded.getVersion());
+			miscellaneousDataReconstruct.setFreeText(miscellaneousData.getFreeText());
+			miscellaneousDataReconstruct.setAttachments(miscellaneousDataFounded.getAttachments());
+		}
+		
+		this.validator.validate(miscellaneousDataReconstruct, binding);
+		
+		return miscellaneousDataReconstruct;
+	}
+
+	public void deleteMiscellaneousDataAsHacker(int miscellaneousDataId) {
+		Hacker hacker = this.hackerService.securityAndHacker();
+		Assert.notNull(this.miscellaneousDataRepository.getMiscellaneousDataOfHacker(hacker.getId(), miscellaneousDataId));
+		MiscellaneousData miscellaneousData = this.findOne(miscellaneousDataId);
+		Curriculum curriculum = this.curriculumService.getCurriculumOfMiscellaneousData(miscellaneousDataId);
+		List<MiscellaneousData> miscellaneoussData = curriculum.getMiscellaneousData();
+		miscellaneoussData.remove(miscellaneousData);
+		curriculum.setMiscellaneousData(miscellaneoussData);
+		this.curriculumService.save(curriculum);
+		this.miscellaneousDataRepository.delete(miscellaneousData);
 	}
 }
