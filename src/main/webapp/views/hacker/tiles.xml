@@ -80,4 +80,14 @@
 		<put-attribute name="body" value="/views/hacker/createEditPositionData.jsp" />
 	</definition>
 	
+	<definition name="hacker/createEducationData" extends="master.page">	
+		<put-attribute name="title" value="Create educacion data" />
+		<put-attribute name="body" value="/views/hacker/createEditEducationData.jsp" />
+	</definition>
+	
+	<definition name="hacker/editEducationData" extends="master.page">	
+		<put-attribute name="title" value="Edit education data" />
+		<put-attribute name="body" value="/views/hacker/createEditEducationData.jsp" />
+	</definition>
+	
 </tiles-definitions>
