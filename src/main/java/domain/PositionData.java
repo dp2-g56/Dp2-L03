@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -41,6 +43,7 @@ public class PositionData extends DomainEntity {
 	}
 
 	@Past
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@NotNull
 	public Date getStartDate() {
@@ -51,6 +54,7 @@ public class PositionData extends DomainEntity {
 		this.startDate = startDate;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	@Past
 	public Date getEndDate() {
