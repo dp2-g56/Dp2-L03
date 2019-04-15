@@ -32,7 +32,23 @@
 		<display:column property="title" titleKey="positionData.title" /> 
 		<display:column property="description" titleKey="positionData.description" /> 
 		<display:column property="startDate" titleKey="positionData.startDate" /> 
-		<display:column property="endDate" titleKey="positionData.endDate" /> 
+		<display:column property="endDate" titleKey="positionData.endDate" />
+		<display:column titleKey="positionData.action">
+			<spring:url var="editPositionData" value="/positionData/hacker/edit.do">
+				<spring:param name="positionDataId" value="${row.id}"/>
+			</spring:url>
+			<spring:url var="deletePositionData" value="/positionData/hacker/delete.do">
+				<spring:param name="positionDataId" value="${row.id}"/>
+			</spring:url>
+			<a href="${editPositionData}">
+				<spring:message code="positionData.edit" var="editPositionDataMessage" />
+				<jstl:out value="${editPositionDataMessage}"/>
+			</a> / 
+			<a href="${deletePositionData}" onclick="return confirm('<spring:message code="positionData.delete.confirmation" />')">
+				<spring:message code="positionData.delete" var="deletePositionDataMessage" />
+				<jstl:out value="${deletePositionDataMessage}"/>
+			</a>
+		</display:column>
 	
 	</display:table>
 	
@@ -57,8 +73,36 @@
 		<display:column property="mark" titleKey="educationData.mark" /> 
 		<display:column property="startDate" titleKey="educationData.startDate" /> 
 		<display:column property="endDate" titleKey="educationData.endDate" />
+		<display:column titleKey="educationData.action">
+		<!-- AQUI -->
+			<spring:url var="editEducationData" value="/educationData/hacker/edit.do">
+				<spring:param name="educationDataId" value="${row.id}"/>
+			</spring:url>
+			<spring:url var="deleteEducationData" value="/educationData/hacker/delete.do">
+				<spring:param name="educationDataId" value="${row.id}"/>
+			</spring:url>
+			<a href="${editEducationData}">
+				<spring:message code="educationData.edit" var="editEducationDataMessage" />
+				<jstl:out value="${editEducationDataMessage}"/>
+			</a> / 
+			<a href="${deleteEducationData}" onclick="return confirm('<spring:message code="educationData.delete.confirmation" />')">
+				<spring:message code="educationData.delete" var="deleteEducationDataMessage" />
+				<jstl:out value="${deletePositionDataMessage}"/>
+			</a>
+		</display:column>
 	
 	</display:table>
+	
+	<spring:url var="newEducationData" value="/educationData/hacker/new.do">
+		<spring:param name="curriculumId" value="${curriculum.id}"/>
+	</spring:url>
+	<p>
+		<a href="${newEducationData}">
+			<spring:message code="educationData.new" var="newEducationDataMessage" />
+			<jstl:out value="${newEducationDataMessage}"/>
+		</a>
+	</p>
+	<!-- FIN -->
 	
 	<spring:message code="miscellaneousData" var="misData"/>
 	<h4><jstl:out value="${misData}"/></h4>

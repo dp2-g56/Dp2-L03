@@ -18,61 +18,63 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Curriculum;
+import domain.EducationData;
 import domain.Hacker;
 import domain.PersonalData;
 import domain.PositionData;
 import forms.FormObjectCurriculumPersonalData;
 import services.CurriculumService;
+import services.EducationDataService;
 import services.HackerService;
 import services.PersonalDataService;
 import services.PositionDataService;
 
 @Controller
-@RequestMapping("/positionData/hacker")
-public class PositionDataHackerController extends AbstractController {
+@RequestMapping("/educationData/hacker")
+public class EducationDataHackerController extends AbstractController {
 	
 	@Autowired
 	private CurriculumService curriculumService;
 	@Autowired
-	private PositionDataService positionDataService;
+	private EducationDataService educationDataService;
 	@Autowired
 	private HackerService hackerService;
 
-	public PositionDataHackerController() {
+	public EducationDataHackerController() {
 		super();
 	}
 	
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public ModelAndView newPositionData(@RequestParam int curriculumId) {
+	public ModelAndView newEducationData(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		PositionData positionData = new PositionData();
+		EducationData educationData = new EducationData();
 		
-		result = this.createEditModelAndView("hacker/createPositionData", positionData, curriculumId);
+		result = this.createEditModelAndView("hacker/createEducationData", educationData, curriculumId);
 		
 		return result;	
 	}
 	
 	@RequestMapping(value = "/edit", method =RequestMethod .GET)
-	public ModelAndView editPositionData(@RequestParam int positionDataId) {
+	public ModelAndView editEducationData(@RequestParam int educationDataId) {
 		ModelAndView result;
 		
-		PositionData positionData = this.positionDataService.findOne(positionDataId);
-		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
+		EducationData educationData = this.educationDataService.findOne(educationDataId);
+		Curriculum curriculum = this.curriculumService.getCurriculumOfEducationData(educationDataId);
 		
-		result = this.createEditModelAndView("hacker/editPositionData", positionData, curriculum.getId());
+		result = this.createEditModelAndView("hacker/editEducationData", educationData, curriculum.getId());
 		
 		return result;
 	}
 	
 	@RequestMapping(value = "/delete", method =RequestMethod .GET)
-	public ModelAndView deletePositionData(@RequestParam int positionDataId) {
+	public ModelAndView deleteEducationData(@RequestParam int educationDataId) {
 		ModelAndView result = null;
 		
-		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
+		Curriculum curriculum = this.curriculumService.getCurriculumOfEducationData(educationDataId);
 		
 		try {
-			this.positionDataService.deletePositionDataAsHacker(positionDataId);
+			this.educationDataService.deleteEducationDataAsHacker(educationDataId);
 			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
 		} catch(Throwable oops) {
 			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
@@ -82,21 +84,21 @@ public class PositionDataHackerController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView savePositionData(@Valid PositionData positionData, BindingResult binding, @Valid int curriculumId) {
+	public ModelAndView savePositionData(@Valid EducationData educationData, BindingResult binding, @Valid int curriculumId) {
 		ModelAndView result;
 		
 		String tiles;
-		if(positionData.getId()==0) {
-			tiles = "hacker/createPositionData";
+		if(educationData.getId()==0) {
+			tiles = "hacker/createEducationData";
 		} else {
-			tiles = "hacker/editPositionData";
+			tiles = "hacker/editEducationData";
 		}
 		
 		if(binding.hasErrors()) {
-			result = this.createEditModelAndView(tiles, positionData, curriculumId);
+			result = this.createEditModelAndView(tiles, educationData, curriculumId);
 		} else {
 			try {
-				this.positionDataService.addOrUpdatePositionDataAsHacker(positionData, curriculumId);
+				this.educationDataService.addOrUpdateEducationDataAsHacker(educationData, curriculumId);
 				
 				Curriculum curriculum = this.curriculumService.getCurriculumOfLoggedHacker(curriculumId);
 				
@@ -108,23 +110,23 @@ public class PositionDataHackerController extends AbstractController {
 				result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
 				result.addObject("requestURI", "/curriculum/hacker/show.do");
 			} catch(Throwable oops) {
-				result = this.createEditModelAndView(tiles, positionData, curriculumId, "commit.error");
+				result = this.createEditModelAndView(tiles, educationData, curriculumId, "commit.error");
 			}
 		}
 		
 		return result;	
 	}
 
-	private ModelAndView createEditModelAndView(String tiles, PositionData positionData, int curriculumId) {
+	private ModelAndView createEditModelAndView(String tiles, EducationData educationData, int curriculumId) {
 		ModelAndView result = new ModelAndView(tiles);
-		result.addObject("positionData", positionData);
+		result.addObject("educationData", educationData);
 		result.addObject("curriculumId", curriculumId);
 		return result;
 	}
 	
-	private ModelAndView createEditModelAndView(String tiles, PositionData positionData, int curriculumId,
+	private ModelAndView createEditModelAndView(String tiles, EducationData educationData, int curriculumId,
 			String message) {
-		ModelAndView result = this.createEditModelAndView(tiles, positionData, curriculumId);
+		ModelAndView result = this.createEditModelAndView(tiles, educationData, curriculumId);
 		result.addObject("message", message);
 		return result;
 	}

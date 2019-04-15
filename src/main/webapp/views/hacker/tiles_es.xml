@@ -65,6 +65,24 @@
 			value="/views/hacker/editApplication.jsp" />
 	</definition>
 	
+	<definition name="hacker/createPositionData" extends="master.page">	
+		<put-attribute name="title" value="Crear informacion de posicion" />
+		<put-attribute name="body" value="/views/hacker/createEditPositionData.jsp" />
+	</definition>
 	
+	<definition name="hacker/editPositionData" extends="master.page">	
+		<put-attribute name="title" value="Editar informacion de posicion" />
+		<put-attribute name="body" value="/views/hacker/createEditPositionData.jsp" />
+	</definition>
+	
+	<definition name="hacker/createEducationData" extends="master.page">	
+		<put-attribute name="title" value="Crear informacion de educacion" />
+		<put-attribute name="body" value="/views/hacker/createEditEducationData.jsp" />
+	</definition>
+	
+	<definition name="hacker/editEducationData" extends="master.page">	
+		<put-attribute name="title" value="Editar informacion de educacion" />
+		<put-attribute name="body" value="/views/hacker/createEditEducationData.jsp" />
+	</definition>
 	
 </tiles-definitions>

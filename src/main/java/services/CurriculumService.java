@@ -166,6 +166,14 @@ public class CurriculumService {
 		this.delete(curriculum);
 	}
 
+	public Curriculum getCurriculumOfPositionData(int positionDataId) {
+		return this.curriculumRepository.getCurriculumOfPositionData(positionDataId);
+	}
+
+	public Curriculum getCurriculumOfEducationData(int educationDataId) {
+		return this.curriculumRepository.getCurriculumOfEducationData(educationDataId);
+	}
+  
 	public String curriculumToStringExport() {
 		String res = "";
 		Hacker hacker = this.hackerService.loggedHacker();
