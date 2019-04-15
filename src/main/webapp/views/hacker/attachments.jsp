@@ -17,5 +17,17 @@
 		</display:column> 
 	
 	</display:table>
+	
+	<spring:url var="newAttachment" value="/miscellaneousData/hacker/newAttachment.do">
+		<spring:param name="miscellaneousDataId" value="${miscellaneousDataId}"/>
+	</spring:url>
+	<p>
+		<a href="${newAttachment}">
+			<spring:message code="miscellaneousData.new.attachment" var="newAttachmentMessage" />
+			<jstl:out value="${newAttachmentMessage}"/>
+		</a>
+	</p>
+	
+	<acme:cancel url="/curriculum/hacker/show.do?curriculumId=${curriculumId}" code="curriculum.cancelButton" /> 
 
 </security:authorize>

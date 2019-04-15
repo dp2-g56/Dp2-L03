@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +41,36 @@ public class MiscellaneousDataHackerController extends AbstractController {
 		
 		result = new ModelAndView("hacker/attachments");
 		result.addObject("attachments", attachments);
+		result.addObject("miscellaneousDataId", miscellaneousDataId);
+		result.addObject("curriculumId", this.curriculumService.getCurriculumOfMiscellaneousData(miscellaneousDataId).getId());
+		
+		return result;	
+	}
+	
+	@RequestMapping(value = "/newAttachment", method = RequestMethod.GET)
+	public ModelAndView newAttachment(@RequestParam int miscellaneousDataId) {
+		ModelAndView result;
+		
+		result = new ModelAndView("hacker/createAttachment");
+		result.addObject("miscellaneousDataId", miscellaneousDataId);
+		result.addObject("attachment", "");
+
+		return result;	
+	}
+	
+	@RequestMapping(value = "/saveAttachment", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveAttachment(@RequestParam int miscellaneousDataId, @RequestParam String attachment) {
+		ModelAndView result;
+		
+		try {
+			this.miscellaneousDataService.addAttachmentAsHacker(miscellaneousDataId, attachment);
+			result = new ModelAndView("redirect:listAttachments.do?miscellaneousDataId=" + miscellaneousDataId);
+		} catch(Throwable oops) {
+			result = new ModelAndView("hacker/createAttachment");
+			result.addObject("miscellaneousDataId", miscellaneousDataId);
+			result.addObject("attachment", attachment);
+			result.addObject("message", "commit.error");
+		}
 		
 		return result;	
 	}
@@ -55,7 +86,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 		return result;	
 	}
 	
-	@RequestMapping(value = "/edit", method =RequestMethod .GET)
+	@RequestMapping(value = "/edit", method = RequestMethod .GET)
 	public ModelAndView editMiscellaneousData(@RequestParam int miscellaneousDataId) {
 		ModelAndView result;
 		
@@ -67,7 +98,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/delete", method =RequestMethod .GET)
+	@RequestMapping(value = "/delete", method = RequestMethod .GET)
 	public ModelAndView deleteMiscellaneousData(@RequestParam int miscellaneousDataId) {
 		ModelAndView result = null;
 		
@@ -84,7 +115,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveMiscellaneousData(@Valid MiscellaneousData miscellaneousData, BindingResult binding, @Valid int curriculumId) {
+	public ModelAndView saveMiscellaneousData(@ModelAttribute("miscellaneousData") @Valid MiscellaneousData miscellaneousData, BindingResult binding, @Valid int curriculumId) {
 		ModelAndView result;
 		
 		String tiles;

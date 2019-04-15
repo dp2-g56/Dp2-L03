@@ -94,4 +94,14 @@ public class MiscellaneousDataService {
 		this.curriculumService.save(curriculum);
 		this.miscellaneousDataRepository.delete(miscellaneousData);
 	}
+
+	public void addAttachmentAsHacker(int miscellaneousDataId, String attachment) {
+		Hacker hacker = this.hackerService.securityAndHacker();
+		MiscellaneousData miscellaneousData = this.miscellaneousDataRepository.getMiscellaneousDataOfHacker(hacker.getId(), miscellaneousDataId);
+		Assert.notNull(miscellaneousData);
+		Assert.isTrue(!attachment.contentEquals(""));
+		List<String> attachments = miscellaneousData.getAttachments();
+		attachments.add(attachment);
+		this.save(miscellaneousData);
+	}
 }
