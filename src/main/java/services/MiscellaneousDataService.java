@@ -12,6 +12,7 @@ import domain.Curriculum;
 import domain.Hacker;
 import domain.MiscellaneousData;
 import domain.PersonalData;
+import domain.PositionData;
 import repositories.CurriculumRepository;
 import repositories.MiscellaneousDataRepository;
 
@@ -23,6 +24,8 @@ public class MiscellaneousDataService {
 	private MiscellaneousDataRepository miscellaneousDataRepository;
 	@Autowired
 	private HackerService hackerService;
+	@Autowired
+	private CurriculumService curriculumService;
 	
 	public void save(MiscellaneousData m) {
 		this.miscellaneousDataRepository.save(m);
@@ -41,5 +44,18 @@ public class MiscellaneousDataService {
 	
 	public void deleteInBatch(Iterable<MiscellaneousData> entities) {
 		this.miscellaneousDataRepository.deleteInBatch(entities);
+	}
+
+	public void addOrUpdateMiscellaneousDataAsHacker(MiscellaneousData miscellaneousData, int curriculumId) {
+		Hacker hacker = this.hackerService.securityAndHacker();
+		
+		if(miscellaneousData.getId()==0) {
+			Curriculum curriculum = this.curriculumService.getCurriculumOfHacker(hacker.getId(), curriculumId);
+			List<MiscellaneousData> miscellaneoussData = curriculum.getMiscellaneousData();
+			miscellaneoussData.add(miscellaneousData);
+			this.curriculumService.save(curriculum);
+		} else {
+			this.save(miscellaneousData);
+		}
 	}
 }

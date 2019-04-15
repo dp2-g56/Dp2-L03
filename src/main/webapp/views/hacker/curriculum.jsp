@@ -74,7 +74,6 @@
 		<display:column property="startDate" titleKey="educationData.startDate" /> 
 		<display:column property="endDate" titleKey="educationData.endDate" />
 		<display:column titleKey="educationData.action">
-		<!-- AQUI -->
 			<spring:url var="editEducationData" value="/educationData/hacker/edit.do">
 				<spring:param name="educationDataId" value="${row.id}"/>
 			</spring:url>
@@ -102,7 +101,6 @@
 			<jstl:out value="${newEducationDataMessage}"/>
 		</a>
 	</p>
-	<!-- FIN -->
 	
 	<spring:message code="miscellaneousData" var="misData"/>
 	<h4><jstl:out value="${misData}"/></h4>
@@ -115,13 +113,37 @@
 			<spring:url var="attachments" value="/miscellaneousData/hacker/listAttachments.do">
 				<spring:param name="miscellaneousDataId" value="${row.id}"/>
 			</spring:url>
+			<spring:url var="editMiscellaneousData" value="/miscellaneousData/hacker/edit.do">
+				<spring:param name="miscellaneousDataId" value="${row.id}"/>
+			</spring:url>
+			<spring:url var="deleteMiscellaneousData" value="/miscellaneousData/hacker/delete.do">
+				<spring:param name="miscellaneousDataId" value="${row.id}"/>
+			</spring:url>
 			<a href="${attachments}">
 				<spring:message code="attachments.show" var="show" />
 				<jstl:out value="${show} (${row.attachments.size()})"/>
+			</a> / 
+			<a href="${editMiscellaneousData}">
+				<spring:message code="miscellaneousData.edit" var="editMiscellaneousDataMessage" />
+				<jstl:out value="${editMiscellaneousDataMessage}"/>
+			</a> / 
+			<a href="${deleteMiscellaneousData}" onclick="return confirm('<spring:message code="miscellaneousData.delete.confirmation" />')">
+				<spring:message code="miscellaneousData.delete" var="deleteMiscellaneousDataMessage" />
+				<jstl:out value="${deleteMiscellaneousDataMessage}"/>
 			</a>
 		</display:column>
 		
 	</display:table>
+	
+	<spring:url var="newMiscellaneousData" value="/miscellaneousData/hacker/new.do">
+		<spring:param name="curriculumId" value="${curriculum.id}"/>
+	</spring:url>
+	<p>
+		<a href="${newMiscellaneousData}">
+			<spring:message code="miscellaneousData.new" var="newMiscellaneousDataMessage" />
+			<jstl:out value="${newMiscellaneousDataMessage}"/>
+		</a>
+	</p>
 	
   	<security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
   		<a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
