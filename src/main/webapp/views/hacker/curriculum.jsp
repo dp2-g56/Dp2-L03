@@ -32,7 +32,23 @@
 		<display:column property="title" titleKey="positionData.title" /> 
 		<display:column property="description" titleKey="positionData.description" /> 
 		<display:column property="startDate" titleKey="positionData.startDate" /> 
-		<display:column property="endDate" titleKey="positionData.endDate" /> 
+		<display:column property="endDate" titleKey="positionData.endDate" />
+		<display:column titleKey="positionData.action">
+			<spring:url var="editPositionData" value="/positionData/hacker/edit.do">
+				<spring:param name="positionDataId" value="${row.id}"/>
+			</spring:url>
+			<spring:url var="deletePositionData" value="/positionData/hacker/delete.do">
+				<spring:param name="positionDataId" value="${row.id}"/>
+			</spring:url>
+			<a href="${editPositionData}">
+				<spring:message code="positionData.edit" var="editPositionDataMessage" />
+				<jstl:out value="${editPositionDataMessage}"/>
+			</a> / 
+			<a href="${deletePositionData}" onclick="return confirm('<spring:message code="positionData.delete.confirmation" />')">
+				<spring:message code="positionData.delete" var="deletePositionDataMessage" />
+				<jstl:out value="${deletePositionDataMessage}"/>
+			</a>
+		</display:column>
 	
 	</display:table>
 	

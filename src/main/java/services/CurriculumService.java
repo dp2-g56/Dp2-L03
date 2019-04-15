@@ -166,5 +166,9 @@ public class CurriculumService {
 		
 		this.delete(curriculum);
 	}
+
+	public Curriculum getCurriculumOfPositionData(int positionDataId) {
+		return this.curriculumRepository.getCurriculumOfPositionData(positionDataId);
+	}
 	
 }

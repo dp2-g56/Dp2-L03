@@ -35,6 +35,8 @@ public class PositionDataHackerController extends AbstractController {
 	private CurriculumService curriculumService;
 	@Autowired
 	private PositionDataService positionDataService;
+	@Autowired
+	private HackerService hackerService;
 
 	public PositionDataHackerController() {
 		super();
@@ -49,6 +51,34 @@ public class PositionDataHackerController extends AbstractController {
 		result = this.createEditModelAndView("hacker/createPositionData", positionData, curriculumId);
 		
 		return result;	
+	}
+	
+	@RequestMapping(value = "/edit", method =RequestMethod .GET)
+	public ModelAndView editPositionData(@RequestParam int positionDataId) {
+		ModelAndView result;
+		
+		PositionData positionData = this.positionDataService.findOne(positionDataId);
+		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
+		
+		result = this.createEditModelAndView("hacker/editPositionData", positionData, curriculum.getId());
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/delete", method =RequestMethod .GET)
+	public ModelAndView deletePositionData(@RequestParam int positionDataId) {
+		ModelAndView result = null;
+		
+		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
+		
+		try {
+			this.positionDataService.deletePositionDataAsHacker(positionDataId);
+			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")

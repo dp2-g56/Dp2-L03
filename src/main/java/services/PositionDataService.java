@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import domain.Curriculum;
 import domain.Hacker;
@@ -41,8 +43,24 @@ public class PositionDataService {
 			positionsData.add(positionData);
 			this.curriculumService.save(curriculum);
 		} else {
-			
+			this.save(positionData);
 		}
+	}
+
+	public PositionData findOne(int positionDataId) {
+		return this.positionDataRepository.findOne(positionDataId);
+	}
+
+	public void deletePositionDataAsHacker(int positionDataId) {
+		Hacker hacker = this.hackerService.securityAndHacker();
+		Assert.notNull(this.positionDataRepository.getPositionDataOfHacker(hacker.getId(), positionDataId));
+		PositionData positionData = this.findOne(positionDataId);
+		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
+		List<PositionData> positionsData = curriculum.getPositionData();
+		positionsData.remove(positionData);
+		curriculum.setPositionData(positionsData);
+		this.curriculumService.save(curriculum);
+		this.positionDataRepository.delete(positionData);
 	}
 
 }
