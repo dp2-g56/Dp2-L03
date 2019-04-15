@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.Validator;
 
 import repositories.CompanyRepository;
 import security.Authority;
@@ -25,6 +26,7 @@ import domain.Position;
 import domain.Problem;
 import domain.SocialProfile;
 import forms.FormObjectCompany;
+import forms.FormObjectEditCompany;
 
 @Service
 @Transactional
@@ -41,6 +43,9 @@ public class CompanyService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+	
+	@Autowired
+	private	Validator				validator;
 
 
 	//----------------------------------------CRUD METHODS--------------------------
@@ -261,6 +266,118 @@ public class CompanyService {
 				binding.addError(new FieldError("formObjectCompany", "email", result.getEmail(), false, null, null, "Dont follow the pattern example@domain.asd or alias <example@domain.asd>"));
 
 		return result;
+	}
+	
+	public FormObjectEditCompany getFormObjectEditCompany(Company company) {
+		
+		FormObjectEditCompany res = new FormObjectEditCompany();
+		
+		//Company
+		res.setAddress(company.getAddress());
+		res.setName(company.getName());
+		res.setVATNumber(company.getVATNumber());
+		res.setPhoto(company.getPhoto());
+		res.setEmail(company.getEmail());
+		res.setAddress(company.getAddress());
+		res.setCompanyName(company.getCompanyName());
+		res.setSurname(company.getSurname());
+		
+		//Credit Card
+		CreditCard c = company.getCreditCard();
+		
+		res.setHolderName(c.getHolderName());
+		res.setBrandName(c.getBrandName());
+		res.setNumber(c.getNumber());
+		res.setExpirationMonth(c.getExpirationMonth());
+		res.setExpirationYear(c.getExpirationYear());
+		res.setCvvCode(c.getCvvCode());
+		
+		
+		
+		return res;
+
+		
+	}
+	
+	public Company reconstructCompanyPersonalData(FormObjectEditCompany formObjectCompany, BindingResult binding) {
+		Company res = new Company();
+		
+		Company companyDB = this.findOne(formObjectCompany.getId());
+		
+		
+		CreditCard card = new CreditCard();
+		
+		
+		//Credit Card
+		card.setBrandName(formObjectCompany.getBrandName());
+		card.setCvvCode(formObjectCompany.getCvvCode());
+		card.setExpirationMonth(formObjectCompany.getExpirationMonth());
+		card.setExpirationYear(formObjectCompany.getExpirationYear());
+		card.setHolderName(formObjectCompany.getHolderName());
+		card.setNumber(formObjectCompany.getNumber());
+		
+		
+		
+		res.setAddress(formObjectCompany.getAddress());
+		res.setCompanyName(formObjectCompany.getCompanyName());
+		res.setEmail(formObjectCompany.getEmail());
+		res.setPhone(formObjectCompany.getPhone());
+		res.setPhoto(formObjectCompany.getPhoto());
+		res.setSurname(formObjectCompany.getSurname());
+		res.setName(formObjectCompany.getName());
+		res.setId(formObjectCompany.getId());
+		res.setVATNumber(formObjectCompany.getVATNumber());
+		res.setCreditCard(card);
+		res.setPositions(companyDB.getPositions());
+		res.setProblems(companyDB.getProblems());
+		res.setHasSpam(companyDB.getHasSpam());
+		res.setMessages(companyDB.getMessages());
+		res.setSocialProfiles(companyDB.getSocialProfiles());
+		res.setUserAccount(companyDB.getUserAccount());
+		res.setVersion(companyDB.getVersion());
+		
+
+		
+		if (card.getNumber() != null)
+			if (!this.creditCardService.validateNumberCreditCard(card))
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+					binding.addError(new FieldError("formObject", "number", formObjectCompany.getNumber(), false, null, null, "El numero de la tarjeta es invalido"));
+				else
+					binding.addError(new FieldError("formObject", "number", formObjectCompany.getNumber(), false, null, null, "The card number is invalid"));
+
+		if (card.getExpirationMonth() != null && card.getExpirationYear() != null)
+			if (!this.creditCardService.validateDateCreditCard(card))
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "La tarjeta no puede estar caducada"));
+				else
+					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "The credit card can not be expired"));
+
+		List<String> cardType = this.configurationService.getConfiguration().getCardType();
+
+		if (!cardType.contains(res.getCreditCard().getBrandName()))
+			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "Tarjeta no admitida"));
+			else
+				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "The credit card is not accepted"));
+
+		if (res.getEmail().matches("[\\w.%-]+\\<[\\w.%-]+\\@+\\>|[\\w.%-]+"))
+			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+				binding.addError(new FieldError("formObjectCompany", "email", res.getEmail(), false, null, null, "No sigue el patron ejemplo@dominio.asd o alias <ejemplo@dominio.asd>"));
+			else
+				binding.addError(new FieldError("formObjectCompany", "email", res.getEmail(), false, null, null, "Dont follow the pattern example@domain.asd or alias <example@domain.asd>"));
+
+		
+	
+		
+		return res;
+		
+	}
+	
+	public void updateCompany(Company company) {
+		this.loggedAsCompany();
+		Assert.isTrue(company.getId()==this.loggedCompany().getId());
+		
+		this.save(company);	
 	}
 
 }

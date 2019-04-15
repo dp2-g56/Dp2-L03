@@ -187,11 +187,28 @@ public class FinderService {
 
 	public List<Position> getPositionsByKeyWord(String keyWord) {
 		return this.finderRepository.getPositionsByKeyWord("%" + keyWord + "%");
-	}	
+	}
 
 	public void delete(Finder finder) {
 		this.finderRepository.delete(finder);
 	}
+
+	/*
+	 * public void updateFinders() {
+	 * 
+	 * Date thisMoment = new Date();
+	 * 
+	 * Calendar calendar = Calendar.getInstance();
+	 * calendar.setTime(thisMoment);
+	 * calendar.add(Calendar.HOUR_OF_DAY, -this.configurationService.getConfiguration().getTimeFinder());
+	 * 
+	 * List<Finder> finders = new ArrayList<Finder>();
+	 * finders = this.finderRepository.getFindersNeedToUpdate(calendar.getTime());
+	 * for (Finder f : finders)
+	 * f.setPositions(new ArrayList<Position>());
+	 */
+
+	//}
 
 	public void updateAllFinders() {
 

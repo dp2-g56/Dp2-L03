@@ -94,7 +94,6 @@ public class Application extends DomainEntity {
 	}
 
 	@ManyToOne
-	@NotNull
 	public Position getPosition() {
 		return this.position;
 	}

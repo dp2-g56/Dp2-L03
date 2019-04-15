@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import repositories.PositionRepository;
 import domain.Application;
 import domain.Company;
+import domain.Hacker;
 import domain.Position;
 import domain.Problem;
 import domain.Status;
@@ -372,5 +373,11 @@ public class PositionService {
 	public List<Position> positionsFiltered(String word) {
 		return this.positionRepository.positionsFiltered("%" + word + "%");
 	}
+
+	/*
+	 * public List<Position> positionsOfApplicationOfHacker(Hacker hacker) {
+	 * return this.positionRepository.positionsOfApplicationOfHacker(hacker);
+	 * }
+	 */
 
 }
