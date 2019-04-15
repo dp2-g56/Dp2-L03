@@ -329,8 +329,10 @@ public class PositionController extends AbstractController {
 		position = this.positionService.reconstructCheckBox(formObjectPositionProblemCheckbox, binding);
 		Boolean errorProblems = false;
 		
-		if(!formObjectPositionProblemCheckbox.getIsDraftMode()) {
-			errorProblems = !(problems.size()>=2);
+		if(formObjectPositionProblemCheckbox.getIsDraftMode()!=null) {
+			if(!formObjectPositionProblemCheckbox.getIsDraftMode()) {
+				errorProblems = !(problems.size()>=2);
+			}
 		}
 		
 		if (binding.hasErrors() || errorProblems) {
