@@ -55,67 +55,67 @@ public class EducationDataHackerController extends AbstractController {
 		return result;	
 	}
 	
-//	@RequestMapping(value = "/edit", method =RequestMethod .GET)
-//	public ModelAndView editPositionData(@RequestParam int positionDataId) {
-//		ModelAndView result;
-//		
-//		PositionData positionData = this.positionDataService.findOne(positionDataId);
-//		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
-//		
-//		result = this.createEditModelAndView("hacker/editPositionData", positionData, curriculum.getId());
-//		
-//		return result;
-//	}
-//	
-//	@RequestMapping(value = "/delete", method =RequestMethod .GET)
-//	public ModelAndView deletePositionData(@RequestParam int positionDataId) {
-//		ModelAndView result = null;
-//		
-//		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
-//		
-//		try {
-//			this.positionDataService.deletePositionDataAsHacker(positionDataId);
-//			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
-//		} catch(Throwable oops) {
-//			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
-//		}
-//		
-//		return result;
-//	}
-//	
-//	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
-//	public ModelAndView savePositionData(@Valid PositionData positionData, BindingResult binding, @Valid int curriculumId) {
-//		ModelAndView result;
-//		
-//		String tiles;
-//		if(positionData.getId()==0) {
-//			tiles = "hacker/createPositionData";
-//		} else {
-//			tiles = "hacker/editPositionData";
-//		}
-//		
-//		if(binding.hasErrors()) {
-//			result = this.createEditModelAndView(tiles, positionData, curriculumId);
-//		} else {
-//			try {
-//				this.positionDataService.addOrUpdatePositionDataAsHacker(positionData, curriculumId);
-//				
-//				Curriculum curriculum = this.curriculumService.getCurriculumOfLoggedHacker(curriculumId);
-//				
-//				result = new ModelAndView("hacker/curriculum");
-//				result.addObject("curriculum", curriculum);
-//				result.addObject("personalData", curriculum.getPersonalData());
-//				result.addObject("positionData", curriculum.getPositionData());
-//				result.addObject("educationData", curriculum.getEducationData());
-//				result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
-//				result.addObject("requestURI", "/curriculum/hacker/show.do");
-//			} catch(Throwable oops) {
-//				result = this.createEditModelAndView(tiles, positionData, curriculumId, "commit.error");
-//			}
-//		}
-//		
-//		return result;	
-//	}
+	@RequestMapping(value = "/edit", method =RequestMethod .GET)
+	public ModelAndView editEducationData(@RequestParam int educationDataId) {
+		ModelAndView result;
+		
+		EducationData educationData = this.educationDataService.findOne(educationDataId);
+		Curriculum curriculum = this.curriculumService.getCurriculumOfEducationData(educationDataId);
+		
+		result = this.createEditModelAndView("hacker/editEducationData", educationData, curriculum.getId());
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/delete", method =RequestMethod .GET)
+	public ModelAndView deleteEducationData(@RequestParam int educationDataId) {
+		ModelAndView result = null;
+		
+		Curriculum curriculum = this.curriculumService.getCurriculumOfEducationData(educationDataId);
+		
+		try {
+			this.educationDataService.deleteEducationDataAsHacker(educationDataId);
+			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST, params = "save")
+	public ModelAndView savePositionData(@Valid EducationData educationData, BindingResult binding, @Valid int curriculumId) {
+		ModelAndView result;
+		
+		String tiles;
+		if(educationData.getId()==0) {
+			tiles = "hacker/createEducationData";
+		} else {
+			tiles = "hacker/editEducationData";
+		}
+		
+		if(binding.hasErrors()) {
+			result = this.createEditModelAndView(tiles, educationData, curriculumId);
+		} else {
+			try {
+				this.educationDataService.addOrUpdateEducationDataAsHacker(educationData, curriculumId);
+				
+				Curriculum curriculum = this.curriculumService.getCurriculumOfLoggedHacker(curriculumId);
+				
+				result = new ModelAndView("hacker/curriculum");
+				result.addObject("curriculum", curriculum);
+				result.addObject("personalData", curriculum.getPersonalData());
+				result.addObject("positionData", curriculum.getPositionData());
+				result.addObject("educationData", curriculum.getEducationData());
+				result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
+				result.addObject("requestURI", "/curriculum/hacker/show.do");
+			} catch(Throwable oops) {
+				result = this.createEditModelAndView(tiles, educationData, curriculumId, "commit.error");
+			}
+		}
+		
+		return result;	
+	}
 
 	private ModelAndView createEditModelAndView(String tiles, EducationData educationData, int curriculumId) {
 		ModelAndView result = new ModelAndView(tiles);

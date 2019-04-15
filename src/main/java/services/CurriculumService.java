@@ -170,5 +170,9 @@ public class CurriculumService {
 	public Curriculum getCurriculumOfPositionData(int positionDataId) {
 		return this.curriculumRepository.getCurriculumOfPositionData(positionDataId);
 	}
+
+	public Curriculum getCurriculumOfEducationData(int educationDataId) {
+		return this.curriculumRepository.getCurriculumOfEducationData(educationDataId);
+	}
 	
 }
