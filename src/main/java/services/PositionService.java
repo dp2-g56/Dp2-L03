@@ -374,8 +374,10 @@ public class PositionService {
 		return this.positionRepository.positionsFiltered("%" + word + "%");
 	}
 
-	public List<Position> positionsOfApplicationOfHacker(Hacker hacker) {
-		return this.positionRepository.positionsOfApplicationOfHacker(hacker);
-	}
+	/*
+	 * public List<Position> positionsOfApplicationOfHacker(Hacker hacker) {
+	 * return this.positionRepository.positionsOfApplicationOfHacker(hacker);
+	 * }
+	 */
 
 }
