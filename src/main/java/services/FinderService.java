@@ -120,7 +120,13 @@ public class FinderService {
 		result.setKeyWord(finderForm.getKeyWord());
 		result.setDeadLine(finderForm.getDeadLine());
 		result.setMaxDeadLine(finderForm.getMaxDeadLine());
-		result.setMinSalary(finderForm.getMinSalary());
+		
+		Double salary = finderForm.getMinSalary();
+		if(salary==null) {
+			result.setMinSalary(0.);
+		} else {
+			result.setMinSalary(finderForm.getMinSalary());
+		}
 		
 		this.validator.validate(result, binding);
 		
@@ -145,19 +151,19 @@ public class FinderService {
 		
 		// Deadline
 		if (finder.getDeadLine() != null) {
-			filter = this.finderRepository.getParadesByDeadline(finder.getDeadLine());
+			filter = this.finderRepository.getPositionsByDeadline(finder.getDeadLine());
 			result.retainAll(filter);
 		}
 		
 		// Max deadline
 		if (finder.getMaxDeadLine() != null) {
-			filter = this.finderRepository.getParadesByMaxDeadline(finder.getMaxDeadLine());
+			filter = this.finderRepository.getPositionsByMaxDeadline(finder.getMaxDeadLine());
 			result.retainAll(filter);
 		}
 		
 		// Min salary
-		if (!finder.getMinSalary().equals(null) && !finder.getMinSalary().equals(0.)) {
-			filter = this.finderRepository.getParadesByMinSalary(finder.getMinSalary());
+		if (!finder.getMinSalary().equals(null)) {
+			filter = this.finderRepository.getPositionsByMinSalary(finder.getMinSalary());
 			result.retainAll(filter);
 		}
 		
@@ -181,11 +187,28 @@ public class FinderService {
 
 	public List<Position> getPositionsByKeyWord(String keyWord) {
 		return this.finderRepository.getPositionsByKeyWord("%" + keyWord + "%");
-	}	
+	}
 
 	public void delete(Finder finder) {
 		this.finderRepository.delete(finder);
 	}
+
+	/*
+	 * public void updateFinders() {
+	 * 
+	 * Date thisMoment = new Date();
+	 * 
+	 * Calendar calendar = Calendar.getInstance();
+	 * calendar.setTime(thisMoment);
+	 * calendar.add(Calendar.HOUR_OF_DAY, -this.configurationService.getConfiguration().getTimeFinder());
+	 * 
+	 * List<Finder> finders = new ArrayList<Finder>();
+	 * finders = this.finderRepository.getFindersNeedToUpdate(calendar.getTime());
+	 * for (Finder f : finders)
+	 * f.setPositions(new ArrayList<Position>());
+	 */
+
+	//}
 
 	public void updateAllFinders() {
 
@@ -205,7 +228,7 @@ public class FinderService {
 		// Max Time Finder
 		Integer time = this.configurationService.getConfiguration().getTimeFinder();
 
-		// Empty List parades
+		// Empty List Positions
 		List<Position> positions = new ArrayList<>();
 
 		for (Finder f : finders) {
@@ -222,5 +245,13 @@ public class FinderService {
 				this.save(f);
 			}
 		}
+	}
+
+	public List<Position> getPositionsByMinSalary(Double minSalary) {
+		return this.finderRepository.getPositionsByMinSalary(minSalary);
+	}
+
+	public void flush() {
+		this.finderRepository.flush();
 	}
 }

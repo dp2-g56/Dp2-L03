@@ -58,7 +58,8 @@
 			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="anonymous/hacker/create.do"><spring:message code="master.page.createHacker" /></a></li>				
+					<li><a href="anonymous/hacker/create.do"><spring:message code="master.page.createHacker" /></a></li>	
+					<li><a href="anonymous/company/create.do"><spring:message code="master.page.createCompany" /></a></li>			
 				</ul>
 			</li>
 			<li><a href="anonymous/position/list.do"><spring:message code="master.page.publicPositions" /></a></li>
@@ -91,6 +92,11 @@
 				</ul>
 			</li>
 		</security:authorize>
+		
+		<security:authorize access="hasAnyRole('HACKER', 'COMPANY')">
+		<li><a href="authenticated/deleteUser.do" onClick="return confirm('<spring:message code="delete.user.confirmation" />')"><spring:message code="master.page.deleteUser" /> </a></li>
+		</security:authorize>
+		
 		
 	</ul>
 </div>

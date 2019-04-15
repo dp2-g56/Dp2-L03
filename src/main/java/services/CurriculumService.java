@@ -118,11 +118,14 @@ public class CurriculumService {
 		
 		return curriculums;
 	}
+	
+	public Curriculum getCurriculumOfHacker(int hackerId, int curriculumId) {
+		return this.curriculumRepository.getCurriculumOfHacker(hackerId, curriculumId);
+	}
 
 	public Curriculum getCurriculumOfLoggedHacker(int curriculumId) {
 		Hacker hacker = this.hackerService.securityAndHacker();
-		Curriculum curriculum = this.findOne(curriculumId);
-		Assert.isTrue(hacker.getCurriculums().contains(curriculum));
+		Curriculum curriculum = this.getCurriculumOfHacker(hacker.getId(), curriculumId);
 		return curriculum;
 	}
 
@@ -151,13 +154,25 @@ public class CurriculumService {
 
 	public void deleteCurriculumAsHacker(int curriculumId) {
 		Hacker hacker = this.hackerService.securityAndHacker();
-		Curriculum curriculum = this.findOne(curriculumId);
+		
+		Curriculum curriculum = this.getCurriculumOfHacker(hacker.getId(), curriculumId);
+		Assert.notNull(curriculum);
+		
 		List<Curriculum> curriculums = hacker.getCurriculums();
-		Assert.isTrue(curriculums.contains(curriculum));
+
 		curriculums.remove(curriculum);
 		hacker.setCurriculums(curriculums);
 		this.hackerService.save(hacker);
+		
 		this.delete(curriculum);
+	}
+
+	public Curriculum getCurriculumOfPositionData(int positionDataId) {
+		return this.curriculumRepository.getCurriculumOfPositionData(positionDataId);
+	}
+
+	public Curriculum getCurriculumOfEducationData(int educationDataId) {
+		return this.curriculumRepository.getCurriculumOfEducationData(educationDataId);
 	}
 	
 }

@@ -18,10 +18,17 @@ import repositories.HackerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Actor;
 import domain.Application;
 import domain.CreditCard;
 import domain.Curriculum;
+import domain.EducationData;
+import domain.Finder;
 import domain.Hacker;
+import domain.MiscellaneousData;
+import domain.PersonalData;
+import domain.PositionData;
+import domain.Problem;
 import domain.Message;
 import domain.SocialProfile;
 import forms.FormObjectHacker;
@@ -33,7 +40,11 @@ public class HackerService {
 	@Autowired
 	private HackerRepository		hackerRepository;
 	@Autowired
-	private CurriculumService		curriculumService;
+	private CurriculumService curriculumService;
+	@Autowired
+	private ActorService actorService;
+	@Autowired
+	private PersonalDataService personalDataService;
 
 	@Autowired
 	private ApplicationService		applicationService;
@@ -43,6 +54,9 @@ public class HackerService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
+
+	@Autowired
+	private FinderService			finderService;
 
 
 	// Auxiliar methods
@@ -56,12 +70,15 @@ public class HackerService {
 
 		return loggedHacker;
 	}
+	
+	public Boolean isHacker(Actor actor) {
+		List<Authority> authorities = (List<Authority>) actor.getUserAccount().getAuthorities();
+		return authorities.get(0).toString().equals("HACKER");
+	}
 
 	public Hacker loggedHacker() {
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		List<Authority> authorities = (List<Authority>) userAccount.getAuthorities();
-		Assert.isTrue(authorities.get(0).toString().equals("HACKER"));
 		return this.hackerRepository.getHackerByUsername(userAccount.getUsername());
 	}
 
@@ -97,9 +114,9 @@ public class HackerService {
 		Hacker hacker = this.securityAndHacker();
 
 		if(curriculum.getId() > 0) {
-			Assert.isTrue(hacker.getCurriculums().contains(this.curriculumService.findOne(curriculum.getId())));
+			Assert.notNull(this.curriculumService.getCurriculumOfHacker(hacker.getId(), curriculum.getId()));
 			this.curriculumService.save(curriculum);
-		} else {
+		} else {			
 			List<Curriculum> curriculums = hacker.getCurriculums();
 			curriculums.add(curriculum);
 			hacker.setCurriculums(curriculums);
@@ -240,6 +257,28 @@ public class HackerService {
 				binding.addError(new FieldError("member", "email", result.getEmail(), false, null, null, "Dont follow the pattern example@domain.asd or alias <example@domain.asd>"));
 
 		return result;
+	}
+
+	public void deleteHacker() {
+		Hacker hacker = new Hacker();
+
+		hacker = this.loggedHacker();
+
+		Finder finder = hacker.getFinder();
+
+		//Finder se borra solo, hay que quitar la lista de positions
+		finder.getPositions().removeAll(finder.getPositions());
+
+		//Curriculum se borra solo
+
+		//Mensajes se borran solos
+
+		//Socialprofile se borra solo
+
+		this.applicationService.deleteAllApplication();
+
+		this.hackerRepository.delete(hacker);
+
 	}
 
 }

@@ -7,8 +7,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme"  tagdir="/WEB-INF/tags"%>
 
-<security:authorize access="hasRole('HACKER')">
-
 	<spring:message code="curriculum.title" var="title"/>
 	<h3><jstl:out value="${title}: ${curriculum.title}"/></h3>
 	
@@ -29,34 +27,88 @@
 	<h4><jstl:out value="${posData}"/></h4>
 	
 	<display:table name="positionData" id="row" pagesize="5" class="displaytag" 
-					requestURI="/curriculum/hacker/list.do">
+					requestURI="${requestURI}">
 			
 		<display:column property="title" titleKey="positionData.title" /> 
 		<display:column property="description" titleKey="positionData.description" /> 
 		<display:column property="startDate" titleKey="positionData.startDate" /> 
-		<display:column property="endDate" titleKey="positionData.endDate" /> 
+		<display:column property="endDate" titleKey="positionData.endDate" />
+		<display:column titleKey="positionData.action">
+			<spring:url var="editPositionData" value="/positionData/hacker/edit.do">
+				<spring:param name="positionDataId" value="${row.id}"/>
+			</spring:url>
+			<spring:url var="deletePositionData" value="/positionData/hacker/delete.do">
+				<spring:param name="positionDataId" value="${row.id}"/>
+			</spring:url>
+			<a href="${editPositionData}">
+				<spring:message code="positionData.edit" var="editPositionDataMessage" />
+				<jstl:out value="${editPositionDataMessage}"/>
+			</a> / 
+			<a href="${deletePositionData}" onclick="return confirm('<spring:message code="positionData.delete.confirmation" />')">
+				<spring:message code="positionData.delete" var="deletePositionDataMessage" />
+				<jstl:out value="${deletePositionDataMessage}"/>
+			</a>
+		</display:column>
 	
 	</display:table>
+	
+	<spring:url var="newPositionData" value="/positionData/hacker/new.do">
+		<spring:param name="curriculumId" value="${curriculum.id}"/>
+	</spring:url>
+	<p>
+		<a href="${newPositionData}">
+			<spring:message code="positionData.new" var="newPositionDataMessage" />
+			<jstl:out value="${newPositionDataMessage}"/>
+		</a>
+	</p>
 	
 	<spring:message code="educationData" var="eduData"/>
 	<h4><jstl:out value="${eduData}"/></h4>
 	
 	<display:table name="educationData" id="row" pagesize="5" class="displaytag" 
-					requestURI="/curriculum/hacker/list.do">
+					requestURI="${requestURI}">
 			
 		<display:column property="degree" titleKey="educationData.degree" /> 
 		<display:column property="institution" titleKey="educationData.institution" /> 
 		<display:column property="mark" titleKey="educationData.mark" /> 
 		<display:column property="startDate" titleKey="educationData.startDate" /> 
 		<display:column property="endDate" titleKey="educationData.endDate" />
+		<display:column titleKey="educationData.action">
+		<!-- AQUI -->
+			<spring:url var="editEducationData" value="/educationData/hacker/edit.do">
+				<spring:param name="educationDataId" value="${row.id}"/>
+			</spring:url>
+			<spring:url var="deleteEducationData" value="/educationData/hacker/delete.do">
+				<spring:param name="educationDataId" value="${row.id}"/>
+			</spring:url>
+			<a href="${editEducationData}">
+				<spring:message code="educationData.edit" var="editEducationDataMessage" />
+				<jstl:out value="${editEducationDataMessage}"/>
+			</a> / 
+			<a href="${deleteEducationData}" onclick="return confirm('<spring:message code="educationData.delete.confirmation" />')">
+				<spring:message code="educationData.delete" var="deleteEducationDataMessage" />
+				<jstl:out value="${deletePositionDataMessage}"/>
+			</a>
+		</display:column>
 	
 	</display:table>
+	
+	<spring:url var="newEducationData" value="/educationData/hacker/new.do">
+		<spring:param name="curriculumId" value="${curriculum.id}"/>
+	</spring:url>
+	<p>
+		<a href="${newEducationData}">
+			<spring:message code="educationData.new" var="newEducationDataMessage" />
+			<jstl:out value="${newEducationDataMessage}"/>
+		</a>
+	</p>
+	<!-- FIN -->
 	
 	<spring:message code="miscellaneousData" var="misData"/>
 	<h4><jstl:out value="${misData}"/></h4>
 	
 	<display:table name="miscellaneousData" id="row" pagesize="5" class="displaytag" 
-					requestURI="/curriculum/hacker/list.do">
+					requestURI="${requestURI}">
 			
 		<display:column property="freeText" titleKey="miscellaneousData.freeText" /> 
 		<display:column titleKey="miscellaneousData.action">
@@ -70,5 +122,7 @@
 		</display:column>
 		
 	</display:table>
-
-</security:authorize>
+	
+  	<security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
+  		<a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
+  	</security:authorize>
