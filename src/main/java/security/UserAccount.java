@@ -25,11 +25,16 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
+import javax.persistence.Table;
+import javax.persistence.Index;
 
 import domain.DomainEntity;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+		@Index(columnList = "username")
+	})
 public class UserAccount extends DomainEntity implements UserDetails {
 
 	// Constructors -----------------------------------------------------------
