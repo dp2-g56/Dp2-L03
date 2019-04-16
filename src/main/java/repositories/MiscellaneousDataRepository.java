@@ -14,5 +14,8 @@ public interface MiscellaneousDataRepository extends JpaRepository<Miscellaneous
 
 	@Query("select m from Hacker h join h.curriculums c join c.miscellaneousData m where h.id = ?1")
 	public List<MiscellaneousData> getMiscellaneousDataOfHacker(int hackerId);
+
+	@Query("select m from Hacker h join h.curriculums c join c.miscellaneousData m where h.id = ?1 and m.id = ?2")
+	public MiscellaneousData getMiscellaneousDataOfHacker(int hackerId, int miscellaneousDataId);
 	
 }

@@ -25,6 +25,9 @@ public interface CurriculumRepository extends JpaRepository<Curriculum, Integer>
 	@Query("select c from Curriculum c join c.educationData e where e.id = ?1")
 	public Curriculum getCurriculumOfEducationData(int educationDataId);
 
+	@Query("select c from Curriculum c join c.miscellaneousData m where m.id = ?1")
+	public Curriculum getCurriculumOfMiscellaneousData(int miscellaneousDataId);
+
 	@Query("select p.title from Hacker h join h.curriculums c join c.positionData p where h = ?1")
 	List<String> getTitlesOfPositionDatas(Hacker hacker);
 
@@ -33,4 +36,5 @@ public interface CurriculumRepository extends JpaRepository<Curriculum, Integer>
 
 	@Query("select m.freeText from Hacker h join h.curriculums c join c.miscellaneousData m where h = ?1")
 	List<String> getFreeTestOfMiscellaneousData(Hacker hacker);
+
 }

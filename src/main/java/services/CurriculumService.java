@@ -173,6 +173,10 @@ public class CurriculumService {
 	public Curriculum getCurriculumOfEducationData(int educationDataId) {
 		return this.curriculumRepository.getCurriculumOfEducationData(educationDataId);
 	}
+
+	public Curriculum getCurriculumOfMiscellaneousData(int miscellaneousDataId) {
+		return this.curriculumRepository.getCurriculumOfMiscellaneousData(miscellaneousDataId);
+	}
   
 	public String curriculumToStringExport() {
 		String res = "";
