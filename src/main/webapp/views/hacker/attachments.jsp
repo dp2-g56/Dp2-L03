@@ -15,6 +15,17 @@
 		<display:column titleKey="attachments">
 			<jstl:out value="${row}"/>
 		</display:column> 
+		
+		<display:column titleKey="miscellaneousData.action">
+			<spring:url var="deleteAttachment" value="/miscellaneousData/hacker/deleteAttachment.do">
+				<spring:param name="miscellaneousDataId" value="${miscellaneousDataId}"/>
+				<spring:param name="attachmentIndex" value="${attachments.indexOf(row)}"/>
+			</spring:url>
+			<a href="${deleteAttachment}" onclick="return confirm('<spring:message code="miscellaneousData.delete.attachment.confirmation" />')">
+				<spring:message code="miscellaneousData.delete.attachment" var="deleteAttachmentMessage" />
+				<jstl:out value="${deleteAttachmentMessage}"/>
+			</a>
+		</display:column>
 	
 	</display:table>
 	

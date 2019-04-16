@@ -58,6 +58,20 @@ public class MiscellaneousDataHackerController extends AbstractController {
 		return result;	
 	}
 	
+	@RequestMapping(value = "/deleteAttachment", method = RequestMethod.GET)
+	public ModelAndView newAttachment(@RequestParam int miscellaneousDataId, @RequestParam int attachmentIndex) {
+		ModelAndView result;
+		
+		try {
+			this.miscellaneousDataService.deleteAttachmentAsHacker(miscellaneousDataId, attachmentIndex);
+			result = new ModelAndView("redirect:listAttachments.do?miscellaneousDataId=" + miscellaneousDataId);
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:listAttachments.do?miscellaneousDataId=" + miscellaneousDataId);
+		}
+
+		return result;	
+	}
+	
 	@RequestMapping(value = "/saveAttachment", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveAttachment(@RequestParam int miscellaneousDataId, @RequestParam String attachment) {
 		ModelAndView result;
