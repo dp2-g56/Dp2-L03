@@ -166,6 +166,8 @@ public class ApplicationHackerController extends AbstractController {
 
 		Application p = new Application();
 
+		Hacker hacker = this.hackerService.loggedHacker();
+
 		p = this.applicationService.reconstruct(application, binding);
 
 		if (binding.hasErrors()
