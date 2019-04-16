@@ -39,6 +39,6 @@
 		</a>
 	</p>
 	
-	<acme:cancel url="/curriculum/hacker/show.do?curriculumId=${curriculumId}" code="curriculum.cancelButton" /> 
+	<acme:cancel url="/curriculum/hacker/show.do?curriculumId=${curriculumId}" code="hacker.back" /> 
 
 </security:authorize>

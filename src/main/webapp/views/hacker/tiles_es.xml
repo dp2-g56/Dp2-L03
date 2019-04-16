@@ -100,4 +100,14 @@
 		<put-attribute name="body" value="/views/hacker/createAttachment.jsp" />
 	</definition>
 	
+	<definition name="hacker/skills" extends="master.page">	
+		<put-attribute name="title" value="Habilidades" />
+		<put-attribute name="body" value="/views/hacker/skills.jsp" />
+	</definition>
+	
+	<definition name="hacker/technologies" extends="master.page">	
+		<put-attribute name="title" value="Tecnologias" />
+		<put-attribute name="body" value="/views/hacker/technologies.jsp" />
+	</definition>
+	
 </tiles-definitions>
