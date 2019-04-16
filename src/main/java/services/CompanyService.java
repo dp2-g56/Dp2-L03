@@ -22,6 +22,7 @@ import security.UserAccount;
 import domain.Application;
 import domain.Company;
 import domain.CreditCard;
+import domain.Curriculum;
 import domain.Hacker;
 import domain.Message;
 import domain.Position;
@@ -54,6 +55,9 @@ public class CompanyService {
 
 	@Autowired
 	private FinderService			finderService;
+
+	@Autowired
+	private CurriculumService		curriculumService;
 
 	@Autowired
 	private Validator				validator;
@@ -406,13 +410,21 @@ public class CompanyService {
 	public void deleteCompany() {
 		Company company = this.loggedCompany();
 
-		List<Application> applications = this.companyRepository.applicationsOfCompany(company.getId());
+		int companyId = company.getId();
 
-		for (Application a : applications) {
-			Hacker hacker = a.getHacker();
-			hacker.getApplications().remove(a);
-			this.applicationService.delete(a);
+		List<Application> applications = this.companyRepository.applicationsOfCompany(companyId);
+
+		List<Hacker> hackers = this.companyRepository.hackersOfCompany(companyId);
+
+		List<Curriculum> curriculums = this.companyRepository.curriculumsOfApplicationssOfCompany(companyId);
+
+		for (Hacker h : hackers) {
+			h.getApplications().removeAll(applications);
 		}
+
+		this.applicationService.deleteinBatch(applications);
+
+		this.curriculumService.deleteInBatch(curriculums);
 
 		List<Position> positions = new ArrayList<Position>();
 		positions.addAll(company.getPositions());
