@@ -65,6 +65,7 @@ public class HackerService {
 		String username = userAccount.getUsername();
 
 		Hacker loggedHacker = this.hackerRepository.getHackerByUsername(username);
+		Assert.notNull(loggedHacker);
 		List<Authority> authorities = (List<Authority>) loggedHacker.getUserAccount().getAuthorities();
 		Assert.isTrue(authorities.get(0).toString().equals("HACKER"));
 
@@ -110,18 +111,24 @@ public class HackerService {
 		return this.hackerRepository.save(hacker);
 	}
 
-	public void addCurriculum(Curriculum curriculum) {
+	public void addOrUpdateCurriculum(Curriculum curriculum) {
 		Hacker hacker = this.securityAndHacker();
 
 		if(curriculum.getId() > 0) {
 			Assert.notNull(this.curriculumService.getCurriculumOfHacker(hacker.getId(), curriculum.getId()));
 			this.curriculumService.save(curriculum);
+			this.curriculumService.flush();
 		} else {			
 			List<Curriculum> curriculums = hacker.getCurriculums();
 			curriculums.add(curriculum);
 			hacker.setCurriculums(curriculums);
 			this.save(hacker);
+			this.flush();
 		}
+	}
+
+	private void flush() {
+		this.hackerRepository.flush();
 	}
 
 	public Hacker createHacker() {

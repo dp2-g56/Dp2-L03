@@ -124,6 +124,7 @@ public class CurriculumService {
 	public Curriculum getCurriculumOfLoggedHacker(int curriculumId) {
 		Hacker hacker = this.hackerService.securityAndHacker();
 		Curriculum curriculum = this.getCurriculumOfHacker(hacker.getId(), curriculumId);
+		Assert.notNull(curriculum);
 		return curriculum;
 	}
 
@@ -229,5 +230,9 @@ public class CurriculumService {
 			cont++;
 		}
 		return sb.toString();
+	}
+
+	public void flush() {
+		this.curriculumRepository.flush();
 	}
 }

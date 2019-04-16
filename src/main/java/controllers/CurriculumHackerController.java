@@ -149,7 +149,7 @@ public class CurriculumHackerController extends AbstractController {
 			result = this.createEditModelAndView(tiles, formObject);
 		} else {
 			try {
-				this.hackerService.addCurriculum(curriculum);
+				this.hackerService.addOrUpdateCurriculum(curriculum);
 				result = new ModelAndView("redirect:list.do");
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(tiles, formObject, "commit.error");
