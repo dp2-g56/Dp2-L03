@@ -85,4 +85,29 @@
 		<put-attribute name="body" value="/views/hacker/createEditEducationData.jsp" />
 	</definition>
 	
+	<definition name="hacker/createMiscellaneousData" extends="master.page">	
+		<put-attribute name="title" value="Crear bloque de informacion" />
+		<put-attribute name="body" value="/views/hacker/createEditMiscellaneousData.jsp" />
+	</definition>
+	
+	<definition name="hacker/editMiscellaneousData" extends="master.page">	
+		<put-attribute name="title" value="Editar bloque de informacion" />
+		<put-attribute name="body" value="/views/hacker/createEditMiscellaneousData.jsp" />
+	</definition>
+	
+	<definition name="hacker/createAttachment" extends="master.page">	
+		<put-attribute name="title" value="Añadir adjunto" />
+		<put-attribute name="body" value="/views/hacker/createAttachment.jsp" />
+	</definition>
+	
+	<definition name="hacker/skills" extends="master.page">	
+		<put-attribute name="title" value="Habilidades" />
+		<put-attribute name="body" value="/views/hacker/skills.jsp" />
+	</definition>
+	
+	<definition name="hacker/technologies" extends="master.page">	
+		<put-attribute name="title" value="Tecnologias" />
+		<put-attribute name="body" value="/views/hacker/technologies.jsp" />
+	</definition>
+	
 </tiles-definitions>

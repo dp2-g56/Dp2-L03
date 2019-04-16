@@ -10,16 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 
+import repositories.CurriculumRepository;
 import domain.Curriculum;
 import domain.EducationData;
-import domain.Mark;
+import domain.Hacker;
 import domain.MiscellaneousData;
 import domain.PersonalData;
 import domain.PositionData;
-import domain.Hacker;
 import forms.FormObjectCurriculumPersonalData;
-
-import repositories.CurriculumRepository;
 
 @Service
 @Transactional
@@ -44,7 +42,7 @@ public class CurriculumService {
 	private HackerService hackerService;
 
 	public Curriculum findOne(int id) {
-		return curriculumRepository.findOne(id);
+		return this.curriculumRepository.findOne(id);
 	}
 
 	public Curriculum copyCurriculum(Curriculum curriculum) {
@@ -178,5 +176,58 @@ public class CurriculumService {
 
 	public List<Curriculum> findAll() {
 		return this.curriculumRepository.findAll();
+	}
+
+	public Curriculum getCurriculumOfMiscellaneousData(int miscellaneousDataId) {
+		return this.curriculumRepository.getCurriculumOfMiscellaneousData(miscellaneousDataId);
+	}
+
+	public String curriculumToStringExport() {
+		String res = "";
+		Hacker hacker = this.hackerService.loggedHacker();
+		List<Curriculum> curriculums = new ArrayList<Curriculum>();
+		StringBuilder sb = new StringBuilder();
+		curriculums = hacker.getCurriculums();
+
+		/*
+		 * + c.getTitle() + " EducationalData: " + c.getEducationData().toString() +
+		 * " Miscellaneous data: " + c.getMiscellaneousData().toString() +
+		 * "Position data" + c.getPositionData().toString(
+		 */
+
+		Integer cont = 1;
+
+		for (Curriculum c : curriculums) {
+			sb.append("Curriculum" + cont + ": ").append(System.getProperty("line.separator"));
+			sb.append("Title: " + c.getTitle()).append(System.getProperty("line.separator"));
+			sb.append("Full name: " + c.getPersonalData().getFullName()).append(System.getProperty("line.separator"));
+			sb.append("GitHub profile: " + c.getPersonalData().getGitHubProfile())
+					.append(System.getProperty("line.separator"));
+			sb.append("Linkedin profile: " + c.getPersonalData().getLinkedinProfile())
+					.append(System.getProperty("line.separator"));
+			sb.append("Statement: " + c.getPersonalData().getStatement()).append(System.getProperty("line.separator"));
+			sb.append("Phone number: " + c.getPersonalData().getPhoneNumber())
+					.append(System.getProperty("line.separator"));
+			sb.append(System.getProperty("line.separator"));
+
+			sb.append("Titles of Positions data: " + this.curriculumRepository.getTitlesOfPositionDatas(hacker))
+					.append(System.getProperty("line.separator"));
+
+			sb.append(System.getProperty("line.separator"));
+
+			sb.append("Degrees of Educations data: " + this.curriculumRepository.getDegreesOfEducationalData(hacker))
+					.append(System.getProperty("line.separator"));
+
+			sb.append(System.getProperty("line.separator"));
+
+			sb.append("Free texts of Miscellaneous data: "
+					+ this.curriculumRepository.getFreeTestOfMiscellaneousData(hacker))
+					.append(System.getProperty("line.separator"));
+
+			sb.append(System.getProperty("line.separator"));
+
+			cont++;
+		}
+		return sb.toString();
 	}
 }
