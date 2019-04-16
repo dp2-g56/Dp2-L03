@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Curriculum;
+import domain.Hacker;
 import domain.MiscellaneousData;
 import domain.PositionData;
 import services.CurriculumService;
+import services.HackerService;
 import services.MiscellaneousDataService;
 
 @Controller
@@ -28,6 +31,8 @@ public class MiscellaneousDataHackerController extends AbstractController {
 	private CurriculumService curriculumService;
 	@Autowired
 	private MiscellaneousDataService miscellaneousDataService;
+	@Autowired
+	private HackerService hackerService;
 
 	public MiscellaneousDataHackerController() {
 		super();
@@ -37,12 +42,16 @@ public class MiscellaneousDataHackerController extends AbstractController {
 	public ModelAndView list(@RequestParam int miscellaneousDataId) {
 		ModelAndView result;
 		
-		List<String> attachments = this.miscellaneousDataService.getMiscellaneousDataOfLoggedHacker(miscellaneousDataId).getAttachments();
-		
-		result = new ModelAndView("hacker/attachments");
-		result.addObject("attachments", attachments);
-		result.addObject("miscellaneousDataId", miscellaneousDataId);
-		result.addObject("curriculumId", this.curriculumService.getCurriculumOfMiscellaneousData(miscellaneousDataId).getId());
+		try {
+			List<String> attachments = this.miscellaneousDataService.getMiscellaneousDataOfLoggedHacker(miscellaneousDataId).getAttachments();
+			
+			result = new ModelAndView("hacker/attachments");
+			result.addObject("attachments", attachments);
+			result.addObject("miscellaneousDataId", miscellaneousDataId);
+			result.addObject("curriculumId", this.curriculumService.getCurriculumOfMiscellaneousData(miscellaneousDataId).getId());
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:/curriculum/hacker/list.do");
+		}
 		
 		return result;	
 	}
@@ -66,7 +75,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 			this.miscellaneousDataService.deleteAttachmentAsHacker(miscellaneousDataId, attachmentIndex);
 			result = new ModelAndView("redirect:listAttachments.do?miscellaneousDataId=" + miscellaneousDataId);
 		} catch(Throwable oops) {
-			result = new ModelAndView("redirect:listAttachments.do?miscellaneousDataId=" + miscellaneousDataId);
+			result = new ModelAndView("redirect:/curriculum/hacker/list.do");
 		}
 
 		return result;	
@@ -104,10 +113,14 @@ public class MiscellaneousDataHackerController extends AbstractController {
 	public ModelAndView editMiscellaneousData(@RequestParam int miscellaneousDataId) {
 		ModelAndView result;
 		
-		MiscellaneousData miscellaneousData = this.miscellaneousDataService.findOne(miscellaneousDataId);
-		Curriculum curriculum = this.curriculumService.getCurriculumOfMiscellaneousData(miscellaneousDataId);
-		
-		result = this.createEditModelAndView("hacker/editMiscellaneousData", miscellaneousData, curriculum.getId());
+		try {
+			MiscellaneousData miscellaneousData = this.miscellaneousDataService.getMiscellaneousDataOfLoggedHacker(miscellaneousDataId);
+			Curriculum curriculum = this.curriculumService.getCurriculumOfMiscellaneousData(miscellaneousDataId);
+			
+			result = this.createEditModelAndView("hacker/editMiscellaneousData", miscellaneousData, curriculum.getId());
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:/curriculum/hacker/list.do");
+		}
 		
 		return result;
 	}
@@ -122,7 +135,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 			this.miscellaneousDataService.deleteMiscellaneousDataAsHacker(miscellaneousDataId);
 			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
 		} catch(Throwable oops) {
-			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
+			result = new ModelAndView("redirect:/curriculum/hacker/list.do");
 		}
 		
 		return result;
