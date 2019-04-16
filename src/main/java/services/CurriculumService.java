@@ -39,7 +39,7 @@ public class CurriculumService {
 
 	@Autowired
 	private EducationDataService educationDataService;
-	
+
 	@Autowired
 	private HackerService hackerService;
 
@@ -102,12 +102,12 @@ public class CurriculumService {
 		copy.setPersonalData(copyP);
 		copy.setMiscellaneousData(copyMis);
 		copy.setEducationData(copyEd);
-		
+
 		Curriculum saved = this.curriculumRepository.save(copy);
 
 		return saved;
 	}
-	
+
 	public List<Curriculum> getCurriculumsOfHacker(int hackerId) {
 		return this.curriculumRepository.getCurriculumsOfHacker(hackerId);
 	}
@@ -115,10 +115,10 @@ public class CurriculumService {
 	public List<Curriculum> getCurriculumsOfLoggedHacker() {
 		Hacker hacker = this.hackerService.securityAndHacker();
 		List<Curriculum> curriculums = this.getCurriculumsOfHacker(hacker.getId());
-		
+
 		return curriculums;
 	}
-	
+
 	public Curriculum getCurriculumOfHacker(int hackerId, int curriculumId) {
 		return this.curriculumRepository.getCurriculumOfHacker(hackerId, curriculumId);
 	}
@@ -129,18 +129,19 @@ public class CurriculumService {
 		return curriculum;
 	}
 
-	public Curriculum reconstruct(FormObjectCurriculumPersonalData formObject, BindingResult binding, PersonalData personalData) {
+	public Curriculum reconstruct(FormObjectCurriculumPersonalData formObject, BindingResult binding,
+			PersonalData personalData) {
 		Curriculum curriculum = new Curriculum();
-		
-		if(formObject.getId() > 0) {
+
+		if (formObject.getId() > 0) {
 			Curriculum curriculumFounded = this.findOne(formObject.getId());
-			
+
 			curriculum.setId(curriculumFounded.getId());
 			curriculum.setVersion(curriculumFounded.getVersion());
-		} 
+		}
 		curriculum.setTitle(formObject.getTitle());
 		curriculum.setPersonalData(personalData);
-		
+
 		return curriculum;
 	}
 
@@ -154,16 +155,16 @@ public class CurriculumService {
 
 	public void deleteCurriculumAsHacker(int curriculumId) {
 		Hacker hacker = this.hackerService.securityAndHacker();
-		
+
 		Curriculum curriculum = this.getCurriculumOfHacker(hacker.getId(), curriculumId);
 		Assert.notNull(curriculum);
-		
+
 		List<Curriculum> curriculums = hacker.getCurriculums();
 
 		curriculums.remove(curriculum);
 		hacker.setCurriculums(curriculums);
 		this.hackerService.save(hacker);
-		
+
 		this.delete(curriculum);
 	}
 
@@ -174,5 +175,8 @@ public class CurriculumService {
 	public Curriculum getCurriculumOfEducationData(int educationDataId) {
 		return this.curriculumRepository.getCurriculumOfEducationData(educationDataId);
 	}
-	
+
+	public List<Curriculum> findAll() {
+		return this.curriculumRepository.findAll();
+	}
 }
