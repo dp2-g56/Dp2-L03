@@ -190,7 +190,7 @@ public class ApplicationService {
 		List<Application> applications = new ArrayList<Application>();
 		applications = hacker.getApplications();
 
-		//Quitamos todos los applications de hacker
+		// Quitamos todos los applications de hacker
 
 		for (Application app : applications) {
 			Position pos = new Position();
@@ -201,20 +201,25 @@ public class ApplicationService {
 
 		}
 
-		//hacker.getApplications().removeAll(applications);
+		// hacker.getApplications().removeAll(applications);
 
 		/*
 		 * List<Position> allPositionsOfHacker = new ArrayList<Position>();
 		 * 
-		 * allPositionsOfHacker = this.positionService.positionsOfApplicationOfHacker(hacker);
+		 * allPositionsOfHacker =
+		 * this.positionService.positionsOfApplicationOfHacker(hacker);
 		 * 
-		 * for (Position p : allPositionsOfHacker)
-		 * if (Collections.disjoint(p.getApplications(), applications)) {
+		 * for (Position p : allPositionsOfHacker) if
+		 * (Collections.disjoint(p.getApplications(), applications)) {
 		 * 
 		 * }
 		 */
 
 		this.applicationRepository.deleteInBatch(applications);
 
+	}
+
+	public void flush() {
+		this.applicationRepository.flush();
 	}
 }
