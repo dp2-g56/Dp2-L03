@@ -32,9 +32,6 @@ import domain.DomainEntity;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Table(indexes = {
-		@Index(columnList = "username")
-	})
 public class UserAccount extends DomainEntity implements UserDetails {
 
 	// Constructors -----------------------------------------------------------
