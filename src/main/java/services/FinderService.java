@@ -254,4 +254,14 @@ public class FinderService {
 	public void flush() {
 		this.finderRepository.flush();
 	}
+
+	public void cleanFindersOfPositions(List<Position> positions) {
+		for (Position p : positions) {
+			List<Finder> finders = this.finderRepository.getFindersContainsPosition(p);
+			for (Finder f : finders) {
+				f.getPositions().removeAll(positions);
+			}
+		}
+	}
+
 }

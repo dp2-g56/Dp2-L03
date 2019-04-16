@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Application;
 import domain.Company;
 import domain.Position;
 
@@ -27,5 +28,8 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
 	@Query("select c.positions from Company c where c.id = ?1")
 	public List<Position> positionsOfCompany(int idCompany);
+
+	@Query("select distinct p.applications from Company a join a.positions p where a.id = ?1")
+	public List<Application> applicationsOfCompany(int idCompany);
 
 }
