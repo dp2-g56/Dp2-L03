@@ -121,12 +121,7 @@ public class FinderService {
 		result.setDeadLine(finderForm.getDeadLine());
 		result.setMaxDeadLine(finderForm.getMaxDeadLine());
 		
-		Double salary = finderForm.getMinSalary();
-		if(salary==null) {
-			result.setMinSalary(0.);
-		} else {
-			result.setMinSalary(finderForm.getMinSalary());
-		}
+		result.setMinSalary(finderForm.getMinSalary());
 		
 		this.validator.validate(result, binding);
 		
@@ -162,12 +157,16 @@ public class FinderService {
 		}
 		
 		// Min salary
-		if (!finder.getMinSalary().equals(null)) {
+		try {
+			Assert.notNull(finder.getMinSalary());
 			filter = this.finderRepository.getPositionsByMinSalary(finder.getMinSalary());
 			result.retainAll(filter);
+		} catch(Throwable oops) {
+			finder.setMinSalary(0.);
 		}
 		
 		finder.setPositions(result);
+		
 		Finder finderRes = this.finderRepository.save(finder);
 		hacker.setFinder(finderRes);
 		this.hackerService.save(hacker);

@@ -116,9 +116,13 @@ public class FinderHackerController extends AbstractController {
 				this.finderService.filterPositionsByFinder(finder);
 				result = new ModelAndView("redirect:list.do");
 			} catch (Throwable oops) {
-				Hacker hacker = this.hackerService.securityAndHacker();
-				result = this.createEditModelAndView(finder, "finder.commit.error");
-				result.addObject("hacker", hacker);
+				try {
+					Hacker hacker = this.hackerService.securityAndHacker();
+					result = this.createEditModelAndView(finder, "finder.commit.error");
+					result.addObject("hacker", hacker);
+				} catch(Throwable oops2) {
+					result = new ModelAndView("redirect:/");
+				}
 			}
 		return result;
 	}

@@ -30,6 +30,7 @@ public class Finder extends DomainEntity {
 	private List<Position> positions;
 
 
+	@Valid
 	public String getKeyWord() {
 		return this.keyWord;
 	}
@@ -49,7 +50,7 @@ public class Finder extends DomainEntity {
 		this.deadLine = deadLine;
 	}
 
-	@Min(0)
+	@Valid
 	public Double getMinSalary() {
 		return this.minSalary;
 	}
@@ -88,8 +89,6 @@ public class Finder extends DomainEntity {
 
 	public void setPositions(List<Position> positions) {
 		this.positions = positions;
-	}
-	
-	
+	}	
 
 }
