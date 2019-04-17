@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Company;
 import domain.Problem;
-import forms.FormObjectEditCompany;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -26,6 +26,9 @@ public class CompanyTest extends AbstractTest {
 	private ProblemService	problemService;
 	@Autowired
 	private CompanyService	companyService;
+
+	@Autowired
+	private ActorService	actorService;
 
 
 	@Test
@@ -130,37 +133,35 @@ public class CompanyTest extends AbstractTest {
 		}
 
 	}
-	
+
 	/**
-	On this test we are going to test the requirement 8. 
-	
-	An actor who is authenticated must be able to:
-	2. Edit his or her personal data.
-	
-	
-	**/
-	
+	 * On this test we are going to test the requirement 8.
+	 * 
+	 * An actor who is authenticated must be able to:
+	 * 2. Edit his or her personal data.
+	 **/
+
 	@Test
 	public void editPersonalData() {
 		Object testingData[][] = {
 
-				{
-					//POSITIVE: A company is editing his company name
-					"company1" ,"company1", "companyName", null
-				}, {
-					//NEGATIVE: A company is trying to edit another company's name
-					"company2","company1",  "companyName", IllegalArgumentException.class
-				}
-			};
-		
+			{
+				//POSITIVE: A company is editing his company name
+				"company1", "company1", "companyName", null
+			}, {
+				//NEGATIVE: A company is trying to edit another company's name
+				"company2", "company1", "companyName", IllegalArgumentException.class
+			}
+		};
+
 		for (int i = 0; i < testingData.length; i++) {
-			this.templateEditPersonalData((String) testingData[i][0], (String) testingData[i][1],(String) testingData[i][2]  ,(Class<?>) testingData[i][3]);
+			this.templateEditPersonalData((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
 		}
-		
+
 	}
 
 	private void templateEditPersonalData(String username, String companyToEdit, String name, Class<?> expected) {
-		
+
 		this.startTransaction();
 		super.authenticate(username);
 
@@ -168,7 +169,6 @@ public class CompanyTest extends AbstractTest {
 
 		Class<?> caught = null;
 
-		
 		try {
 			company.setCompanyName(name);
 			this.companyService.updateCompany(company);
@@ -181,7 +181,6 @@ public class CompanyTest extends AbstractTest {
 
 		this.rollbackTransaction();
 
-		
 	}
 
 	protected void templateEditProblem(String username, String problem, String title, String statement, Class<?> expected) {
@@ -304,5 +303,50 @@ public class CompanyTest extends AbstractTest {
 		this.rollbackTransaction();
 
 	}
-	
+
+	@Test
+	public void driverDeleteCompany() {
+
+		Object testingData[][] = {
+			// Positive case
+			{
+				"company1", null
+			}, {
+				"hacker1", NullPointerException.class
+			}
+		// Negative case: Trying to delete an user with a different role
+
+		};
+
+		for (int i = 0; i < testingData.length; i++) {
+			this.templateDeleteMember((String) testingData[i][0], (Class<?>) testingData[i][1]);
+		}
+	}
+
+	private void templateDeleteMember(String username, Class<?> expected) {
+
+		Class<?> caught = null;
+
+		try {
+			this.startTransaction();
+			super.authenticate(username);
+
+			Assert.notNull(this.actorService.getActorByUsername(username));
+
+			this.companyService.deleteCompany();
+
+			Assert.isNull(this.actorService.getActorByUsername(username));
+
+			super.unauthenticate();
+			this.companyService.flush();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+
+	}
+
 }

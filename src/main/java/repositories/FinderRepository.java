@@ -25,5 +25,8 @@ public interface FinderRepository extends JpaRepository<Finder, Integer> {
 
 	@Query("select p from Position p where (p.offeredSalary > ?1 or p.offeredSalary = ?1) and p.isDraftMode = false")
 	public List<Position> getPositionsByMinSalary(Double minSalary);
-	
-} 
+
+	@Query("select f from Finder f where ?1 member of f.positions")
+	public List<Finder> getFindersContainsPosition(Position position);
+
+}

@@ -230,4 +230,9 @@ public class CurriculumService {
 		}
 		return sb.toString();
 	}
+
+	public void deleteInBatch(List<Curriculum> curriculums) {
+		this.curriculumRepository.deleteInBatch(curriculums);
+
+	}
 }
