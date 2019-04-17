@@ -44,10 +44,14 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		
-		List<Curriculum> curriculums = this.curriculumService.getCurriculumsOfLoggedHacker();
-		
-		result = new ModelAndView("hacker/curriculums");
-		result.addObject("curriculums", curriculums);
+		try {
+			List<Curriculum> curriculums = this.curriculumService.getCurriculumsOfLoggedHacker();
+			
+			result = new ModelAndView("hacker/curriculums");
+			result.addObject("curriculums", curriculums);
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:/");
+		}
 		
 		return result;	
 	}
@@ -56,15 +60,19 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView show(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		Curriculum curriculum = this.curriculumService.getCurriculumOfLoggedHacker(curriculumId);
-		
-		result = new ModelAndView("hacker/curriculum");
-		result.addObject("curriculum", curriculum);
-		result.addObject("personalData", curriculum.getPersonalData());
-		result.addObject("positionData", curriculum.getPositionData());
-		result.addObject("educationData", curriculum.getEducationData());
-		result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
-		result.addObject("requestURI", "/curriculum/hacker/show.do");
+		try {
+			Curriculum curriculum = this.curriculumService.getCurriculumOfLoggedHacker(curriculumId);
+			
+			result = new ModelAndView("hacker/curriculum");
+			result.addObject("curriculum", curriculum);
+			result.addObject("personalData", curriculum.getPersonalData());
+			result.addObject("positionData", curriculum.getPositionData());
+			result.addObject("educationData", curriculum.getEducationData());
+			result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
+			result.addObject("requestURI", "/curriculum/hacker/show.do");
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 		
 		return result;	
 	}
@@ -84,19 +92,23 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView editCurriculum(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		FormObjectCurriculumPersonalData formObject = new FormObjectCurriculumPersonalData();
-		
-		Curriculum curriculum = this.curriculumService.findOne(curriculumId);
-		
-		formObject.setId(curriculum.getId());
-		formObject.setTitle(curriculum.getTitle());
-		formObject.setFullName(curriculum.getPersonalData().getFullName());
-		formObject.setPhoneNumber(curriculum.getPersonalData().getPhoneNumber());
-		formObject.setStatement(curriculum.getPersonalData().getStatement());
-		formObject.setGitHubProfile(curriculum.getPersonalData().getGitHubProfile());
-		formObject.setLinkedInProfile(curriculum.getPersonalData().getLinkedinProfile());
-		
-		result = this.createEditModelAndView("hacker/editCurriculum", formObject);
+		try {
+			FormObjectCurriculumPersonalData formObject = new FormObjectCurriculumPersonalData();
+			
+			Curriculum curriculum = this.curriculumService.getCurriculumOfLoggedHacker(curriculumId);
+			
+			formObject.setId(curriculum.getId());
+			formObject.setTitle(curriculum.getTitle());
+			formObject.setFullName(curriculum.getPersonalData().getFullName());
+			formObject.setPhoneNumber(curriculum.getPersonalData().getPhoneNumber());
+			formObject.setStatement(curriculum.getPersonalData().getStatement());
+			formObject.setGitHubProfile(curriculum.getPersonalData().getGitHubProfile());
+			formObject.setLinkedInProfile(curriculum.getPersonalData().getLinkedinProfile());
+			
+			result = this.createEditModelAndView("hacker/editCurriculum", formObject);
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 		
 		return result;	
 	}
@@ -105,10 +117,13 @@ public class CurriculumHackerController extends AbstractController {
 	public ModelAndView deleteCurriculum(@RequestParam int curriculumId) {
 		ModelAndView result;
 		
-		if(this.curriculumService.findOne(curriculumId)!=null) {
+		try {
 			this.curriculumService.deleteCurriculumAsHacker(curriculumId);
+
+			result = new ModelAndView("redirect:list.do");
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
 		}
-		result = new ModelAndView("redirect:list.do");
 		
 		return result;	
 	}
@@ -134,7 +149,7 @@ public class CurriculumHackerController extends AbstractController {
 			result = this.createEditModelAndView(tiles, formObject);
 		} else {
 			try {
-				this.hackerService.addCurriculum(curriculum);
+				this.hackerService.addOrUpdateCurriculum(curriculum);
 				result = new ModelAndView("redirect:list.do");
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(tiles, formObject, "commit.error");

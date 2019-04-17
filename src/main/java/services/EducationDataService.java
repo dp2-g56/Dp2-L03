@@ -39,12 +39,20 @@ public class EducationDataService {
 		
 		if(educationData.getId()==0) {
 			Curriculum curriculum = this.curriculumService.getCurriculumOfHacker(hacker.getId(), curriculumId);
+			Assert.notNull(curriculum);
 			List<EducationData> educationsData = curriculum.getEducationData();
 			educationsData.add(educationData);
 			this.curriculumService.save(curriculum);
+			this.curriculumService.flush();
 		} else {
+			Assert.notNull(this.educationDataRepository.getEducationDataOfHacker(hacker.getId(), educationData.getId()));
 			this.save(educationData);
+			this.flush();
 		}
+	}
+
+	private void flush() {
+		this.educationDataRepository.flush();
 	}
 
 	public EducationData findOne(int educationDataId) {

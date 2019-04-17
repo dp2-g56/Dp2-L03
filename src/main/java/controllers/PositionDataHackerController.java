@@ -57,15 +57,20 @@ public class PositionDataHackerController extends AbstractController {
 	public ModelAndView editPositionData(@RequestParam int positionDataId) {
 		ModelAndView result;
 		
-		PositionData positionData = this.positionDataService.findOne(positionDataId);
-		Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
-		
-		result = this.createEditModelAndView("hacker/editPositionData", positionData, curriculum.getId());
+		try {
+			PositionData positionData = this.positionDataService.findOne(positionDataId);
+			Curriculum curriculum = this.curriculumService.getCurriculumOfPositionData(positionDataId);
+			Assert.notNull(this.curriculumService.getCurriculumOfLoggedHacker(curriculum.getId()));
+			
+			result = this.createEditModelAndView("hacker/editPositionData", positionData, curriculum.getId());
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:/curriculum/hacker/list.do");
+		}
 		
 		return result;
 	}
 	
-	@RequestMapping(value = "/delete", method =RequestMethod .GET)
+	@RequestMapping(value = "/delete", method = RequestMethod .GET)
 	public ModelAndView deletePositionData(@RequestParam int positionDataId) {
 		ModelAndView result = null;
 		
@@ -75,7 +80,7 @@ public class PositionDataHackerController extends AbstractController {
 			this.positionDataService.deletePositionDataAsHacker(positionDataId);
 			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
 		} catch(Throwable oops) {
-			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
+			result = new ModelAndView("redirect:/curriculum/hacker/list.do");
 		}
 		
 		return result;

@@ -8,8 +8,10 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
@@ -23,6 +25,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+		@Index(columnList = "title, description, ticker, requiredProfile, isDraftMode"), 
+		@Index(columnList = "deadline, isDraftMode"),
+		@Index(columnList = "offeredSalary, isDraftMode"),
+		@Index(columnList = "isDraftMode")
+	})
 public class Position extends DomainEntity {
 
 	private String				title;
