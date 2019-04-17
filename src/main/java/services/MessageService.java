@@ -130,6 +130,9 @@ public class MessageService {
 
 		this.actorService.loggedAsActor();
 
+		List<String> spam = new ArrayList<String>();
+		spam = this.configurationService.getSpamWords();
+
 		Actor loggedActor = this.actorService.loggedActor();
 
 		Actor receiver = this.actorService.getActorByUsername(message.getReceiver());
@@ -140,8 +143,11 @@ public class MessageService {
 		Message messageSaved = this.messageRepository.save(message);
 		Message messageCopy = this.createCopy(messageSaved.getSubject(), messageSaved.getBody(), message.getTags(), messageSaved.getReceiver());
 
-		if (this.configurationService.isStringSpam(message.getBody(), spamWords) || this.configurationService.isStringSpam(message.getSubject(), spamWords) || this.configurationService.isStringSpam(message.getTags(), spamWords))
+		Boolean hasSpam = this.configurationService.isStringSpam(message.getBody(), spamWords) || this.configurationService.isStringSpam(message.getSubject(), spamWords) || this.configurationService.isStringSpam(message.getTags(), spamWords);
+
+		if (hasSpam) {
 			messageCopy.setTags("SPAM");
+		}
 
 		Message messageSavedCopy = this.messageRepository.save(messageCopy);
 
@@ -150,6 +156,11 @@ public class MessageService {
 
 		receiver.getMessages().add(messageSavedCopy);
 		this.actorService.save(receiver);
+
+		this.flush();
+		if (hasSpam) {
+			this.actorService.updateActorSpam(loggedActor);
+		}
 
 		return messageSaved;
 	}
