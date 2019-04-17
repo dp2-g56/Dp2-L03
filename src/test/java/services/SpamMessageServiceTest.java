@@ -43,8 +43,9 @@ public class SpamMessageServiceTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++)
+		for (int i = 0; i < testingData.length; i++) {
 			this.templateSpamMessage((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (Class<?>) testingData[i][5]);
+		}
 
 	}
 
@@ -61,6 +62,8 @@ public class SpamMessageServiceTest extends AbstractTest {
 
 			Actor actor = this.actorService.getActorByUsername(receiver);
 
+			Actor sender = this.actorService.getActorByUsername(username);
+
 			Date thisMoment = new Date();
 			thisMoment.setTime(thisMoment.getTime() - 1000);
 
@@ -73,10 +76,12 @@ public class SpamMessageServiceTest extends AbstractTest {
 			message.setReceiver(receiver);
 			message.setTags(tags);
 
+			Assert.isTrue(!sender.getHasSpam());
+
 			this.messageService.sendMessage(message);
 			this.messageService.flush();
 
-			Assert.isTrue(actor.getMessages().get(0).getTags().contains("SPAM"));
+			Assert.isTrue(actor.getMessages().get(0).getTags().contains("SPAM") && sender.getHasSpam());
 
 			super.authenticate(null);
 

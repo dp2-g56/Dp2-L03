@@ -25,6 +25,9 @@ public class ActorService {
 	@Autowired
 	private SocialProfileService	socialProfileService;
 
+	@Autowired
+	private ConfigurationService	configurationService;
+
 
 	//	@Autowired
 	//	private ConfigurationService configurationService;
@@ -71,10 +74,11 @@ public class ActorService {
 		Boolean res = false;
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
-		if (userAccount.getAuthorities().size() > 0)
+		if (userAccount.getAuthorities().size() > 0) {
 			res = true;
-		else
+		} else {
 			res = false;
+		}
 		return res;
 	}
 
@@ -110,5 +114,13 @@ public class ActorService {
 
 	public List<Actor> allActorsExceptOne(String username) {
 		return this.actorRepository.getActorsExceptOne(username);
+	}
+
+	public void updateActorSpam(Actor a) {
+
+		if (this.configurationService.isActorSuspicious(a) && a.getHasSpam() == false) {
+			a.setHasSpam(true);
+			this.actorRepository.save(a);
+		}
 	}
 }

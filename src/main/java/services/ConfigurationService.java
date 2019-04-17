@@ -71,20 +71,19 @@ public class ConfigurationService {
 		List<String> spamWords = new ArrayList<String>();
 		spamWords = this.getSpamWords();
 		Integer spamCount = 0;
-		Integer messagesCount = 0;
-		Double spamPorcent = 0.;
+
+		List<Message> messages = this.configurationRepository.messagesSendedByActor(a.getId());
+		Integer messagesCount = messages.size();
 
 		// COMPROBANDO LAS CAJAS DEL ACTOR
 
-		for (Message g : a.getMessages()) {
-			if (g.getSender().equals(a) && (this.isStringSpam(g.getBody(), spamWords) || this.isStringSpam(g.getSubject(), spamWords))) {
+		for (Message g : messages) {
+			if (this.isStringSpam(g.getBody(), spamWords) || this.isStringSpam(g.getSubject(), spamWords) || this.isStringSpam(g.getTags(), spamWords)) {
 				spamCount++;
 			}
 		}
 
-		spamPorcent = spamCount / messagesCount * 100.;
-
-		if (spamPorcent >= 10) {
+		if (spamCount * 10 >= messagesCount) {
 			result = true;
 		}
 
