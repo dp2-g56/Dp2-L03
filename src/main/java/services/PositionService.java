@@ -397,4 +397,14 @@ public class PositionService {
 	 * }
 	 */
 
+	public void deleteInBatch(List<Position> positions) {
+		this.positionRepository.deleteInBatch(positions);
+
+	}
+
+	public void delete(Position position) {
+		this.positionRepository.delete(position);
+
+	}
+
 }

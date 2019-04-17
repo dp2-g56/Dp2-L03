@@ -184,5 +184,9 @@ public class ProblemService {
 		this.save(problem);
 	}
 
+	public void deleteInBatch(List<Problem> problems) {
+		this.problemRepository.deleteInBatch(problems);
+
+	}
 
 }

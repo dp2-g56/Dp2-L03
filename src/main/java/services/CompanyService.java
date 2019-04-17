@@ -19,8 +19,11 @@ import repositories.CompanyRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Application;
 import domain.Company;
 import domain.CreditCard;
+import domain.Curriculum;
+import domain.Hacker;
 import domain.Message;
 import domain.Position;
 import domain.Problem;
@@ -43,9 +46,21 @@ public class CompanyService {
 
 	@Autowired
 	private ConfigurationService	configurationService;
-	
+
 	@Autowired
-	private	Validator				validator;
+	private ApplicationService		applicationService;
+
+	@Autowired
+	private PositionService			positionService;
+
+	@Autowired
+	private FinderService			finderService;
+
+	@Autowired
+	private CurriculumService		curriculumService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	//----------------------------------------CRUD METHODS--------------------------
@@ -224,54 +239,68 @@ public class CompanyService {
 		String locale = LocaleContextHolder.getLocale().getLanguage().toUpperCase();
 
 		//Confirmacion contrasena
-		if (!formObjectCompany.getPassword().equals(formObjectCompany.getConfirmPassword()))
-			if (locale.contains("ES"))
+		if (!formObjectCompany.getPassword().equals(formObjectCompany.getConfirmPassword())) {
+			if (locale.contains("ES")) {
 				binding.addError(new FieldError("formObjectCompany", "password", formObjectCompany.getPassword(), false, null, null, "Las contrasenas no coinciden"));
-			else
+			} else {
 				binding.addError(new FieldError("formObjectCompany", "password", formObjectCompany.getPassword(), false, null, null, "Passwords don't match"));
+			}
+		}
 
 		//Confirmacion terminos y condiciones
-		if (!formObjectCompany.getTermsAndConditions())
-			if (locale.contains("ES"))
+		if (!formObjectCompany.getTermsAndConditions()) {
+			if (locale.contains("ES")) {
 				binding.addError(new FieldError("formObjectCompany", "termsAndConditions", formObjectCompany.getTermsAndConditions(), false, null, null, "Debe aceptar los terminos y condiciones"));
-			else
+			} else {
 				binding.addError(new FieldError("formObjectCompany", "termsAndConditions", formObjectCompany.getTermsAndConditions(), false, null, null, "You must accept the terms and conditions"));
+			}
+		}
 
-		if (card.getNumber() != null)
-			if (!this.creditCardService.validateNumberCreditCard(card))
-				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+		if (card.getNumber() != null) {
+			if (!this.creditCardService.validateNumberCreditCard(card)) {
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
 					binding.addError(new FieldError("formObject", "number", formObjectCompany.getNumber(), false, null, null, "El numero de la tarjeta es invalido"));
-				else
+				} else {
 					binding.addError(new FieldError("formObject", "number", formObjectCompany.getNumber(), false, null, null, "The card number is invalid"));
+				}
+			}
+		}
 
-		if (card.getExpirationMonth() != null && card.getExpirationYear() != null)
-			if (!this.creditCardService.validateDateCreditCard(card))
-				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+		if (card.getExpirationMonth() != null && card.getExpirationYear() != null) {
+			if (!this.creditCardService.validateDateCreditCard(card)) {
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
 					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "La tarjeta no puede estar caducada"));
-				else
+				} else {
 					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "The credit card can not be expired"));
+				}
+			}
+		}
 
 		List<String> cardType = this.configurationService.getConfiguration().getCardType();
 
-		if (!cardType.contains(result.getCreditCard().getBrandName()))
-			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+		if (!cardType.contains(result.getCreditCard().getBrandName())) {
+			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
 				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "Tarjeta no admitida"));
-			else
+			} else {
 				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "The credit card is not accepted"));
+			}
+		}
 
-		if (result.getEmail().matches("[\\w.%-]+\\<[\\w.%-]+\\@+\\>|[\\w.%-]+"))
-			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+		if (result.getEmail().matches("[\\w.%-]+\\<[\\w.%-]+\\@+\\>|[\\w.%-]+")) {
+			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
 				binding.addError(new FieldError("formObjectCompany", "email", result.getEmail(), false, null, null, "No sigue el patron ejemplo@dominio.asd o alias <ejemplo@dominio.asd>"));
-			else
+			} else {
 				binding.addError(new FieldError("formObjectCompany", "email", result.getEmail(), false, null, null, "Dont follow the pattern example@domain.asd or alias <example@domain.asd>"));
+			}
+		}
 
 		return result;
 	}
-	
+
 	public FormObjectEditCompany getFormObjectEditCompany(Company company) {
-		
+
 		FormObjectEditCompany res = new FormObjectEditCompany();
-		
+
 		//Company
 		res.setAddress(company.getAddress());
 		res.setName(company.getName());
@@ -281,33 +310,28 @@ public class CompanyService {
 		res.setAddress(company.getAddress());
 		res.setCompanyName(company.getCompanyName());
 		res.setSurname(company.getSurname());
-		
+
 		//Credit Card
 		CreditCard c = company.getCreditCard();
-		
+
 		res.setHolderName(c.getHolderName());
 		res.setBrandName(c.getBrandName());
 		res.setNumber(c.getNumber());
 		res.setExpirationMonth(c.getExpirationMonth());
 		res.setExpirationYear(c.getExpirationYear());
 		res.setCvvCode(c.getCvvCode());
-		
-		
-		
+
 		return res;
 
-		
 	}
-	
+
 	public Company reconstructCompanyPersonalData(FormObjectEditCompany formObjectCompany, BindingResult binding) {
 		Company res = new Company();
-		
+
 		Company companyDB = this.findOne(formObjectCompany.getId());
-		
-		
+
 		CreditCard card = new CreditCard();
-		
-		
+
 		//Credit Card
 		card.setBrandName(formObjectCompany.getBrandName());
 		card.setCvvCode(formObjectCompany.getCvvCode());
@@ -315,9 +339,7 @@ public class CompanyService {
 		card.setExpirationYear(formObjectCompany.getExpirationYear());
 		card.setHolderName(formObjectCompany.getHolderName());
 		card.setNumber(formObjectCompany.getNumber());
-		
-		
-		
+
 		res.setAddress(formObjectCompany.getAddress());
 		res.setCompanyName(formObjectCompany.getCompanyName());
 		res.setEmail(formObjectCompany.getEmail());
@@ -335,49 +357,104 @@ public class CompanyService {
 		res.setSocialProfiles(companyDB.getSocialProfiles());
 		res.setUserAccount(companyDB.getUserAccount());
 		res.setVersion(companyDB.getVersion());
-		
 
-		
-		if (card.getNumber() != null)
-			if (!this.creditCardService.validateNumberCreditCard(card))
-				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+		if (card.getNumber() != null) {
+			if (!this.creditCardService.validateNumberCreditCard(card)) {
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
 					binding.addError(new FieldError("formObject", "number", formObjectCompany.getNumber(), false, null, null, "El numero de la tarjeta es invalido"));
-				else
+				} else {
 					binding.addError(new FieldError("formObject", "number", formObjectCompany.getNumber(), false, null, null, "The card number is invalid"));
+				}
+			}
+		}
 
-		if (card.getExpirationMonth() != null && card.getExpirationYear() != null)
-			if (!this.creditCardService.validateDateCreditCard(card))
-				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+		if (card.getExpirationMonth() != null && card.getExpirationYear() != null) {
+			if (!this.creditCardService.validateDateCreditCard(card)) {
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
 					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "La tarjeta no puede estar caducada"));
-				else
+				} else {
 					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "The credit card can not be expired"));
+				}
+			}
+		}
 
 		List<String> cardType = this.configurationService.getConfiguration().getCardType();
 
-		if (!cardType.contains(res.getCreditCard().getBrandName()))
-			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+		if (!cardType.contains(res.getCreditCard().getBrandName())) {
+			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
 				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "Tarjeta no admitida"));
-			else
+			} else {
 				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "The credit card is not accepted"));
+			}
+		}
 
-		if (res.getEmail().matches("[\\w.%-]+\\<[\\w.%-]+\\@+\\>|[\\w.%-]+"))
-			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+		if (res.getEmail().matches("[\\w.%-]+\\<[\\w.%-]+\\@+\\>|[\\w.%-]+")) {
+			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
 				binding.addError(new FieldError("formObjectCompany", "email", res.getEmail(), false, null, null, "No sigue el patron ejemplo@dominio.asd o alias <ejemplo@dominio.asd>"));
-			else
+			} else {
 				binding.addError(new FieldError("formObjectCompany", "email", res.getEmail(), false, null, null, "Dont follow the pattern example@domain.asd or alias <example@domain.asd>"));
+			}
+		}
 
-		
-	
-		
 		return res;
-		
+
 	}
-	
+
 	public void updateCompany(Company company) {
 		this.loggedAsCompany();
-		Assert.isTrue(company.getId()==this.loggedCompany().getId());
-		
-		this.save(company);	
+		Assert.isTrue(company.getId() == this.loggedCompany().getId());
+
+		this.save(company);
 	}
 
+	public void deleteCompany() {
+		Company company = this.loggedCompany();
+
+		int companyId = company.getId();
+
+		List<Application> applications = this.companyRepository.applicationsOfCompany(companyId);
+
+		List<Hacker> hackers = this.companyRepository.hackersOfCompany(companyId);
+
+		List<Curriculum> curriculums = this.companyRepository.curriculumsOfApplicationssOfCompany(companyId);
+
+		for (Hacker h : hackers) {
+			h.getApplications().removeAll(applications);
+		}
+
+		this.applicationService.deleteinBatch(applications);
+
+		this.curriculumService.deleteInBatch(curriculums);
+
+		List<Position> positions = new ArrayList<Position>();
+		positions.addAll(company.getPositions());
+
+		List<Problem> problems = new ArrayList<Problem>();
+		problems.addAll(company.getProblems());
+
+		company.getProblems().clear();
+		company.getPositions().clear();
+
+		this.finderService.cleanFindersOfPositions(positions);
+
+		for (Position p : positions) {
+			this.positionService.delete(p);
+		}
+
+		for (Problem pr : problems) {
+			this.problemService.delete(pr);
+		}
+
+		this.companyRepository.delete(company);
+
+	}
+
+	public void flush() {
+		this.companyRepository.flush();
+
+	}
+
+	public Company getCompanyByUsername(String username) {
+		return this.companyRepository.getCompanyByUsername(username);
+	}
 }

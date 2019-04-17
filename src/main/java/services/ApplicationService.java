@@ -219,6 +219,14 @@ public class ApplicationService {
 
 	}
 
+	public void delete(Application application) {
+		this.applicationRepository.delete(application);
+	}
+
+	public void deleteinBatch(List<Application> applications) {
+		this.applicationRepository.deleteInBatch(applications);
+	}
+
 	public void flush() {
 		this.applicationRepository.flush();
 	}

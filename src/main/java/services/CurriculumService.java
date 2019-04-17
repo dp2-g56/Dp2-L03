@@ -235,4 +235,8 @@ public class CurriculumService {
 	public void flush() {
 		this.curriculumRepository.flush();
 	}
+	
+	public void deleteInBatch(List<Curriculum> curriculums) {
+		this.curriculumRepository.deleteInBatch(curriculums);
+	}
 }
