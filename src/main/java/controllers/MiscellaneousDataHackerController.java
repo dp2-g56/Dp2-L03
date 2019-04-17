@@ -43,7 +43,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 		ModelAndView result;
 		
 		try {
-			List<String> attachments = this.miscellaneousDataService.getMiscellaneousDataOfLoggedHacker(miscellaneousDataId).getAttachments();
+			List<String> attachments = this.miscellaneousDataService.getAttachmentsOfMiscellaneousDataOfLoggedHacker(miscellaneousDataId);
 			
 			result = new ModelAndView("hacker/attachments");
 			result.addObject("attachments", attachments);

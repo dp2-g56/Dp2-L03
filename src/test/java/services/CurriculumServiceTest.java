@@ -245,5 +245,75 @@ public class CurriculumServiceTest extends AbstractTest {
 		super.checkExceptions(expected, caught);
 
 	}
+	
+	/**
+	 * R17. An actor who is authenticated as a hacker must be able to:
+	 *
+	 * 1. Manage his or her curricula, which includes updating them.
+	 * 
+	 **/
+	@Test
+	public void driverUpdateCurriculum() {
+
+		Object testingData[][] = {
+
+				/**
+				 * POSITIVE TEST: Hacker is updating a curriculum
+				 **/
+				{ "hacker1", super.getEntityId("curriculum1"), "Title", "Full name", "Statement", "+34123456789", "https://github.com", "https://linkedin.com", null},
+				/**
+				 * NEGATIVE TEST: Hacker is trying to update a curriculum of other hacker
+				 **/
+				{ "hacker3", super.getEntityId("curriculum1"), "Title", "Full name", "Statement", "+34123456789", "https://github.com", "https://linkedin.com", IllegalArgumentException.class},
+				/**
+				 * NEGATIVE TEST: Another user is trying to update a curriculum
+				 **/
+				{ "company1", super.getEntityId("curriculum1"), "Title", "Full name", "Statement", "+34123456789", "https://github.com", "https://linkedin.com", IllegalArgumentException.class},
+				/**
+				 * NEGATIVE TEST: Hacker is trying to update a curriculum with a title in blank
+				 **/
+				{ "hacker1", super.getEntityId("curriculum1"), "", "Full name", "Statement", "+34123456789", "https://github.com", "https://linkedin.com", ConstraintViolationException.class},
+				/**
+				 * NEGATIVE TEST: Hacker is trying to update a curriculum with a gitHub profile in blank
+				 **/
+				{ "hacker1", super.getEntityId("curriculum1"), "Title", "Full name", "Statement", "+34123456789", "", "https://linkedin.com", ConstraintViolationException.class}
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.updateCurriculumTemplate((String) testingData[i][0], (Integer) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6], (String) testingData[i][7], (Class<?>) testingData[i][8]);
+
+	}
+
+	private void updateCurriculumTemplate(String hacker, Integer curriculumId, String title, String fullName, String statement, String phoneNumber, String gitHubProfile, String linkedinProfile, Class<?> expected) {
+		Curriculum curriculum = this.curriculumService.findOne(curriculumId);
+		PersonalData personalData = curriculum.getPersonalData();
+		
+		personalData.setFullName(fullName);
+		personalData.setStatement(statement);
+		personalData.setPhoneNumber(phoneNumber);
+		personalData.setGitHubProfile(gitHubProfile);
+		personalData.setLinkedinProfile(linkedinProfile);
+		
+		curriculum.setTitle(title);
+		curriculum.setPersonalData(personalData);
+		
+		Class<?> caught = null;
+
+		try {
+			super.startTransaction();
+			super.authenticate(hacker);
+			
+			this.hackerService.addOrUpdateCurriculum(curriculum);
+			
+			super.unauthenticate();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+
+	}
 
 }

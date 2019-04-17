@@ -55,7 +55,7 @@ public class EducationDataHackerController extends AbstractController {
 		return result;	
 	}
 	
-	@RequestMapping(value = "/edit", method =RequestMethod .GET)
+	@RequestMapping(value = "/edit", method = RequestMethod .GET)
 	public ModelAndView editEducationData(@RequestParam int educationDataId) {
 		ModelAndView result;
 		

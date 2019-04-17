@@ -192,5 +192,59 @@ public class FinderServiceTest extends AbstractTest {
 		super.checkExceptions(expected, caught);
 
 	}
+	
+	/**
+	 * R17. An actor who is authenticated as a hacker must be able to:
+	 *
+	 * 2. Manage his or her finder, which involves listing its contents.
+	 * 
+	 **/
+	@Test
+	public void driverListSkillsAndTechnologiesFinder() {
+		Finder finder = this.hackerService.getHackerByUsername("hacker1").getFinder();
+
+		Object testingData[][] = {
+
+				/**
+				 * POSITIVE TEST: Hacker is listing his finder
+				 **/
+				{ "hacker1", finder, null },
+				/**
+				 * NEGATIVE TEST: Hacker is trying to list another finder
+				 **/
+				{ "hacker2", finder, IllegalArgumentException.class }
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			this.finderSkillsAndTechnologiesTemplate((String) testingData[i][0], (Finder) testingData[i][1], (Class<?>) testingData[i][2]);
+
+	}
+
+	private void finderSkillsAndTechnologiesTemplate(String hacker, Finder finder, Class<?> expected) {
+		Class<?> caught = null;
+
+		try {
+			super.startTransaction();
+			super.authenticate(hacker);
+			
+			finder.setKeyWord("xp");
+			this.finderService.filterPositionsByFinder(finder);
+			this.finderService.flush();
+			
+			Finder finderFounded = this.finderService.findOne(finder.getId());
+			
+			this.positionService.getSkillsAsHacker(finderFounded.getPositions().get(0).getId());
+			this.positionService.getTechnologiesAsHacker(finderFounded.getPositions().get(0).getId());
+			
+			super.unauthenticate();
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			this.rollbackTransaction();
+		}
+
+		super.checkExceptions(expected, caught);
+
+	}
 
 }
