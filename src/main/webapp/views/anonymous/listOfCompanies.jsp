@@ -7,10 +7,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme"  tagdir="/WEB-INF/tags"%>
 
-<security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
-
-
-	
 	
 	<display:table name="companies" id="row">
 	
@@ -39,6 +35,4 @@
 	
 	</display:table>
 	
-	
 
-</security:authorize>

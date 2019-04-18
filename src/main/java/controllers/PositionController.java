@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ApplicationService;
 import services.CompanyService;
 import services.PositionService;
 import services.ProblemService;
+import domain.Actor;
 import domain.Application;
 import domain.Company;
 import domain.Position;
@@ -39,6 +41,8 @@ public class PositionController extends AbstractController {
 	private ProblemService		problemService;
 	@Autowired
 	private ApplicationService	applicationService;
+	@Autowired
+	private ActorService		actorService;
 
 
 	public PositionController() {
@@ -109,10 +113,20 @@ public class PositionController extends AbstractController {
 			return this.list();
 
 		allApplications = this.applicationService.getApplicationsCompany(positionId);
+		Actor actor = this.positionService.getActorWithPosition(position.getId());
+
+		Actor loggedActor = this.actorService.loggedActor();
+		Boolean sameActorLogged;
+
+		if (loggedActor.equals(actor))
+			sameActorLogged = true;
+		else
+			sameActorLogged = false;
 
 		result = new ModelAndView("applicationPosition/company/list");
 
 		result.addObject("allApplications", allApplications);
+		result.addObject("sameActorLogged", sameActorLogged);
 		result.addObject("requestURI", "application/company/list.do");
 		result.addObject("positionId", positionId);
 
