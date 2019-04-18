@@ -30,6 +30,7 @@ import domain.Message;
 import domain.Position;
 import domain.SocialProfile;
 import forms.FormObjectAdmin;
+import forms.FormObjectEditAdmin;
 
 @Service
 @Transactional
@@ -404,6 +405,95 @@ public class AdminService {
 
 		return result;
 
+	}
+
+	public FormObjectEditAdmin getFormObjectEditadmin(Admin admin) {
+
+		FormObjectEditAdmin res = new FormObjectEditAdmin();
+
+		//Company
+		res.setAddress(admin.getAddress());
+		res.setName(admin.getName());
+		res.setVATNumber(admin.getVATNumber());
+		res.setPhoto(admin.getPhoto());
+		res.setEmail(admin.getEmail());
+		res.setAddress(admin.getAddress());
+
+		res.setSurname(admin.getSurname());
+
+		//Credit Card
+		CreditCard c = admin.getCreditCard();
+
+		res.setHolderName(c.getHolderName());
+		res.setBrandName(c.getBrandName());
+		res.setNumber(c.getNumber());
+		res.setExpirationMonth(c.getExpirationMonth());
+		res.setExpirationYear(c.getExpirationYear());
+		res.setCvvCode(c.getCvvCode());
+
+		return res;
+
+	}
+
+	public Admin reconstructCompanyPersonalData(FormObjectEditAdmin formObjectAdmin, BindingResult binding) {
+		Admin res = new Admin();
+
+		Admin adminDB = this.findOne(formObjectAdmin.getId());
+
+		CreditCard card = new CreditCard();
+
+		//Credit Card
+		card.setBrandName(formObjectAdmin.getBrandName());
+		card.setCvvCode(formObjectAdmin.getCvvCode());
+		card.setExpirationMonth(formObjectAdmin.getExpirationMonth());
+		card.setExpirationYear(formObjectAdmin.getExpirationYear());
+		card.setHolderName(formObjectAdmin.getHolderName());
+		card.setNumber(formObjectAdmin.getNumber());
+
+		res.setAddress(formObjectAdmin.getAddress());
+
+		res.setEmail(formObjectAdmin.getEmail());
+		res.setPhone(formObjectAdmin.getPhone());
+		res.setPhoto(formObjectAdmin.getPhoto());
+		res.setSurname(formObjectAdmin.getSurname());
+		res.setName(formObjectAdmin.getName());
+		res.setId(formObjectAdmin.getId());
+		res.setVATNumber(formObjectAdmin.getVATNumber());
+		res.setCreditCard(card);
+		res.setHasSpam(adminDB.getHasSpam());
+		res.setMessages(adminDB.getMessages());
+		res.setSocialProfiles(adminDB.getSocialProfiles());
+		res.setUserAccount(adminDB.getUserAccount());
+		res.setVersion(adminDB.getVersion());
+
+		if (card.getNumber() != null)
+			if (!this.creditCardService.validateNumberCreditCard(card))
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+					binding.addError(new FieldError("formObject", "number", formObjectAdmin.getNumber(), false, null, null, "El numero de la tarjeta es invalido"));
+				else
+					binding.addError(new FieldError("formObject", "number", formObjectAdmin.getNumber(), false, null, null, "The card number is invalid"));
+
+		if (card.getExpirationMonth() != null && card.getExpirationYear() != null)
+			if (!this.creditCardService.validateDateCreditCard(card))
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "La tarjeta no puede estar caducada"));
+				else
+					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "The credit card can not be expired"));
+
+		List<String> cardType = this.configurationService.getConfiguration().getCardType();
+
+		if (!cardType.contains(res.getCreditCard().getBrandName()))
+			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "Tarjeta no admitida"));
+			else
+				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "The credit card is not accepted"));
+
+		return res;
+
+	}
+
+	private Admin findOne(int id) {
+		return this.adminRepository.findOne(id);
 	}
 
 }
