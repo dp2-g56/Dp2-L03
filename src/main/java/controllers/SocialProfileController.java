@@ -2,7 +2,6 @@
 package controllers;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mysql.jdbc.BalanceStrategy;
-
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import services.ActorService;
+import services.AdminService;
 import services.CompanyService;
 import services.ConfigurationService;
 import services.SocialProfileService;
@@ -30,8 +28,8 @@ import domain.Admin;
 import domain.Company;
 import domain.Configuration;
 import domain.SocialProfile;
+import forms.FormObjectEditAdmin;
 import forms.FormObjectEditCompany;
-
 
 @Controller
 @RequestMapping("/authenticated")
@@ -42,12 +40,15 @@ public class SocialProfileController extends AbstractController {
 
 	@Autowired
 	private SocialProfileService	socialProfileService;
-	
+
 	@Autowired
 	private CompanyService			companyService;
-	
+
 	@Autowired
 	private ConfigurationService	configurationService;
+
+	@Autowired
+	private AdminService			adminService;
 
 
 	//-------------------------------------------------------------------
@@ -178,19 +179,26 @@ public class SocialProfileController extends AbstractController {
 			FormObjectEditCompany formCompany = this.companyService.getFormObjectEditCompany(company);
 			formCompany.setId(company.getId());
 			result = this.createEditModelAndView(formCompany);
+
+		} else if (authorities.get(0).toString().equals("ADMIN")) {
+			Admin admin = this.adminService.loggedAdmin();
+			Assert.notNull(admin);
+			FormObjectEditAdmin formAdmin = this.adminService.getFormObjectEditadmin(admin);
+			formAdmin.setId(admin.getId());
+			result = this.createEditModelAndView(formAdmin);
 		}
-	
+
 		if (result == null)
 			result = this.list();
-		
+
 		result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
-		
+
 		return result;
 	}
-	
+
 	//---------------------------------------------------------------------
 	//---------------------------SAVE PERSONAL DATA------------------------
-	
+
 	//Company
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveCompany(@Valid FormObjectEditCompany companyForm, BindingResult binding) {
@@ -219,10 +227,40 @@ public class SocialProfileController extends AbstractController {
 				result = this.createEditModelAndView(companyForm, "socialProfile.commit.error");
 				result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
 			}
-		
+
 		return result;
 	}
-	
+
+	@RequestMapping(value = "/admin/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveCompany(@Valid FormObjectEditAdmin adminForm, BindingResult binding) {
+		ModelAndView result;
+
+		Admin admin = this.adminService.reconstructCompanyPersonalData(adminForm, binding);
+		Configuration configuration = this.configurationService.getConfiguration();
+
+		String prefix = configuration.getSpainTelephoneCode();
+
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(adminForm);
+			result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
+		} else
+			try {
+				if (admin.getPhone().matches("(\\+[0-9]{1,3})(\\([0-9]{1,3}\\))([0-9]{4,})$") || admin.getPhone().matches("(\\+[0-9]{1,3})([0-9]{4,})$"))
+					this.adminService.save(admin);
+				else if (admin.getPhone().matches("([0-9]{4,})$")) {
+					admin.setPhone(prefix + admin.getPhone());
+					this.adminService.save(admin);
+				} else
+					this.adminService.save(admin);
+				result = new ModelAndView("redirect:/authenticated/showProfile.do");
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(adminForm, "socialProfile.commit.error");
+				result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
+			}
+
+		return result;
+	}
+
 	//---------------------------------------------------------------------
 	//---------------------------CREATEEDITMODELANDVIEW--------------------
 
@@ -245,29 +283,49 @@ public class SocialProfileController extends AbstractController {
 
 		return result;
 	}
-	
+
 	//---------------------------------------------------------------------
 	//-------------------CREATEEDITMODELANDVIEW ACTOR----------------------
-	
+
 	//Company
-		protected ModelAndView createEditModelAndView(FormObjectEditCompany company) {
+	protected ModelAndView createEditModelAndView(FormObjectEditCompany company) {
 
-			ModelAndView result;
+		ModelAndView result;
 
-			result = this.createEditModelAndView(company, null);
+		result = this.createEditModelAndView(company, null);
 
-			return result;
-		}
+		return result;
+	}
 
-		protected ModelAndView createEditModelAndView(FormObjectEditCompany company, String messageCode) {
+	protected ModelAndView createEditModelAndView(FormObjectEditCompany company, String messageCode) {
 
-			ModelAndView result;
+		ModelAndView result;
 
-			result = new ModelAndView("authenticated/edit");
-			result.addObject("formObjectEditCompany", company);
-			result.addObject("message", messageCode);
+		result = new ModelAndView("authenticated/edit");
+		result.addObject("formObjectEditCompany", company);
+		result.addObject("message", messageCode);
 
-			return result;
-		}
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(FormObjectEditAdmin admin) {
+
+		ModelAndView result;
+
+		result = this.createEditModelAndView(admin, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(FormObjectEditAdmin admin, String messageCode) {
+
+		ModelAndView result;
+
+		result = new ModelAndView("authenticated/edit");
+		result.addObject("formObjectEditAdmin", admin);
+		result.addObject("message", messageCode);
+
+		return result;
+	}
 
 }
