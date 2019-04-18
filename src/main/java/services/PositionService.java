@@ -40,6 +40,9 @@ public class PositionService {
 	
 	@Autowired
 	private ApplicationService		applicationService;
+	
+	@Autowired
+	private HackerService		hackerService;
 
 
 	public List<Position> findAll() {
@@ -374,10 +377,34 @@ public class PositionService {
 		return this.positionRepository.positionsFiltered("%" + word + "%");
 	}
 
+	public List<String> getSkillsAsHacker(int positionId) {
+		this.hackerService.loggedAsHacker();
+		Position position = this.findOne(positionId);
+		Assert.isTrue(this.getFinalPositions().contains(position));
+		return position.getRequiredSkills();
+	}
+	
+	public List<String> getTechnologiesAsHacker(int positionId) {
+		this.hackerService.loggedAsHacker();
+		Position position = this.findOne(positionId);
+		Assert.isTrue(this.getFinalPositions().contains(position));
+		return position.getRequiredTecnologies();
+	}
+
 	/*
 	 * public List<Position> positionsOfApplicationOfHacker(Hacker hacker) {
 	 * return this.positionRepository.positionsOfApplicationOfHacker(hacker);
 	 * }
 	 */
+
+	public void deleteInBatch(List<Position> positions) {
+		this.positionRepository.deleteInBatch(positions);
+
+	}
+
+	public void delete(Position position) {
+		this.positionRepository.delete(position);
+
+	}
 
 }

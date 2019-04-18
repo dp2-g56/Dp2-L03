@@ -33,9 +33,25 @@
 		
 		<display:column property="requiredProfile" titleKey="position.requiredProfile" /> 
 		
-		<display:column property="requiredSkills" titleKey="position.requiredSkills" /> 
+		<display:column titleKey="position.requiredSkills">
+			<spring:url var="requiredSkills" value="/position/hacker/listSkills.do">
+				<spring:param name="positionId" value="${row.id}"/>
+			</spring:url>
+			<a href="${requiredSkills}">
+				<spring:message code="skills.show" var="show" />
+				<jstl:out value="${show} (${row.requiredSkills.size()})"/>
+			</a>
+		</display:column>
 		
-		<display:column property="requiredTecnologies" titleKey="position.requiredTecnologies" /> 
+		<display:column titleKey="position.requiredTecnologies">
+			<spring:url var="requiredTecnologies" value="/position/hacker/listTechnologies.do">
+				<spring:param name="positionId" value="${row.id}"/>
+			</spring:url>
+			<a href="${requiredTecnologies}">
+				<spring:message code="technologies.show" var="show" />
+				<jstl:out value="${show} (${row.requiredTecnologies.size()})"/>
+			</a>
+		</display:column>
 		
 		<display:column property="offeredSalary" titleKey="position.offeredSalary" /> 
 	

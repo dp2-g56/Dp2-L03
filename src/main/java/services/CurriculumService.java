@@ -24,23 +24,22 @@ import forms.FormObjectCurriculumPersonalData;
 public class CurriculumService {
 
 	@Autowired
-	private CurriculumRepository		curriculumRepository;
+	private CurriculumRepository curriculumRepository;
 
 	@Autowired
-	private PersonalDataService			personalDataService;
+	private PersonalDataService personalDataService;
 
 	@Autowired
-	private PositionDataService			positionDataService;
+	private PositionDataService positionDataService;
 
 	@Autowired
-	private MiscellaneousDataService	miscellaneousDataService;
+	private MiscellaneousDataService miscellaneousDataService;
 
 	@Autowired
-	private EducationDataService		educationDataService;
+	private EducationDataService educationDataService;
 
 	@Autowired
-	private HackerService				hackerService;
-
+	private HackerService hackerService;
 
 	public Curriculum findOne(int id) {
 		return this.curriculumRepository.findOne(id);
@@ -101,12 +100,12 @@ public class CurriculumService {
 		copy.setPersonalData(copyP);
 		copy.setMiscellaneousData(copyMis);
 		copy.setEducationData(copyEd);
-		
+
 		Curriculum saved = this.curriculumRepository.save(copy);
 
 		return saved;
 	}
-	
+
 	public List<Curriculum> getCurriculumsOfHacker(int hackerId) {
 		return this.curriculumRepository.getCurriculumsOfHacker(hackerId);
 	}
@@ -114,10 +113,10 @@ public class CurriculumService {
 	public List<Curriculum> getCurriculumsOfLoggedHacker() {
 		Hacker hacker = this.hackerService.securityAndHacker();
 		List<Curriculum> curriculums = this.getCurriculumsOfHacker(hacker.getId());
-		
+
 		return curriculums;
 	}
-	
+
 	public Curriculum getCurriculumOfHacker(int hackerId, int curriculumId) {
 		return this.curriculumRepository.getCurriculumOfHacker(hackerId, curriculumId);
 	}
@@ -125,21 +124,23 @@ public class CurriculumService {
 	public Curriculum getCurriculumOfLoggedHacker(int curriculumId) {
 		Hacker hacker = this.hackerService.securityAndHacker();
 		Curriculum curriculum = this.getCurriculumOfHacker(hacker.getId(), curriculumId);
+		Assert.notNull(curriculum);
 		return curriculum;
 	}
 
-	public Curriculum reconstruct(FormObjectCurriculumPersonalData formObject, BindingResult binding, PersonalData personalData) {
+	public Curriculum reconstruct(FormObjectCurriculumPersonalData formObject, BindingResult binding,
+			PersonalData personalData) {
 		Curriculum curriculum = new Curriculum();
-		
-		if(formObject.getId() > 0) {
+
+		if (formObject.getId() > 0) {
 			Curriculum curriculumFounded = this.findOne(formObject.getId());
-			
+
 			curriculum.setId(curriculumFounded.getId());
 			curriculum.setVersion(curriculumFounded.getVersion());
-		} 
+		}
 		curriculum.setTitle(formObject.getTitle());
 		curriculum.setPersonalData(personalData);
-		
+
 		return curriculum;
 	}
 
@@ -173,7 +174,15 @@ public class CurriculumService {
 	public Curriculum getCurriculumOfEducationData(int educationDataId) {
 		return this.curriculumRepository.getCurriculumOfEducationData(educationDataId);
 	}
-  
+
+	public List<Curriculum> findAll() {
+		return this.curriculumRepository.findAll();
+	}
+
+	public Curriculum getCurriculumOfMiscellaneousData(int miscellaneousDataId) {
+		return this.curriculumRepository.getCurriculumOfMiscellaneousData(miscellaneousDataId);
+	}
+
 	public String curriculumToStringExport() {
 		String res = "";
 		Hacker hacker = this.hackerService.loggedHacker();
@@ -181,7 +190,11 @@ public class CurriculumService {
 		StringBuilder sb = new StringBuilder();
 		curriculums = hacker.getCurriculums();
 
-		/* + c.getTitle() + " EducationalData: " + c.getEducationData().toString() + " Miscellaneous data: " + c.getMiscellaneousData().toString() + "Position data" + c.getPositionData().toString( */
+		/*
+		 * + c.getTitle() + " EducationalData: " + c.getEducationData().toString() +
+		 * " Miscellaneous data: " + c.getMiscellaneousData().toString() +
+		 * "Position data" + c.getPositionData().toString(
+		 */
 
 		Integer cont = 1;
 
@@ -189,21 +202,28 @@ public class CurriculumService {
 			sb.append("Curriculum" + cont + ": ").append(System.getProperty("line.separator"));
 			sb.append("Title: " + c.getTitle()).append(System.getProperty("line.separator"));
 			sb.append("Full name: " + c.getPersonalData().getFullName()).append(System.getProperty("line.separator"));
-			sb.append("GitHub profile: " + c.getPersonalData().getGitHubProfile()).append(System.getProperty("line.separator"));
-			sb.append("Linkedin profile: " + c.getPersonalData().getLinkedinProfile()).append(System.getProperty("line.separator"));
+			sb.append("GitHub profile: " + c.getPersonalData().getGitHubProfile())
+					.append(System.getProperty("line.separator"));
+			sb.append("Linkedin profile: " + c.getPersonalData().getLinkedinProfile())
+					.append(System.getProperty("line.separator"));
 			sb.append("Statement: " + c.getPersonalData().getStatement()).append(System.getProperty("line.separator"));
-			sb.append("Phone number: " + c.getPersonalData().getPhoneNumber()).append(System.getProperty("line.separator"));
+			sb.append("Phone number: " + c.getPersonalData().getPhoneNumber())
+					.append(System.getProperty("line.separator"));
 			sb.append(System.getProperty("line.separator"));
 
-			sb.append("Titles of Positions data: " + this.curriculumRepository.getTitlesOfPositionDatas(hacker)).append(System.getProperty("line.separator"));
+			sb.append("Titles of Positions data: " + this.curriculumRepository.getTitlesOfPositionDatas(hacker))
+					.append(System.getProperty("line.separator"));
 
 			sb.append(System.getProperty("line.separator"));
 
-			sb.append("Degrees of Educations data: " + this.curriculumRepository.getDegreesOfEducationalData(hacker)).append(System.getProperty("line.separator"));
+			sb.append("Degrees of Educations data: " + this.curriculumRepository.getDegreesOfEducationalData(hacker))
+					.append(System.getProperty("line.separator"));
 
 			sb.append(System.getProperty("line.separator"));
 
-			sb.append("Free texts of Miscellaneous data: " + this.curriculumRepository.getFreeTestOfMiscellaneousData(hacker)).append(System.getProperty("line.separator"));
+			sb.append("Free texts of Miscellaneous data: "
+					+ this.curriculumRepository.getFreeTestOfMiscellaneousData(hacker))
+					.append(System.getProperty("line.separator"));
 
 			sb.append(System.getProperty("line.separator"));
 
@@ -212,4 +232,11 @@ public class CurriculumService {
 		return sb.toString();
 	}
 
+	public void flush() {
+		this.curriculumRepository.flush();
+	}
+	
+	public void deleteInBatch(List<Curriculum> curriculums) {
+		this.curriculumRepository.deleteInBatch(curriculums);
+	}
 }

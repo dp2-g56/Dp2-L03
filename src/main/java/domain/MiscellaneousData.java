@@ -17,8 +17,7 @@ public class MiscellaneousData extends DomainEntity {
 
 	private String			freeText;
 	private List<String>	attachments;
-
-
+	
 	@NotBlank
 	public String getFreeText() {
 		return this.freeText;

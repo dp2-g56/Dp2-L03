@@ -55,14 +55,20 @@ public class EducationDataHackerController extends AbstractController {
 		return result;	
 	}
 	
-	@RequestMapping(value = "/edit", method =RequestMethod .GET)
+	@RequestMapping(value = "/edit", method = RequestMethod .GET)
 	public ModelAndView editEducationData(@RequestParam int educationDataId) {
 		ModelAndView result;
 		
-		EducationData educationData = this.educationDataService.findOne(educationDataId);
-		Curriculum curriculum = this.curriculumService.getCurriculumOfEducationData(educationDataId);
-		
-		result = this.createEditModelAndView("hacker/editEducationData", educationData, curriculum.getId());
+		try {
+			Hacker hacker = this.hackerService.securityAndHacker();
+			EducationData educationData = this.educationDataService.findOne(educationDataId);
+			Curriculum curriculum = this.curriculumService.getCurriculumOfEducationData(educationDataId);
+			Assert.notNull(this.curriculumService.getCurriculumOfHacker(hacker.getId(), curriculum.getId()));
+			
+			result = this.createEditModelAndView("hacker/editEducationData", educationData, curriculum.getId());
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:/curriculum/hacker/list.do");
+		}
 		
 		return result;
 	}
@@ -77,7 +83,7 @@ public class EducationDataHackerController extends AbstractController {
 			this.educationDataService.deleteEducationDataAsHacker(educationDataId);
 			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
 		} catch(Throwable oops) {
-			result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculum.getId());
+			result = new ModelAndView("redirect:/curriculum/hacker/list.do");
 		}
 		
 		return result;
