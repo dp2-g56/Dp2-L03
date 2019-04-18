@@ -85,7 +85,7 @@
     
              <jstl:if test="${!row.isDraftMode}">
     	
-    		<jstl:set var="applicationsSize" value="${row.applications.size()}" />
+    		
     		
        		<spring:url var="applicationsUrl" value="/position/company/application/list.do?positionId={positionId}">
             	<spring:param name="positionId" value="${row.id}"/>
@@ -93,7 +93,7 @@
         	
         	<a href="${applicationsUrl}">
               <spring:message var ="viewApplications1" code="position.viewApplications" />
-             <jstl:out value="${viewApplications1}(${applicationsSize})" />   
+             <jstl:out value="${viewApplications1}" />   
         	</a>
         	
         	</jstl:if>

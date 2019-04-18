@@ -33,7 +33,7 @@
 		 <display:column titleKey="position.applications">
     
 
-    		<jstl:set var="applicationsSize" value="${row.applications.size()}" />
+    	
     		
        		<spring:url var="applicationsUrl" value="/anonymous/application/list.do?positionId={positionId}">
             	<spring:param name="positionId" value="${row.id}"/>
@@ -41,7 +41,7 @@
         	
         	<a href="${applicationsUrl}">
               <spring:message var ="viewApplications1" code="position.viewApplications" />
-             <jstl:out value="${viewApplications1}(${applicationsSize})" />   
+             <jstl:out value="${viewApplications1}" />   
         	</a>
         	
         </display:column>

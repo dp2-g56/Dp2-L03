@@ -117,4 +117,10 @@
   <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
   	<a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
   </security:authorize>
+  
+  <br/>
+  
+  <jstl:if test="${publicValue}">
+  <a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
+  </jstl:if> 	
 

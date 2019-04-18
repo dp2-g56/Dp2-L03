@@ -20,7 +20,7 @@
 		<display:column titleKey="companies.positions">
     
 
-    		<jstl:set var="positionsSize" value="${row.positions.size()}" />
+    	
     		
        		<spring:url var="positionsUrl" value="/anonymous/company/positions.do?idCompany={idCompany}">
             	<spring:param name="idCompany" value="${row.id}"/>
@@ -28,7 +28,7 @@
         	
         	<a href="${positionsUrl}">
               <spring:message var ="viewPositions" code="position.viewPositions" />
-             <jstl:out value="${viewPositions}(${positionsSize})" />   
+             <jstl:out value="${viewPositions}" />   
         	</a>
         	
         </display:column>

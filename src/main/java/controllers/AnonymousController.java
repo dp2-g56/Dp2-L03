@@ -331,8 +331,11 @@ public class AnonymousController extends AbstractController {
 		else
 			sameActorLogged = false;
 
+		Boolean publicValue = true;
+
 		result = new ModelAndView("anonymous/company/listOne");
 		result.addObject("actor", company);
+		result.addObject("publicValue", publicValue);
 		result.addObject("sameActorLogged", sameActorLogged);
 		result.addObject("requestURI", "anonymous/company/listOne.do");
 
@@ -360,9 +363,10 @@ public class AnonymousController extends AbstractController {
 
 		ModelAndView result;
 
-		List<Position> positions = this.companyService.positionOfRespectiveCompany(idCompany);
+		List<Position> positions = this.companyService.positionsOfCompanyInFinalNotCancelled(idCompany);
 
 		result = new ModelAndView("anonymous/company/positions");
+		result.addObject("publicPositionsSize", positions.size());
 		result.addObject("publicPositions", positions);
 		result.addObject("requestURI", "anonymous/company/positions.do");
 
