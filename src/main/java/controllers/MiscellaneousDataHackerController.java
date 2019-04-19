@@ -159,16 +159,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 		} else {
 			try {
 				this.miscellaneousDataService.addOrUpdateMiscellaneousDataAsHacker(miscellaneousDataReconstructed, curriculumId);
-				
-				Curriculum curriculum = this.curriculumService.getCurriculumOfLoggedHacker(curriculumId);
-				
-				result = new ModelAndView("hacker/curriculum");
-				result.addObject("curriculum", curriculum);
-				result.addObject("personalData", curriculum.getPersonalData());
-				result.addObject("positionData", curriculum.getPositionData());
-				result.addObject("educationData", curriculum.getEducationData());
-				result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
-				result.addObject("requestURI", "/curriculum/hacker/show.do");
+				result = new ModelAndView("redirect:/curriculum/hacker/show.do?curriculumId=" + curriculumId);
 			} catch(Throwable oops) {
 				result = this.createEditModelAndView(tiles, miscellaneousDataReconstructed, curriculumId, "commit.error");
 			}
