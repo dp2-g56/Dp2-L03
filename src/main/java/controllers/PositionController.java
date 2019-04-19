@@ -18,10 +18,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ApplicationService;
 import services.CompanyService;
+import services.CurriculumService;
 import services.PositionService;
 import services.ProblemService;
 import domain.Application;
 import domain.Company;
+import domain.Curriculum;
 import domain.Position;
 import domain.Problem;
 import domain.Status;
@@ -39,6 +41,8 @@ public class PositionController extends AbstractController {
 	private ProblemService		problemService;
 	@Autowired
 	private ApplicationService	applicationService;
+	@Autowired
+	private CurriculumService	curriculumService;
 
 
 	public PositionController() {
@@ -78,9 +82,8 @@ public class PositionController extends AbstractController {
 
 		Position position = this.positionService.findOne(positionId);
 
-		if (position.getIsDraftMode()) {
+		if (position.getIsDraftMode())
 			return this.list();
-		}
 
 		allProblems = position.getProblems();
 
@@ -115,6 +118,37 @@ public class PositionController extends AbstractController {
 		result.addObject("allApplications", allApplications);
 		result.addObject("requestURI", "application/company/list.do");
 		result.addObject("positionId", positionId);
+
+		return result;
+	}
+
+	//------------------------------SHOW CURRICULUM------------------------------------
+	//---------------------------------------------------------------------------------
+	@RequestMapping(value = "/curriculum/list", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam int applicationId) {
+		ModelAndView result;
+
+		try {
+
+			Company loggedCompany = this.companyService.loggedCompany();
+			Application application = this.applicationService.findOne(applicationId);
+			Position position = application.getPosition();
+			if (!loggedCompany.getPositions().contains(position))
+				return this.list();
+
+			Application application2 = this.applicationService.findOneWithAssert(applicationId);
+			Curriculum curriculum = application2.getCurriculum();
+
+			result = new ModelAndView("company/curriculum");
+			result.addObject("curriculum", curriculum);
+			result.addObject("personalData", curriculum.getPersonalData());
+			result.addObject("positionData", curriculum.getPositionData());
+			result.addObject("educationData", curriculum.getEducationData());
+			result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
+			result.addObject("requestURI", "/curriculum/hacker/show.do");
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 
 		return result;
 	}
@@ -176,9 +210,8 @@ public class PositionController extends AbstractController {
 
 		Problem problem = this.problemService.findOne(problemId);
 
-		if (!loggedCompany.getProblems().contains(problem)) {
+		if (!loggedCompany.getProblems().contains(problem))
 			return this.list();
-		}
 
 		list = problem.getAttachments();
 
@@ -205,9 +238,8 @@ public class PositionController extends AbstractController {
 
 		Position position = this.positionService.findOne(positionId);
 
-		if (!loggedCompany.getPositions().contains(position)) {
+		if (!loggedCompany.getPositions().contains(position))
 			return this.list();
-		}
 
 		list = position.getRequiredTecnologies();
 
@@ -234,9 +266,8 @@ public class PositionController extends AbstractController {
 
 		Position position = this.positionService.findOne(positionId);
 
-		if (!loggedCompany.getPositions().contains(position)) {
+		if (!loggedCompany.getPositions().contains(position))
 			return this.list();
-		}
 
 		list = position.getRequiredSkills();
 
@@ -270,27 +301,21 @@ public class PositionController extends AbstractController {
 		Position position;
 		position = this.positionService.findOne(positionId);
 		Company company = this.companyService.loggedCompany();
-		
-		if(company.getPositions().contains(position)) {
 
-			if (!position.getIsDraftMode() || position.getIsCancelled()) {
+		if (company.getPositions().contains(position)) {
+
+			if (!position.getIsDraftMode() || position.getIsCancelled())
 				return this.list();
-			}
-	
-			if (!(company.getPositions().contains(position))) {
+
+			if (!(company.getPositions().contains(position)))
 				return this.list();
-			}
-	
-			FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox
-			= this.positionService.prepareFormObjectPositionProblemCheckbox(positionId);
-	
+
+			FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox = this.positionService.prepareFormObjectPositionProblemCheckbox(positionId);
+
 			result = this.createEditModelAndView(formObjectPositionProblemCheckbox);
-			
-		} else {
-			
+
+		} else
 			result = new ModelAndView("redirect:list.do");
-			
-		}
 
 		return result;
 	}
@@ -316,31 +341,27 @@ public class PositionController extends AbstractController {
 
 	//SAVE POSITION
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox,
-			BindingResult binding) {
+	public ModelAndView save(@Valid FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox, BindingResult binding) {
 
 		ModelAndView result;
 
 		Position position = new Position();
 		position = this.positionService.createPosition();
 		List<Problem> problems = new ArrayList<>();
-		
+
 		problems = this.problemService.reconstructList(formObjectPositionProblemCheckbox);
 		position = this.positionService.reconstructCheckBox(formObjectPositionProblemCheckbox, binding);
 		Boolean errorProblems = false;
-		
-		if(formObjectPositionProblemCheckbox.getIsDraftMode()!=null) {
-			if(!formObjectPositionProblemCheckbox.getIsDraftMode()) {
-				errorProblems = !(problems.size()>=2);
-			}
-		}
-		
+
+		if (formObjectPositionProblemCheckbox.getIsDraftMode() != null)
+			if (!formObjectPositionProblemCheckbox.getIsDraftMode())
+				errorProblems = !(problems.size() >= 2);
+
 		if (binding.hasErrors() || errorProblems) {
 			result = this.createEditModelAndView(position);
-			if(errorProblems) {
+			if (errorProblems)
 				result.addObject("message", "position.problemsError");
-			}
-		} else {
+		} else
 			try {
 				this.positionService.saveAssignList(position, problems);
 
@@ -351,7 +372,6 @@ public class PositionController extends AbstractController {
 				result = this.createEditModelAndView(position, "commit.error");
 
 			}
-		}
 		return result;
 	}
 

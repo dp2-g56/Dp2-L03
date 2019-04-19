@@ -50,7 +50,8 @@
 		<security:intercept-url pattern="/position/company/**" access="hasRole('COMPANY')" /> 
 		<security:intercept-url pattern="/problemPosition/company/**" access="hasRole('COMPANY')" /> 
 		<security:intercept-url pattern="/problem/company/**" access="hasRole('COMPANY')" /> 
-
+		<security:intercept-url pattern="/curriculum/company/**" access="hasRole('COMPANY')" /> 
+		
 		<!-- HACKER -->
 		<security:intercept-url pattern="/finder/hacker/**" access="hasRole('HACKER')" /> 
 		<security:intercept-url pattern="/curriculum/hacker/**" access="hasRole('HACKER')" /> 
