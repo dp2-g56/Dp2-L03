@@ -31,6 +31,9 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 	@Query("select c.positions from Company c where c.id = ?1")
 	public List<Position> positionsOfCompany(int idCompany);
 
+	@Query("select p from Company c join c.positions p where c.id = ?1 AND p.isCancelled = false AND p.isDraftMode = false")
+	public List<Position> positionsOfCompanyInFinalNotCancelled(int idCompany);
+
 	@Query("select distinct p.applications from Company c join c.positions p where c.id = ?1")
 	public List<Application> applicationsOfCompany(int idCompany);
 

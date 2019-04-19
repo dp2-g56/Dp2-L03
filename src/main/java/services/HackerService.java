@@ -274,8 +274,7 @@ public class HackerService {
 		Finder finder = hacker.getFinder();
 
 		//Finder se borra solo, hay que quitar la lista de positions
-		finder.getPositions().removeAll(finder.getPositions());
-
+		finder.getPositions().clear();
 		//Curriculum se borra solo
 
 		//Mensajes se borran solos

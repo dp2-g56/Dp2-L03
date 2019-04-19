@@ -198,13 +198,14 @@ public class ApplicationService {
 
 		// Quitamos todos los applications de hacker
 
+		List<Curriculum> curriculumsToDelete = this.applicationRepository.getCopyCurriculumsOfApplications(hacker);
+
 		for (Application app : applications) {
 			Position pos = new Position();
 			pos = app.getPosition();
 			pos.getApplications().remove(app);
-			app.setHacker(null);
-			app.setPosition(null);
-
+			//app.setHacker(null);
+			//app.setPosition(null);
 		}
 
 		// hacker.getApplications().removeAll(applications);
@@ -222,6 +223,7 @@ public class ApplicationService {
 		 */
 
 		this.applicationRepository.deleteInBatch(applications);
+		this.curriculumService.deleteInBatch(curriculumsToDelete);
 
 	}
 
