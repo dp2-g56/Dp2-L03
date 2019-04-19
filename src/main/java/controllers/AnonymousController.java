@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ApplicationService;
 import services.CompanyService;
 import services.ConfigurationService;
 import services.HackerService;
 import services.PositionService;
 import services.ProblemService;
+import domain.Actor;
 import domain.Application;
 import domain.Company;
 import domain.Configuration;
@@ -51,6 +53,9 @@ public class AnonymousController extends AbstractController {
 
 	@Autowired
 	private ProblemService			problemService;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	public AnonymousController() {
@@ -244,10 +249,20 @@ public class AnonymousController extends AbstractController {
 
 		List<Problem> allProblems = new ArrayList<>();
 		allProblems = this.positionService.getProblemsOfPosition(positionId);
+		Actor actor = this.positionService.getActorWithPosition(positionId);
+
+		Actor loggedActor = this.actorService.loggedActor();
+		Boolean sameActorLogged;
+
+		if (loggedActor.equals(actor))
+			sameActorLogged = true;
+		else
+			sameActorLogged = false;
 
 		result = new ModelAndView("anonymous/problem/list");
 
 		result.addObject("problems", allProblems);
+		result.addObject("sameActorLogged", sameActorLogged);
 		result.addObject("requestURI", "anonymous/problem/list.do");
 		result.addObject("positionId", positionId);
 
@@ -280,9 +295,20 @@ public class AnonymousController extends AbstractController {
 
 		List<Application> allApplications = new ArrayList<Application>();
 		allApplications = this.applicationService.getApplicationsCompany(positionId);
+		Actor actor = this.positionService.getActorWithPosition(positionId);
+
+		Actor loggedActor = this.actorService.loggedActor();
+		Boolean sameActorLogged;
+
+		if (loggedActor.equals(actor))
+			sameActorLogged = true;
+		else
+			sameActorLogged = false;
+
 		result = new ModelAndView("anonymous/application/list");
 
 		result.addObject("allApplications", allApplications);
+		result.addObject("sameActorLogged", sameActorLogged);
 		result.addObject("requestURI", "anonymous/application/list.do");
 		result.addObject("positionId", positionId);
 
@@ -295,9 +321,22 @@ public class AnonymousController extends AbstractController {
 		ModelAndView result;
 
 		Company company = this.companyService.companyOfRespectivePosition(positionId);
+		Actor actor = this.positionService.getActorWithPosition(positionId);
+
+		Actor loggedActor = this.actorService.loggedActor();
+		Boolean sameActorLogged;
+
+		if (loggedActor.equals(actor))
+			sameActorLogged = true;
+		else
+			sameActorLogged = false;
+
+		Boolean publicValue = true;
 
 		result = new ModelAndView("anonymous/company/listOne");
 		result.addObject("actor", company);
+		result.addObject("publicValue", publicValue);
+		result.addObject("sameActorLogged", sameActorLogged);
 		result.addObject("requestURI", "anonymous/company/listOne.do");
 
 		return result;
@@ -324,9 +363,10 @@ public class AnonymousController extends AbstractController {
 
 		ModelAndView result;
 
-		List<Position> positions = this.companyService.positionOfRespectiveCompany(idCompany);
+		List<Position> positions = this.companyService.positionsOfCompanyInFinalNotCancelled(idCompany);
 
 		result = new ModelAndView("anonymous/company/positions");
+		result.addObject("publicPositionsSize", positions.size());
 		result.addObject("publicPositions", positions);
 		result.addObject("requestURI", "anonymous/company/positions.do");
 

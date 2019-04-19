@@ -50,9 +50,10 @@
 	
 	<security:authorize access="hasRole('COMPANY')">
 	
+	
 	<display:column>
 	
-		<jstl:if test="${row.status == 'SUBMITTED'}">
+		<jstl:if test="${row.status == 'SUBMITTED' && sameActorLogged}">
 			<a href="position/company/application/accept.do?applicationId=${row.id}" onclick="return confirm('<spring:message code="company.confirmChangeStatus" />')">
 				<spring:message code="application.accept" />
 			</a>
@@ -73,12 +74,14 @@
 <br />
 
 <security:authorize access="hasRole('COMPANY')">
+<jstl:if test="${sameActorLogged}">
 <a href="position/company/list.do"><spring:message code="position.back" /></a>
+</jstl:if>
 </security:authorize>
 
- <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
-  <a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
-  </security:authorize>
+<br />
+  <a href="anonymous/position/list.do"><spring:message code="position.backToPublicData" /></a>
+
 
 
 	

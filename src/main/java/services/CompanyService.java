@@ -457,4 +457,8 @@ public class CompanyService {
 	public Company getCompanyByUsername(String username) {
 		return this.companyRepository.getCompanyByUsername(username);
 	}
+
+	public List<Position> positionsOfCompanyInFinalNotCancelled(int idCompany) {
+		return this.companyRepository.positionsOfCompanyInFinalNotCancelled(idCompany);
+	}
 }
