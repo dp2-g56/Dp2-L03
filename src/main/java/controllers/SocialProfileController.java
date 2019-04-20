@@ -65,9 +65,11 @@ public class SocialProfileController extends AbstractController {
 
 		logguedActor = this.actorService.getActorByUsername(userAccount.getUsername());
 		socialProfiles = logguedActor.getSocialProfiles();
+		Boolean trueValue = true;
 
 		result.addObject("socialProfiles", socialProfiles);
 		result.addObject("actor", logguedActor);
+		result.addObject("trueValue", trueValue);
 		result.addObject("requestURI", "authenticated/showProfile.do");
 
 		return result;
