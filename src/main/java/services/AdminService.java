@@ -181,52 +181,40 @@ public class AdminService {
 		String locale = LocaleContextHolder.getLocale().getLanguage().toUpperCase();
 
 		// Confirmacion contrasena
-		if (!formObjectAdmin.getPassword().equals(formObjectAdmin.getConfirmPassword())) {
-			if (locale.contains("ES")) {
+		if (!formObjectAdmin.getPassword().equals(formObjectAdmin.getConfirmPassword()))
+			if (locale.contains("ES"))
 				binding.addError(new FieldError("formObjectAdmin", "password", formObjectAdmin.getPassword(), false, null, null, "Las contrasenas no coinciden"));
-			} else {
+			else
 				binding.addError(new FieldError("formObjectAdmin", "password", formObjectAdmin.getPassword(), false, null, null, "Passwords don't match"));
-			}
-		}
 
 		// Confirmacion terminos y condiciones
-		if (!formObjectAdmin.getTermsAndConditions()) {
-			if (locale.contains("ES")) {
+		if (!formObjectAdmin.getTermsAndConditions())
+			if (locale.contains("ES"))
 				binding.addError(new FieldError("formObjectAdmin", "termsAndConditions", formObjectAdmin.getTermsAndConditions(), false, null, null, "Debe aceptar los terminos y condiciones"));
-			} else {
+			else
 				binding.addError(new FieldError("formObjectAdmin", "termsAndConditions", formObjectAdmin.getTermsAndConditions(), false, null, null, "You must accept the terms and conditions"));
-			}
-		}
 
-		if (card.getNumber() != null) {
-			if (!this.creditCardService.validateNumberCreditCard(card)) {
-				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
+		if (card.getNumber() != null)
+			if (!this.creditCardService.validateNumberCreditCard(card))
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
 					binding.addError(new FieldError("formObject", "number", formObjectAdmin.getNumber(), false, null, null, "El numero de la tarjeta es invalido"));
-				} else {
+				else
 					binding.addError(new FieldError("formObject", "number", formObjectAdmin.getNumber(), false, null, null, "The card number is invalid"));
-				}
-			}
-		}
 
-		if (card.getExpirationMonth() != null && card.getExpirationYear() != null) {
-			if (!this.creditCardService.validateDateCreditCard(card)) {
-				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
+		if (card.getExpirationMonth() != null && card.getExpirationYear() != null)
+			if (!this.creditCardService.validateDateCreditCard(card))
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
 					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "La tarjeta no puede estar caducada"));
-				} else {
+				else
 					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "The credit card can not be expired"));
-				}
-			}
-		}
 
 		List<String> cardType = this.configurationService.getConfiguration().getCardType();
 
-		if (!cardType.contains(result.getCreditCard().getBrandName())) {
-			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES")) {
+		if (!cardType.contains(result.getCreditCard().getBrandName()))
+			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
 				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "Tarjeta no admitida"));
-			} else {
+			else
 				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "The credit card is not accepted"));
-			}
-		}
 
 		return result;
 	}
@@ -261,11 +249,10 @@ public class AdminService {
 
 		}
 
-		if (this.adminRepository.ratioEmptyFinder(calendar.getTime()) == null) {
+		if (this.adminRepository.ratioEmptyFinder(calendar.getTime()) == null)
 			statistics.add((float) 0);
-		} else {
+		else
 			statistics.add(this.adminRepository.ratioEmptyFinder(calendar.getTime()));
-		}
 
 		return statistics;
 
@@ -358,9 +345,8 @@ public class AdminService {
 
 		Boolean hasSpam = this.configurationService.isStringSpam(message.getBody(), spamWords) || this.configurationService.isStringSpam(message.getSubject(), spamWords) || this.configurationService.isStringSpam(message.getTags(), spamWords);
 
-		if (hasSpam) {
+		if (hasSpam)
 			message.setTags("SPAM");
-		}
 
 		for (Actor a : actors) {
 
@@ -371,9 +357,8 @@ public class AdminService {
 		}
 		sender.getMessages().add(message2);
 
-		if (hasSpam) {
+		if (hasSpam)
 			this.actorService.updateActorSpam(sender);
-		}
 
 		this.save(sender);
 
@@ -497,6 +482,24 @@ public class AdminService {
 
 	private Admin findOne(int id) {
 		return this.adminRepository.findOne(id);
+	}
+
+	//----------------------------------------------BAN/UNBAN---------------------------------
+	//----------------------------------------------------------------------------------------
+	public void unBanSuspiciousActor(Actor a) {
+		this.loggedAsAdmin();
+
+		a.getUserAccount().setIsNotLocked(true);
+		this.actorService.save(a);
+	}
+
+	public void banSuspiciousActor(Actor a) {
+		this.loggedAsAdmin();
+
+		Assert.isTrue(a.getHasSpam());
+
+		a.getUserAccount().setIsNotLocked(false);
+		this.actorService.save(a);
 	}
 
 }

@@ -31,8 +31,8 @@
 	
 	<display:column titleKey="application.curriculum">
 		<spring:message var="seeCurriculum" code="application.viewCurriculum" />
-	
-			<spring:url var="curriculumUrl" value="/application/company/list.do?applicationId={applicationId}">
+						
+			<spring:url var="curriculumUrl" value="/position/company/curriculum/list.do?applicationId={applicationId}">
             	<spring:param name="applicationId" value="${row.id}"/>
         	</spring:url>
         	
