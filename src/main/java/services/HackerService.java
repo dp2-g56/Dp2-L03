@@ -127,7 +127,7 @@ public class HackerService {
 		}
 	}
 
-	private void flush() {
+	public void flush() {
 		this.hackerRepository.flush();
 	}
 
@@ -293,10 +293,10 @@ public class HackerService {
 
 	public String SocialProfilesToString() {
 		String res = "";
-		Hacker hacker = this.loggedHacker();
+		Actor actor = this.actorService.loggedActor();
 		List<SocialProfile> socialProfiles = new ArrayList<SocialProfile>();
 		StringBuilder sb = new StringBuilder();
-		socialProfiles = hacker.getSocialProfiles();
+		socialProfiles = actor.getSocialProfiles();
 
 		Integer cont = 1;
 

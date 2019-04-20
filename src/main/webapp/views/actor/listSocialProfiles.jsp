@@ -50,22 +50,22 @@
 	</table>
 
 	<security:authorize access="hasAnyRole('ADMIN')">
-	<jstl:if test="${sameActorLogged}">
-		<acme:cancel url="/administrator/export.do?id=${actor.id}"
+	<jstl:if test="${sameActorLogged || trueValue}">
+		<acme:cancel url="/export/admin.do?id=${actor.id}"
 			code="export" />
 	</jstl:if> 
 	</security:authorize>
 
 	<security:authorize access="hasAnyRole('HACKER')">
-	<jstl:if test="${sameActorLogged}">
+	<jstl:if test="${sameActorLogged || trueValue}">
 		<acme:cancel url="/export/hacker.do?id=${actor.id}"
 			code="export" />
 	</jstl:if> 
 	</security:authorize>
 
 	<security:authorize access="hasAnyRole('COMPANY')">
-	<jstl:if test="${sameActorLogged}">
-		<acme:cancel url="/company/export.do?id=${actor.id}"
+	<jstl:if test="${sameActorLogged || trueValue}">
+		<acme:cancel url="/export/company.do?id=${actor.id}"
 			code="export" />
 	</jstl:if> 	
 	</security:authorize>

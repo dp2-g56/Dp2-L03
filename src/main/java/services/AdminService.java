@@ -480,7 +480,7 @@ public class AdminService {
 
 	}
 
-	private Admin findOne(int id) {
+	public Admin findOne(int id) {
 		return this.adminRepository.findOne(id);
 	}
 
