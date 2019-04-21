@@ -134,7 +134,7 @@ public class HackerService {
 	public Hacker createHacker() {
 		Hacker hacker = new Hacker();
 		CreditCard card = new CreditCard();
-
+		Finder finder = new Finder();
 		// Se crean las listas vacias
 		// ACTOR
 		List<SocialProfile> socialProfiles = new ArrayList<SocialProfile>();
@@ -156,6 +156,7 @@ public class HackerService {
 		hacker.setSocialProfiles(socialProfiles);
 		hacker.setSurname("");
 		hacker.setVATNumber("");
+		hacker.setFinder(finder);
 
 		List<Authority> authorities = new ArrayList<Authority>();
 
