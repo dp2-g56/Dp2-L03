@@ -269,6 +269,7 @@ public class HackerService {
 	public void deleteHacker() {
 		Hacker hacker = new Hacker();
 
+		this.loggedAsHacker();
 		hacker = this.loggedHacker();
 
 		Finder finder = hacker.getFinder();

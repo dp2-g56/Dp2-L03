@@ -408,6 +408,7 @@ public class CompanyService {
 	}
 
 	public void deleteCompany() {
+		this.loggedAsCompany();
 		Company company = this.loggedCompany();
 
 		int companyId = company.getId();

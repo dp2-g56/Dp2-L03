@@ -26,6 +26,7 @@ import domain.Actor;
 import domain.Application;
 import domain.Company;
 import domain.Configuration;
+import domain.Curriculum;
 import domain.Hacker;
 import domain.Position;
 import domain.Problem;
@@ -239,6 +240,32 @@ public class AnonymousController extends AbstractController {
 		result = new ModelAndView("anonymous/position/list");
 		result.addObject("publicPositions", publicPositions);
 		result.addObject("requestURI", "anonymous/position/list.do");
+
+		return result;
+	}
+
+	@RequestMapping(value = "/curriculum/list", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam int applicationId) {
+		ModelAndView result;
+
+		try {
+
+			Application application = this.applicationService.findOne(applicationId);
+			Curriculum curriculum = application.getCurriculum();
+
+			Boolean publicData = true;
+
+			result = new ModelAndView("anonymous/curriculum/list");
+			result.addObject("curriculum", curriculum);
+			result.addObject("publicData", publicData);
+			result.addObject("personalData", curriculum.getPersonalData());
+			result.addObject("positionData", curriculum.getPositionData());
+			result.addObject("educationData", curriculum.getEducationData());
+			result.addObject("miscellaneousData", curriculum.getMiscellaneousData());
+			result.addObject("requestURI", "/anonymous/curriculum/list.do");
+		} catch (Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 
 		return result;
 	}
