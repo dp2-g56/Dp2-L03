@@ -41,8 +41,9 @@ public class ProblemController extends AbstractController {
 		problems = this.problemService.showProblems();
 
 		result = new ModelAndView("problem/company/list");
-
+		Boolean sameActorLogged = true;
 		result.addObject("problems", problems);
+		result.addObject("sameActorLogged", sameActorLogged);
 		result.addObject("requestURI", "problem/company/list.do");
 
 		return result;
@@ -54,10 +55,11 @@ public class ProblemController extends AbstractController {
 		ModelAndView result;
 
 		Problem problem = this.problemService.findOne(problemId);
-
+		Boolean sameActorLogged = true;
 		result = new ModelAndView("problem/company/listAttachments");
 		result.addObject("attachments", problem.getAttachments());
 		result.addObject("problemId", problemId);
+		result.addObject("sameActorLogged", sameActorLogged);
 		result.addObject("canEdit", problem.getIsDraftMode());
 
 		return result;
