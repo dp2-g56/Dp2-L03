@@ -280,6 +280,7 @@ public class AnonymousController extends AbstractController {
 
 		Actor loggedActor = this.actorService.loggedActor();
 		Boolean sameActorLogged;
+		Boolean publicData = true;
 
 		if (loggedActor.equals(actor))
 			sameActorLogged = true;
@@ -289,6 +290,7 @@ public class AnonymousController extends AbstractController {
 		result = new ModelAndView("anonymous/problem/list");
 
 		result.addObject("problems", allProblems);
+		result.addObject("publicData", publicData);
 		result.addObject("sameActorLogged", sameActorLogged);
 		result.addObject("requestURI", "anonymous/problem/list.do");
 		result.addObject("positionId", positionId);

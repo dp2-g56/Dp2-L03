@@ -79,8 +79,6 @@
 </jstl:if>
 </security:authorize>
 
-<br />
-  <a href="anonymous/position/list.do"><spring:message code="position.backToPublicData" /></a>
 
 
 
