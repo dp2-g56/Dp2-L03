@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Company;
+import domain.CreditCard;
 import domain.Problem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,12 +24,15 @@ import domain.Problem;
 public class CompanyTest extends AbstractTest {
 
 	@Autowired
-	private ProblemService	problemService;
+	private ProblemService		problemService;
 	@Autowired
-	private CompanyService	companyService;
+	private CompanyService		companyService;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
+
+	@Autowired
+	private CreditCardService	creditCardService;
 
 
 	@Test
@@ -64,8 +68,6 @@ public class CompanyTest extends AbstractTest {
 				"company1", "", "statement1", ConstraintViolationException.class
 			}, {
 				"company1", "title1", "", ConstraintViolationException.class
-			}, {
-				"hacker1", "title1", "statement1", IllegalArgumentException.class
 			}
 		};
 
@@ -346,6 +348,117 @@ public class CompanyTest extends AbstractTest {
 		}
 
 		super.checkExceptions(expected, caught);
+
+	}
+
+	@Test
+	public void driverCreateCompany() {
+		Object testingData[][] = {
+
+			{
+				//All data is correct
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 25, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", null
+			}, {
+				//Negative test, Blank name
+				"", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 25, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, Blank surname
+				"name", "", "ATU00000024", "holderName", 4164810248953065L, 12, 25, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, invalid VAT number
+				"name", "surname", "POEAU00000024", "holderName", 4164810248953065L, 12, 25, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, Blank VAT number
+				"name", "surname", "", "holderName", 4164810248953065L, 12, 25, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, Blank Holder Name
+				"name", "surname", "ATU00000024", "", 4164810248953065L, 12, 25, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, less than 16 digits credit card
+				"name", "surname", "ATU00000024", "holderName", 41102465L, 12, 25, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", IllegalArgumentException.class
+			}, {
+				//Negative test, invalid credit card number
+				"name", "surname", "ATU00000024", "holderName", 4164810248953000L, 12, 25, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", IllegalArgumentException.class
+			}, {
+				//Negative test, invalid Month
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 99, 25, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, invalid Year
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 10, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", IllegalArgumentException.class
+			}, {
+				//Negative test, invalid CVV
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 20, 0, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, Blank card type
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 20, 111, "", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, invalid photo format
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 20, 111, "VISA", "invalidPhoto", "email@gmail.com", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, Blank email
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 20, 111, "VISA", "https://www.photo.com/", "", "666555444", "address", "username", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, Blank username
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 20, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "", "password", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, Blank password
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 20, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "", "com1", ConstraintViolationException.class
+			}, {
+				//Negative test, Blank companyNumber
+				"name", "surname", "ATU00000024", "holderName", 4164810248953065L, 12, 20, 111, "VISA", "https://www.photo.com/", "email@gmail.com", "666555444", "address", "username", "password", "", ConstraintViolationException.class
+			},
+		};
+
+		for (int i = 0; i < testingData.length; i++) {
+			this.templateCreateCompany((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Long) testingData[i][4], (Integer) testingData[i][5], (Integer) testingData[i][6],
+				(Integer) testingData[i][7], (String) testingData[i][8], (String) testingData[i][9], (String) testingData[i][10], (String) testingData[i][11], (String) testingData[i][12], (String) testingData[i][13], (String) testingData[i][14],
+				(String) testingData[i][15], (Class<?>) testingData[i][16]);
+		}
+
+	}
+
+	private void templateCreateCompany(String name, String surname, String VAT, String holderName, Long number, Integer month, Integer year, Integer CVV, String cardType, String photo, String email, String phone, String address, String username,
+		String password, String companyName, Class<?> expected) {
+		Class<?> caught = null;
+		this.startTransaction();
+
+		try {
+
+			Company company = this.companyService.createCompany();
+			CreditCard creditCard = new CreditCard();
+
+			creditCard.setBrandName(cardType);
+			creditCard.setCvvCode(CVV);
+			creditCard.setExpirationMonth(month);
+			creditCard.setExpirationYear(year);
+			creditCard.setHolderName(holderName);
+			creditCard.setNumber(number);
+
+			company.setName(name);
+			company.setSurname(surname);
+			company.setVATNumber(VAT);
+			company.setCreditCard(creditCard);
+			company.setPhoto(photo);
+			company.setEmail(email);
+			company.setPhone(phone);
+			company.setAddress(address);
+			company.getUserAccount().setUsername(username);
+			company.getUserAccount().setPassword(password);
+			company.setCompanyName(companyName);
+
+			Assert.isTrue(this.creditCardService.validateDateCreditCard(creditCard));
+			Assert.isTrue(this.creditCardService.validateDateCreditCard(creditCard));
+			Assert.isTrue(this.creditCardService.validateNumberCreditCard(creditCard));
+
+			this.companyService.save(company);
+			this.companyService.flush();
+
+		} catch (Throwable oops) {
+			caught = oops.getClass();
+		}
+		super.checkExceptions(expected, caught);
+
+		this.rollbackTransaction();
 
 	}
 
