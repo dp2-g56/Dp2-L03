@@ -104,7 +104,8 @@
   </security:authorize>  
   
   <br />
+  <jstl:if test="${publicData}">
   <a href="anonymous/filtered/create.do"><spring:message code="position.back" /></a>
-
+ </jstl:if>
     
     
