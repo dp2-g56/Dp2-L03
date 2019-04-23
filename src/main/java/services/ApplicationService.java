@@ -1,3 +1,4 @@
+
 package services;
 
 import java.net.URL;
@@ -10,22 +11,18 @@ import java.util.Random;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.Validator;
-
-import domain.Hacker;
-import domain.Problem;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ApplicationRepository;
 import domain.Application;
 import domain.Company;
 import domain.Curriculum;
+import domain.Hacker;
 import domain.Position;
+import domain.Problem;
 import domain.Status;
 
 @Service
@@ -33,25 +30,26 @@ import domain.Status;
 public class ApplicationService {
 
 	@Autowired
-	private ApplicationRepository applicationRepository;
+	private ApplicationRepository	applicationRepository;
 
 	@Autowired
-	private ProblemService problemService;
+	private ProblemService			problemService;
 
 	@Autowired
-	private HackerService hackerService;
+	private HackerService			hackerService;
 
 	@Autowired
-	private Validator validator;
+	private Validator				validator;
 
 	@Autowired
-	private CompanyService companyService;
+	private CompanyService			companyService;
 
 	@Autowired
-	private PositionService positionService;
+	private PositionService			positionService;
 
 	@Autowired
-	private CurriculumService curriculumService;
+	private CurriculumService		curriculumService;
+
 
 	public List<Application> findAll() {
 		Hacker hacker = this.hackerService.loggedHacker();
@@ -141,6 +139,14 @@ public class ApplicationService {
 		return this.applicationRepository.findOne(applicationId);
 	}
 
+	public Application findOneWithAssert(int applicationId) {
+		Company loggedCompany = this.companyService.loggedCompany();
+		Application application = this.applicationRepository.findOne(applicationId);
+		Position position = application.getPosition();
+		Assert.isTrue(loggedCompany.getPositions().contains(position));
+		return application;
+	}
+
 	public Application save(Application application) {
 		return this.applicationRepository.save(application);
 	}
@@ -192,13 +198,14 @@ public class ApplicationService {
 
 		// Quitamos todos los applications de hacker
 
+		List<Curriculum> curriculumsToDelete = this.applicationRepository.getCopyCurriculumsOfApplications(hacker);
+
 		for (Application app : applications) {
 			Position pos = new Position();
 			pos = app.getPosition();
 			pos.getApplications().remove(app);
-			app.setHacker(null);
-			app.setPosition(null);
-
+			//app.setHacker(null);
+			//app.setPosition(null);
 		}
 
 		// hacker.getApplications().removeAll(applications);
@@ -216,6 +223,7 @@ public class ApplicationService {
 		 */
 
 		this.applicationRepository.deleteInBatch(applications);
+		this.curriculumService.deleteInBatch(curriculumsToDelete);
 
 	}
 

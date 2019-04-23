@@ -20,6 +20,10 @@
 		<put-attribute name="body" value="/views/anonymous/termsAndConditionsEN.jsp" />
 	</definition>
 	
+	<definition name="termsAndConditionsES" extends="master.page">	
+		<put-attribute name="body" value="/views/anonymous/termsAndConditionsES.jsp" />
+	</definition>
+	
 	<definition name="anonymous/hacker/create" extends="master.page">	
 		<put-attribute name="title" value="Register as hacker" />
 		<put-attribute name="body" value="/views/anonymous/createHacker.jsp" />
@@ -31,17 +35,17 @@
 	</definition>
 	
 	<definition name="anonymous/problem/list" extends="master.page">	
-		<put-attribute name="title" value="Public positions" />
+		<put-attribute name="title" value="Public problems" />
 		<put-attribute name="body" value="/views/company/problemList.jsp" />
 	</definition>
 	
 	<definition name="anonymous/application/list" extends="master.page">	
 		<put-attribute name="title" value="Applications" />
-		<put-attribute name="body" value="/views/company/showApplicationsPosition.jsp" />
+		<put-attribute name="body" value="/views/anonymous/showApplicationsPosition.jsp" />
 	</definition>
 	
 	<definition name="anonymous/company/listOne" extends="master.page">	
-		<put-attribute name="title" value="Aplicaciones" />
+		<put-attribute name="title" value="Company profile" />
 		<put-attribute name="body" value="/views/actor/listSocialProfiles.jsp" />
 	</definition>
 	
@@ -73,6 +77,11 @@
 	<definition name="anonymous/company/create" extends="master.page">	
 		<put-attribute name="title" value="Register as company" />
 		<put-attribute name="body" value="/views/anonymous/createCompany.jsp" />
+	</definition>
+	
+		<definition name="anonymous/curriculum/list" extends="master.page">	
+		<put-attribute name="title" value="Curriculums list" />
+		<put-attribute name="body" value="/views/anonymous/curriculumOfApplication.jsp" />
 	</definition>
 	
 </tiles-definitions>

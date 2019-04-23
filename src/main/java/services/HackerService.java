@@ -19,6 +19,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
+import domain.Admin;
 import domain.Application;
 import domain.CreditCard;
 import domain.Curriculum;
@@ -31,6 +32,8 @@ import domain.PositionData;
 import domain.Problem;
 import domain.Message;
 import domain.SocialProfile;
+import forms.FormObjectEditAdmin;
+import forms.FormObjectEditHacker;
 import forms.FormObjectHacker;
 
 @Service
@@ -127,14 +130,14 @@ public class HackerService {
 		}
 	}
 
-	private void flush() {
+	public void flush() {
 		this.hackerRepository.flush();
 	}
 
 	public Hacker createHacker() {
 		Hacker hacker = new Hacker();
 		CreditCard card = new CreditCard();
-
+		Finder finder = new Finder();
 		// Se crean las listas vacias
 		// ACTOR
 		List<SocialProfile> socialProfiles = new ArrayList<SocialProfile>();
@@ -156,6 +159,7 @@ public class HackerService {
 		hacker.setSocialProfiles(socialProfiles);
 		hacker.setSurname("");
 		hacker.setVATNumber("");
+		hacker.setFinder(finder);
 
 		List<Authority> authorities = new ArrayList<Authority>();
 
@@ -202,7 +206,7 @@ public class HackerService {
 		// Authorities
 		List<Authority> authorities = new ArrayList<Authority>();
 		Authority authority = new Authority();
-		authority.setAuthority(Authority.ADMIN);
+		authority.setAuthority(Authority.HACKER);
 		authorities.add(authority);
 		userAccount.setAuthorities(authorities);
 
@@ -269,13 +273,13 @@ public class HackerService {
 	public void deleteHacker() {
 		Hacker hacker = new Hacker();
 
+		this.loggedAsHacker();
 		hacker = this.loggedHacker();
 
 		Finder finder = hacker.getFinder();
 
 		//Finder se borra solo, hay que quitar la lista de positions
-		finder.getPositions().removeAll(finder.getPositions());
-
+		finder.getPositions().clear();
 		//Curriculum se borra solo
 
 		//Mensajes se borran solos
@@ -294,10 +298,10 @@ public class HackerService {
 
 	public String SocialProfilesToString() {
 		String res = "";
-		Hacker hacker = this.loggedHacker();
+		Actor actor = this.actorService.loggedActor();
 		List<SocialProfile> socialProfiles = new ArrayList<SocialProfile>();
 		StringBuilder sb = new StringBuilder();
-		socialProfiles = hacker.getSocialProfiles();
+		socialProfiles = actor.getSocialProfiles();
 
 		Integer cont = 1;
 
@@ -306,6 +310,91 @@ public class HackerService {
 			cont++;
 		}
 		return sb.toString();
+	}
+	
+	public Hacker reconstructHackerPersonalData(FormObjectEditHacker formObjectHacker, BindingResult binding) {
+		Hacker res = new Hacker();
+
+		Hacker adminDB = this.findOne(formObjectHacker.getId());
+
+		CreditCard card = new CreditCard();
+
+		//Credit Card
+		card.setBrandName(formObjectHacker.getBrandName());
+		card.setCvvCode(formObjectHacker.getCvvCode());
+		card.setExpirationMonth(formObjectHacker.getExpirationMonth());
+		card.setExpirationYear(formObjectHacker.getExpirationYear());
+		card.setHolderName(formObjectHacker.getHolderName());
+		card.setNumber(formObjectHacker.getNumber());
+
+		res.setAddress(formObjectHacker.getAddress());
+
+		res.setEmail(formObjectHacker.getEmail());
+		res.setPhone(formObjectHacker.getPhone());
+		res.setPhoto(formObjectHacker.getPhoto());
+		res.setSurname(formObjectHacker.getSurname());
+		res.setName(formObjectHacker.getName());
+		res.setId(formObjectHacker.getId());
+		res.setVATNumber(formObjectHacker.getVATNumber());
+		res.setCreditCard(card);
+		res.setHasSpam(adminDB.getHasSpam());
+		res.setMessages(adminDB.getMessages());
+		res.setSocialProfiles(adminDB.getSocialProfiles());
+		res.setUserAccount(adminDB.getUserAccount());
+		res.setVersion(adminDB.getVersion());
+
+		if (card.getNumber() != null)
+			if (!this.creditCardService.validateNumberCreditCard(card))
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+					binding.addError(new FieldError("formObject", "number", formObjectHacker.getNumber(), false, null, null, "El numero de la tarjeta es invalido"));
+				else
+					binding.addError(new FieldError("formObject", "number", formObjectHacker.getNumber(), false, null, null, "The card number is invalid"));
+
+		if (card.getExpirationMonth() != null && card.getExpirationYear() != null)
+			if (!this.creditCardService.validateDateCreditCard(card))
+				if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "La tarjeta no puede estar caducada"));
+				else
+					binding.addError(new FieldError("formObject", "expirationMonth", card.getExpirationMonth(), false, null, null, "The credit card can not be expired"));
+
+		List<String> cardType = this.configurationService.getConfiguration().getCardType();
+
+		if (!cardType.contains(res.getCreditCard().getBrandName()))
+			if (LocaleContextHolder.getLocale().getLanguage().toUpperCase().contains("ES"))
+				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "Tarjeta no admitida"));
+			else
+				binding.addError(new FieldError("formObject", "brandName", card.getBrandName(), false, null, null, "The credit card is not accepted"));
+
+		return res;
+
+	}
+	
+	public FormObjectEditHacker getFormObjectEditHacker(Hacker hacker) {
+
+		FormObjectEditHacker res = new FormObjectEditHacker();
+
+		//Company
+		res.setAddress(hacker.getAddress());
+		res.setName(hacker.getName());
+		res.setVATNumber(hacker.getVATNumber());
+		res.setPhoto(hacker.getPhoto());
+		res.setEmail(hacker.getEmail());
+		res.setAddress(hacker.getAddress());
+
+		res.setSurname(hacker.getSurname());
+
+		//Credit Card
+		CreditCard c = hacker.getCreditCard();
+
+		res.setHolderName(c.getHolderName());
+		res.setBrandName(c.getBrandName());
+		res.setNumber(c.getNumber());
+		res.setExpirationMonth(c.getExpirationMonth());
+		res.setExpirationYear(c.getExpirationYear());
+		res.setCvvCode(c.getCvvCode());
+
+		return res;
+
 	}
 
 }

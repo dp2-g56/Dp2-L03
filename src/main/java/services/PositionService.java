@@ -17,9 +17,9 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 
 import repositories.PositionRepository;
+import domain.Actor;
 import domain.Application;
 import domain.Company;
-import domain.Hacker;
 import domain.Position;
 import domain.Problem;
 import domain.Status;
@@ -30,17 +30,17 @@ import forms.FormObjectPositionProblemCheckbox;
 public class PositionService {
 
 	@Autowired
-	private PositionRepository		positionRepository;
+	private PositionRepository	positionRepository;
 
 	@Autowired
-	private CompanyService			companyService;
+	private CompanyService		companyService;
 
 	@Autowired
-	private ProblemService			problemService;
-	
+	private ProblemService		problemService;
+
 	@Autowired
-	private ApplicationService		applicationService;
-	
+	private ApplicationService	applicationService;
+
 	@Autowired
 	private HackerService		hackerService;
 
@@ -405,6 +405,10 @@ public class PositionService {
 	public void delete(Position position) {
 		this.positionRepository.delete(position);
 
+	}
+
+	public Actor getActorWithPosition(int positionId) {
+		return this.positionRepository.getActorWithPosition(positionId);
 	}
 
 }

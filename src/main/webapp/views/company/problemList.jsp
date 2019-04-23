@@ -13,7 +13,7 @@
 	requestURI="${requestURI}" >
 	
 <security:authorize access="hasRole('COMPANY')">
-
+<jstl:if test="${sameActorLogged}">
 	<display:column  titleKey="problem.edit" >
 		<jstl:if test="${row.isDraftMode}">
 			<spring:url var="editUrl" value="/problem/company/edit.do?problemId={problemId}">
@@ -26,7 +26,7 @@
         	</a>
         </jstl:if>
 	</display:column>
-	
+</jstl:if>
 </security:authorize>
 
 	
@@ -75,7 +75,7 @@
      </security:authorize>
 
 	<security:authorize access="hasRole('COMPANY')">   
-	 
+	 <jstl:if test="${sameActorLogged}">
     <display:column titleKey="problem.mode" sortable= "true">
     	<jstl:choose>
 			<jstl:when test="${row.isDraftMode}" >
@@ -86,7 +86,7 @@
 			</jstl:otherwise>
 		</jstl:choose>
 	</display:column>
-	
+	</jstl:if>
 	</security:authorize>
 	
 												
@@ -94,15 +94,18 @@
 
 <security:authorize access="hasRole('COMPANY')">   
 <br />
+<jstl:if test="${sameActorLogged}">
 	<spring:url var="createUrl" value="/problem/company/create.do"/>       	
     <a href="${createUrl}">
     	<spring:message var ="create" code="problem.create" />
     	<jstl:out value="${create}" />  
     </a>
+    </jstl:if>
   </security:authorize>  
   
-  <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
+  <br />
+  <jstl:if test="${publicData}">
   <a href="anonymous/filtered/create.do"><spring:message code="position.back" /></a>
-  </security:authorize>
+ </jstl:if>
     
     

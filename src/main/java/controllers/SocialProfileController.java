@@ -22,37 +22,43 @@ import services.ActorService;
 import services.AdminService;
 import services.CompanyService;
 import services.ConfigurationService;
+import services.HackerService;
 import services.SocialProfileService;
 import domain.Actor;
 import domain.Admin;
 import domain.Company;
 import domain.Configuration;
+import domain.Hacker;
 import domain.SocialProfile;
 import forms.FormObjectEditAdmin;
 import forms.FormObjectEditCompany;
+import forms.FormObjectEditHacker;
 
 @Controller
 @RequestMapping("/authenticated")
 public class SocialProfileController extends AbstractController {
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private SocialProfileService	socialProfileService;
+	private SocialProfileService socialProfileService;
 
 	@Autowired
-	private CompanyService			companyService;
+	private CompanyService companyService;
 
 	@Autowired
-	private ConfigurationService	configurationService;
+	private ConfigurationService configurationService;
 
 	@Autowired
-	private AdminService			adminService;
+	private AdminService adminService;
 
+	@Autowired
+	private HackerService hackerService;
 
-	//-------------------------------------------------------------------
-	//---------------------------LIST BROTHERHOOD------------------------------------
+	// -------------------------------------------------------------------
+	// ---------------------------LIST
+	// BROTHERHOOD------------------------------------
 	@RequestMapping(value = "/showProfile", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -65,15 +71,17 @@ public class SocialProfileController extends AbstractController {
 
 		logguedActor = this.actorService.getActorByUsername(userAccount.getUsername());
 		socialProfiles = logguedActor.getSocialProfiles();
+		Boolean trueValue = true;
 
 		result.addObject("socialProfiles", socialProfiles);
 		result.addObject("actor", logguedActor);
+		result.addObject("trueValue", trueValue);
 		result.addObject("requestURI", "authenticated/showProfile.do");
 
 		return result;
 	}
 
-	//---------------------------------------------------------------------
+	// ---------------------------------------------------------------------
 	@RequestMapping(value = "/socialProfile/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
@@ -85,8 +93,9 @@ public class SocialProfileController extends AbstractController {
 		return result;
 	}
 
-	//------------------------------------------------------------------------------------
-	//---------------------------EDIT SOCIAL PROFILE--------------------------------------
+	// ------------------------------------------------------------------------------------
+	// ---------------------------EDIT SOCIAL
+	// PROFILE--------------------------------------
 	@RequestMapping(value = "/socialProfile/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam int socialProfileId) {
 
@@ -106,8 +115,8 @@ public class SocialProfileController extends AbstractController {
 		return result;
 	}
 
-	//---------------------------------------------------------------------
-	//---------------------------SAVE --------------------------------------
+	// ---------------------------------------------------------------------
+	// ---------------------------SAVE --------------------------------------
 	@RequestMapping(value = "/socialProfile/create", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(SocialProfile socialProfile, BindingResult binding) {
 		ModelAndView result;
@@ -140,8 +149,9 @@ public class SocialProfileController extends AbstractController {
 			}
 		return result;
 	}
-	//---------------------------------------------------------------------
-	//---------------------------DELETE------------------------------------
+
+	// ---------------------------------------------------------------------
+	// ---------------------------DELETE------------------------------------
 	@RequestMapping(value = "/socialProfile/create", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(SocialProfile socialProfile, BindingResult binding) {
 
@@ -159,13 +169,12 @@ public class SocialProfileController extends AbstractController {
 		}
 		return result;
 	}
-	//---------------------------------------------------------------------
-	//---------------------------EDIT PERSONAL DAT-------------------------
-	
+	// ---------------------------------------------------------------------
+	// ---------------------------EDIT PERSONAL DAT-------------------------
+
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView editPersonalData() {
-		
-		
+
 		ModelAndView result = null;
 
 		UserAccount userAccount;
@@ -186,6 +195,12 @@ public class SocialProfileController extends AbstractController {
 			FormObjectEditAdmin formAdmin = this.adminService.getFormObjectEditadmin(admin);
 			formAdmin.setId(admin.getId());
 			result = this.createEditModelAndView(formAdmin);
+		} else if (authorities.get(0).toString().equals("HACKER")) {
+			Hacker hacker = this.hackerService.loggedHacker();
+			Assert.notNull(hacker);
+			FormObjectEditHacker formHacker = this.hackerService.getFormObjectEditHacker(hacker);
+			formHacker.setId(hacker.getId());
+			result = this.createEditModelAndView(formHacker);
 		}
 
 		if (result == null)
@@ -196,10 +211,10 @@ public class SocialProfileController extends AbstractController {
 		return result;
 	}
 
-	//---------------------------------------------------------------------
-	//---------------------------SAVE PERSONAL DATA------------------------
+	// ---------------------------------------------------------------------
+	// ---------------------------SAVE PERSONAL DATA------------------------
 
-	//Company
+	// Company
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView saveCompany(@Valid FormObjectEditCompany companyForm, BindingResult binding) {
 		ModelAndView result;
@@ -209,13 +224,13 @@ public class SocialProfileController extends AbstractController {
 
 		String prefix = configuration.getSpainTelephoneCode();
 
-
 		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(companyForm);
 			result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
-		}else
+		} else
 			try {
-				if (company.getPhone().matches("(\\+[0-9]{1,3})(\\([0-9]{1,3}\\))([0-9]{4,})$") || company.getPhone().matches("(\\+[0-9]{1,3})([0-9]{4,})$"))
+				if (company.getPhone().matches("(\\+[0-9]{1,3})(\\([0-9]{1,3}\\))([0-9]{4,})$")
+						|| company.getPhone().matches("(\\+[0-9]{1,3})([0-9]{4,})$"))
 					this.companyService.updateCompany(company);
 				else if (company.getPhone().matches("([0-9]{4,})$")) {
 					company.setPhone(prefix + company.getPhone());
@@ -245,7 +260,8 @@ public class SocialProfileController extends AbstractController {
 			result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
 		} else
 			try {
-				if (admin.getPhone().matches("(\\+[0-9]{1,3})(\\([0-9]{1,3}\\))([0-9]{4,})$") || admin.getPhone().matches("(\\+[0-9]{1,3})([0-9]{4,})$"))
+				if (admin.getPhone().matches("(\\+[0-9]{1,3})(\\([0-9]{1,3}\\))([0-9]{4,})$")
+						|| admin.getPhone().matches("(\\+[0-9]{1,3})([0-9]{4,})$"))
 					this.adminService.save(admin);
 				else if (admin.getPhone().matches("([0-9]{4,})$")) {
 					admin.setPhone(prefix + admin.getPhone());
@@ -260,9 +276,40 @@ public class SocialProfileController extends AbstractController {
 
 		return result;
 	}
+	
+	@RequestMapping(value = "/hacker/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView saveHacker(@Valid FormObjectEditHacker hackerForm, BindingResult binding) {
+		ModelAndView result;
 
-	//---------------------------------------------------------------------
-	//---------------------------CREATEEDITMODELANDVIEW--------------------
+		Hacker hacker = this.hackerService.reconstructHackerPersonalData(hackerForm, binding);
+		Configuration configuration = this.configurationService.getConfiguration();
+
+		String prefix = configuration.getSpainTelephoneCode();
+
+		if (binding.hasErrors()) {
+			result = this.createEditModelAndView(hackerForm);
+			result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
+		} else
+			try {
+				if (hacker.getPhone().matches("(\\+[0-9]{1,3})(\\([0-9]{1,3}\\))([0-9]{4,})$")
+						|| hacker.getPhone().matches("(\\+[0-9]{1,3})([0-9]{4,})$"))
+					this.hackerService.save(hacker);
+				else if (hacker.getPhone().matches("([0-9]{4,})$")) {
+					hacker.setPhone(prefix + hacker.getPhone());
+					this.hackerService.save(hacker);
+				} else
+					this.hackerService.save(hacker);
+				result = new ModelAndView("redirect:/authenticated/showProfile.do");
+			} catch (Throwable oops) {
+				result = this.createEditModelAndView(hackerForm, "socialProfile.commit.error");
+				result.addObject("cardType", this.configurationService.getConfiguration().getCardType());
+			}
+
+		return result;
+	}
+
+	// ---------------------------------------------------------------------
+	// ---------------------------CREATEEDITMODELANDVIEW--------------------
 
 	protected ModelAndView createEditModelAndView(SocialProfile socialProfile) {
 
@@ -284,10 +331,10 @@ public class SocialProfileController extends AbstractController {
 		return result;
 	}
 
-	//---------------------------------------------------------------------
-	//-------------------CREATEEDITMODELANDVIEW ACTOR----------------------
+	// ---------------------------------------------------------------------
+	// -------------------CREATEEDITMODELANDVIEW ACTOR----------------------
 
-	//Company
+	// Company
 	protected ModelAndView createEditModelAndView(FormObjectEditCompany company) {
 
 		ModelAndView result;
@@ -323,6 +370,26 @@ public class SocialProfileController extends AbstractController {
 
 		result = new ModelAndView("authenticated/edit");
 		result.addObject("formObjectEditAdmin", admin);
+		result.addObject("message", messageCode);
+
+		return result;
+	}
+	
+	protected ModelAndView createEditModelAndView(FormObjectEditHacker hacker) {
+
+		ModelAndView result;
+
+		result = this.createEditModelAndView(hacker, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(FormObjectEditHacker hacker, String messageCode) {
+
+		ModelAndView result;
+
+		result = new ModelAndView("authenticated/edit");
+		result.addObject("formObjectEditHacker", hacker);
 		result.addObject("message", messageCode);
 
 		return result;

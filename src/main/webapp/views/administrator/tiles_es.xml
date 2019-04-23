@@ -41,4 +41,9 @@
 		<put-attribute name="body" value="/views/administrator/broadcast.jsp" />
 	</definition>
 	
+	<definition name="suspicious/administrator/list" extends="master.page">	
+		<put-attribute name="title" value="Administrador: Bloquear/desbloquear" />
+		<put-attribute name="body" value="/views/administrator/banUnban.jsp" />
+	</definition>
+	
 </tiles-definitions>

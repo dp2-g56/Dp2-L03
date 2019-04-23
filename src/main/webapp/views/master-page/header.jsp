@@ -28,6 +28,7 @@
 					<li><a href="statistics/administrator/show.do"><spring:message code="master.page.administrator.statistics" /></a></li>
 					<li><a href="configuration/administrator/list.do"><spring:message code="master.page.administrator.configuration" /></a></li>
 					<li><a href="broadcast/administrator/send.do"><spring:message code="master.page.administrator.broadcast" /></a></li>
+					<li><a href="administrator/suspicious/list.do"><spring:message code="master.page.administrator.banUnban" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -62,8 +63,7 @@
 					<li><a href="anonymous/company/create.do"><spring:message code="master.page.createCompany" /></a></li>			
 				</ul>
 			</li>
-			<li><a href="anonymous/position/list.do"><spring:message code="master.page.publicPositions" /></a></li>
-			<li><a href="anonymous/company/list.do"><spring:message code="master.page.publicCompanies" /></a></li>
+			
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
@@ -85,11 +85,16 @@
 		</security:authorize>
 		
 		<security:authorize access="permitAll">
+			
+			<li><a href="anonymous/position/list.do"><spring:message code="master.page.publicPositions" /></a></li>
+			<li><a href="anonymous/company/list.do"><spring:message code="master.page.publicCompanies" /></a></li>
+			
 			<li><a class="fNiv"><spring:message	code="master.page.termsAndConditions" /></a>
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="anonymous/termsAndConditionsEN.do"><spring:message code="master.page.termsAndConditionsEN" /></a></li>
 					<li><a href="anonymous/termsAndConditionsES.do"><spring:message code="master.page.termsAndConditionsES" /></a></li>					
+					
 				</ul>
 			</li>
 		</security:authorize>
