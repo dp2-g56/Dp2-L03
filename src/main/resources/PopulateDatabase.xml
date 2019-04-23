@@ -293,6 +293,7 @@
 		<property name="email" value="hacker1@gmail.com" />
 		<property name="phone" value="+34609235522" />
 		<property name="address" value="hacker1House" />
+		<property name="hasSpam" value="True" />
 		<property name="socialProfiles">
 			<list>
 				<ref bean="socialProfile11" />

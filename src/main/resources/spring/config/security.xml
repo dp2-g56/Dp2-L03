@@ -44,12 +44,16 @@
 		<security:intercept-url pattern="/statistics/administrator/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/configuration/administrator/**" access="hasRole('ADMIN')"/>
 		<security:intercept-url pattern="/broadcast/administrator/**" access="hasRole('ADMIN')"  />
-		
+		<security:intercept-url pattern="/administrator/**" access="hasRole('ADMIN')" /> 
+		<security:intercept-url pattern="/export/admin.do" access="hasRole('ADMIN')" /> 
 
 		<!-- COMPANY -->
 		<security:intercept-url pattern="/position/company/**" access="hasRole('COMPANY')" /> 
 		<security:intercept-url pattern="/problemPosition/company/**" access="hasRole('COMPANY')" /> 
 		<security:intercept-url pattern="/problem/company/**" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/curriculum/company/**" access="hasRole('COMPANY')" /> 
+		
+		<security:intercept-url pattern="/export/company.do" access="hasRole('COMPANY')" /> 
 
 		<!-- HACKER -->
 		<security:intercept-url pattern="/finder/hacker/**" access="hasRole('HACKER')" /> 
@@ -58,7 +62,7 @@
 		<security:intercept-url pattern="/application/hacker/**" access="hasRole('HACKER')" /> 
 		<security:intercept-url pattern="/positionData/hacker/**" access="hasRole('HACKER')" /> 
 		<security:intercept-url pattern="/educationData/hacker/**" access="hasRole('HACKER')" /> 
-		<security:intercept-url pattern="/export/**" access="hasRole('HACKER')" /> 
+		<security:intercept-url pattern="/export/hacker.do" access="hasRole('HACKER')" /> 
 		<security:intercept-url pattern="/position/hacker/**" access="hasRole('HACKER')" /> 
 
 		<!-- AUTHENTICATED -->
@@ -69,9 +73,15 @@
 		<security:intercept-url pattern="/anonymous/termsAndConditionsEN.do" access="permitAll" /> 
 		<security:intercept-url pattern="/anonymous/termsAndConditionsES.do" access="permitAll" /> 
 		
+		<security:intercept-url pattern="/anonymous/**" access="permitAll" /> 
+		
+		
+		
+		
+		
 		<!-- REGISTER -->
 		
-		<security:intercept-url pattern="/anonymous/**" access="isAnonymous()" /> 
+		
 		
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

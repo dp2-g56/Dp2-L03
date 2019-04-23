@@ -42,8 +42,8 @@ public class MiscellaneousDataService {
 
 	public MiscellaneousData getMiscellaneousDataOfLoggedHacker(int miscellaneousDataId) {
 		Hacker hacker = this.hackerService.securityAndHacker();
-		MiscellaneousData miscellaneousData = this.findOne(miscellaneousDataId);
-		Assert.isTrue(this.miscellaneousDataRepository.getMiscellaneousDataOfHacker(hacker.getId()).contains(miscellaneousData));
+		MiscellaneousData miscellaneousData = this.miscellaneousDataRepository.getMiscellaneousDataOfHacker(hacker.getId(), miscellaneousDataId);
+		Assert.notNull(miscellaneousData);
 		return miscellaneousData;
 	}
 	
@@ -56,12 +56,20 @@ public class MiscellaneousDataService {
 		
 		if(miscellaneousData.getId()==0) {
 			Curriculum curriculum = this.curriculumService.getCurriculumOfHacker(hacker.getId(), curriculumId);
+			Assert.notNull(curriculum);
 			List<MiscellaneousData> miscellaneoussData = curriculum.getMiscellaneousData();
 			miscellaneoussData.add(miscellaneousData);
 			this.curriculumService.save(curriculum);
+			this.curriculumService.flush();
 		} else {
+			Assert.notNull(this.miscellaneousDataRepository.getMiscellaneousDataOfHacker(hacker.getId(), miscellaneousData.getId()));
 			this.save(miscellaneousData);
+			this.flush();
 		}
+	}
+
+	private void flush() {
+		this.miscellaneousDataRepository.flush();
 	}
 
 	public MiscellaneousData reconstruct(MiscellaneousData miscellaneousData, BindingResult binding) {
@@ -100,6 +108,7 @@ public class MiscellaneousDataService {
 		MiscellaneousData miscellaneousData = this.miscellaneousDataRepository.getMiscellaneousDataOfHacker(hacker.getId(), miscellaneousDataId);
 		Assert.notNull(miscellaneousData);
 		Assert.isTrue(!attachment.contentEquals(""));
+		Assert.notNull(attachment);
 		List<String> attachments = miscellaneousData.getAttachments();
 		attachments.add(attachment);
 		this.save(miscellaneousData);
@@ -114,5 +123,9 @@ public class MiscellaneousDataService {
 		attachments.remove(attachmentIndex);
 		miscellaneousData.setAttachments(attachments);
 		this.save(miscellaneousData);
+	}
+
+	public List<String> getAttachmentsOfMiscellaneousDataOfLoggedHacker(int miscellaneousDataId) {
+		return this.getMiscellaneousDataOfLoggedHacker(miscellaneousDataId).getAttachments();
 	}
 }

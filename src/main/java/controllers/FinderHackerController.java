@@ -52,12 +52,16 @@ public class FinderHackerController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		
-		Hacker hacker = this.hackerService.securityAndHacker();
-		List<Position> positions = this.finderService.finderList(hacker.getFinder());
-		
-		result = new ModelAndView("hacker/finderResult");
-		result.addObject("positions", positions);
-		result.addObject("hacker", hacker);
+		try {
+			Hacker hacker = this.hackerService.securityAndHacker();
+			List<Position> positions = this.finderService.finderList(hacker.getFinder());
+			
+			result = new ModelAndView("hacker/finderResult");
+			result.addObject("positions", positions);
+			result.addObject("hacker", hacker);
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:/");
+		}
 		
 		return result;	
 	}
@@ -66,10 +70,14 @@ public class FinderHackerController extends AbstractController {
 	public ModelAndView save() {
 		ModelAndView result;
 
-		Hacker hacker = this.hackerService.securityAndHacker();
-		this.finderService.getFinalPositionsAndCleanFinder(hacker.getFinder());
+		try {
+			Hacker hacker = this.hackerService.securityAndHacker();
+			this.finderService.getFinalPositionsAndCleanFinder(hacker.getFinder());
 
-		result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:list.do");
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 
 		return result;
 
@@ -79,12 +87,16 @@ public class FinderHackerController extends AbstractController {
 	public ModelAndView edit() {
 		ModelAndView result;
 		
-		Hacker hacker = this.hackerService.securityAndHacker();
+		try {
+			Hacker hacker = this.hackerService.securityAndHacker();
 
-		Finder finder = hacker.getFinder();
-		Assert.notNull(finder);
+			Finder finder = hacker.getFinder();
+			Assert.notNull(finder);
 
-		result = this.createEditModelAndView(finder);
+			result = this.createEditModelAndView(finder);
+		} catch(Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 
 		return result;
 
@@ -95,7 +107,6 @@ public class FinderHackerController extends AbstractController {
 	public ModelAndView save(Finder finderForm, BindingResult binding) {
 		ModelAndView result;
 
-		Hacker hacker = this.hackerService.securityAndHacker();
 		Finder finder = this.finderService.reconstruct(finderForm, binding);
 		
 		if (binding.hasErrors())
@@ -105,8 +116,13 @@ public class FinderHackerController extends AbstractController {
 				this.finderService.filterPositionsByFinder(finder);
 				result = new ModelAndView("redirect:list.do");
 			} catch (Throwable oops) {
-				result = this.createEditModelAndView(finder, "finder.commit.error");
-				result.addObject("hacker", hacker);
+				try {
+					Hacker hacker = this.hackerService.securityAndHacker();
+					result = this.createEditModelAndView(finder, "finder.commit.error");
+					result.addObject("hacker", hacker);
+				} catch(Throwable oops2) {
+					result = new ModelAndView("redirect:/");
+				}
 			}
 		return result;
 	}

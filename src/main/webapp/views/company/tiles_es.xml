@@ -73,4 +73,9 @@
 		<put-attribute name="body" value="/views/company/addAttachment.jsp" />
 	</definition>
 	
+	<definition name="company/curriculum" extends="master.page">	
+		<put-attribute name="title" value="Curriculum" />
+		<put-attribute name="body" value="/views/company/curriculumOfApplication.jsp" />
+	</definition>
+	
 </tiles-definitions>

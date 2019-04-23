@@ -50,18 +50,24 @@
 	</table>
 
 	<security:authorize access="hasAnyRole('ADMIN')">
-		<acme:cancel url="/administrator/export.do?id=${actor.id}"
+	<jstl:if test="${sameActorLogged || trueValue}">
+		<acme:cancel url="/export/admin.do?id=${actor.id}"
 			code="export" />
+	</jstl:if> 
 	</security:authorize>
 
 	<security:authorize access="hasAnyRole('HACKER')">
+	<jstl:if test="${sameActorLogged || trueValue}">
 		<acme:cancel url="/export/hacker.do?id=${actor.id}"
 			code="export" />
+	</jstl:if> 
 	</security:authorize>
 
 	<security:authorize access="hasAnyRole('COMPANY')">
-		<acme:cancel url="/company/export.do?id=${actor.id}"
+	<jstl:if test="${sameActorLogged || trueValue}">
+		<acme:cancel url="/export/company.do?id=${actor.id}"
 			code="export" />
+	</jstl:if> 	
 	</security:authorize>
 
 	<h2>
@@ -80,8 +86,10 @@
 			titleKey="socialProfile.profileLink" />
 			
 			
-<security:authorize access="isAuthenticated()">			
-
+<security:authorize access="isAuthenticated()">		
+		
+		<jstl:if test="${sameActorLogged}">
+ 	
 		<display:column>
 
 			<a
@@ -91,17 +99,28 @@
 
 		</display:column>
 		
+		</jstl:if> 	
+		
 </security:authorize>		
 		
 	</display:table>
 	
 	<security:authorize access="isAuthenticated()">		
+	<jstl:if test="${sameActorLogged}">
 
 	<a href="authenticated/socialProfile/create.do"><spring:message
 			code="socialProfile.create" /></a>
+	</jstl:if> 	
 	</security:authorize>	
 	<br/>
+	
   <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
   	<a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
   </security:authorize>
+  
+  <br/>
+  
+  <jstl:if test="${publicValue}">
+  <a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
+  </jstl:if> 	
 
