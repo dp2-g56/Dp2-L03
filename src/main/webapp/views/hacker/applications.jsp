@@ -12,6 +12,11 @@
 
 <security:authorize access="hasRole('HACKER')">
 
+	<jstl:if test="${res}">
+		<script type="text/javascript">
+			alert("<spring:message code="application.create.error"/>");
+		</script>
+	</jstl:if>
 
 	<form name="filter" id="filter" action="application/hacker/filter.do"
 		method="post">
@@ -95,8 +100,8 @@
 					value="/application/hacker/edit.do">
 					<spring:param name="applicationId" value="${row.id}" />
 				</spring:url>
-				<a href="${editApplication}">
-				<spring:message code="application.edit" /></a>
+				<a href="${editApplication}"> <spring:message
+						code="application.edit" /></a>
 			</jstl:if>
 		</display:column>
 
