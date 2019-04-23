@@ -22,7 +22,6 @@
 			<spring:message code="educationData.mark" />
 		</form:label>	
 		<form:select path="mark">
-			<form:option value="0" label="" />
 			<form:option value="APLUSPLUS" label="A++" />
 			<form:option value="APLUS" label="A+" />
 			<form:option value="A" label="A" />

@@ -36,6 +36,10 @@ public class FinderServiceTest extends AbstractTest {
 	 *
 	 * 2. Manage his or her finder, which involves clearing it.
 	 * 
+	 * Ratio of data coverage: 2/3 = 66.67%
+	 * - Access as a hacker or not.
+	 * - Clean a finder that belongs to the hacker logged in or not.
+	 * 
 	 **/
 	@Test
 	public void driverCleanFinder() {
@@ -89,6 +93,10 @@ public class FinderServiceTest extends AbstractTest {
 	 *
 	 * 2. Manage his or her finder, which involves listing its contents.
 	 * 
+	 * Ratio of data coverage: 2/3 = 66.67%
+	 * - Access as a hacker or not.
+	 * - List positions of a finder that belongs to the hacker logged in or not.
+	 * 
 	 **/
 	@Test
 	public void driverListFinder() {
@@ -135,6 +143,10 @@ public class FinderServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 2. Manage his or her finder, which involves updating the search criteria.
+	 * 
+	 * Ratio of data coverage: 2/3 = 66.67%
+	 * - Access as a hacker or not.
+	 * - Edit a finder that belongs to the hacker logged in or not.
 	 * 
 	 **/
 	@Test
@@ -197,6 +209,10 @@ public class FinderServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 2. Manage his or her finder, which involves listing its contents.
+	 * 
+	 * Ratio of data coverage: 2/3 = 66.67%
+	 * - Access as a hacker or not.
+	 * - List the content of a finder that belongs to the hacker logged in or not.
 	 * 
 	 **/
 	@Test

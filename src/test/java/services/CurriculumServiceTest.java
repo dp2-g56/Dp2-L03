@@ -36,6 +36,9 @@ public class CurriculumServiceTest extends AbstractTest {
 	 *
 	 * 1. Manage his or her curricula, which includes listing them.
 	 * 
+	 * Ratio of data coverage: 100%
+	 *  - Access as a hacker or not
+	 * 
 	 **/
 	@Test
 	public void driverListCurriculums() {
@@ -82,6 +85,10 @@ public class CurriculumServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 1. Manage his or her curricula, which includes showing them.
+	 * 
+	 * Ratio of data coverage: 100%
+	 *  - Access as a hacker or not.
+	 *  - Show a curriculum that does not belong to the hacker logged in.
 	 * 
 	 **/
 	@Test
@@ -134,6 +141,10 @@ public class CurriculumServiceTest extends AbstractTest {
 	 *
 	 * 1. Manage his or her curricula, which includes deleting them.
 	 * 
+	 * Ratio of data coverage: 100%
+	 *  - Access as a hacker or not.
+	 *  - Delete a curriculum that does belongs to the hacker logged in or not.
+	 * 
 	 **/
 	@Test
 	public void driverDeleteCurriculum() {
@@ -184,6 +195,10 @@ public class CurriculumServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 1. Manage his or her curricula, which includes creating them.
+	 * 
+	 * Ratio of data coverage: 4/7 = 57.14%
+	 * - Access as a hacker or not.
+	 * - 5 attributes with domain restrictions.
 	 * 
 	 **/
 	@Test
@@ -250,6 +265,11 @@ public class CurriculumServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 1. Manage his or her curricula, which includes updating them.
+	 * 
+	 * Ratio of data coverage: 5/8 = 62.5%
+	 * - Access as a hacker or not.
+	 * - Edit a curriculum that does belongs to the hacker logged in or not.
+	 * - 5 attributes with domain restrictions.
 	 * 
 	 **/
 	@Test
