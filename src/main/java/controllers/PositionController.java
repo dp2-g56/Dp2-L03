@@ -49,7 +49,6 @@ public class PositionController extends AbstractController {
 	private ActorService		actorService;
 
 
-
 	public PositionController() {
 		super();
 	}
@@ -86,9 +85,6 @@ public class PositionController extends AbstractController {
 		List<Problem> allProblems = new ArrayList<>();
 
 		Position position = this.positionService.findOne(positionId);
-
-		if (position.getIsDraftMode())
-			return this.list();
 
 		allProblems = position.getProblems();
 
