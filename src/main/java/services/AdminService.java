@@ -502,4 +502,9 @@ public class AdminService {
 		this.actorService.save(a);
 	}
 
+	public void flush() {
+		this.adminRepository.flush();
+
+	}
+
 }

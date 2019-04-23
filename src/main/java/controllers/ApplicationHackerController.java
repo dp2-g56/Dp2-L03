@@ -92,20 +92,29 @@ public class ApplicationHackerController extends AbstractController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createApplication() {
-		ModelAndView result;
+		ModelAndView result = null;
+		Boolean res = false;
 
 		Hacker hacker = this.hackerService.loggedHacker();
 
-		List<Position> positions = this.positionService.getFinalPositions();
+		if (hacker.getCurriculums().isEmpty() || this.positionService.getFinalPositions().isEmpty()) {
+			result = this.list();
+			res = true;
+			result.addObject("res", res);
+			return result;
+		} else {
 
-		Application application = new Application();
+			List<Position> positions = this.positionService.getFinalPositions();
 
-		result = this.createEditModelAndView(application);
-		result.addObject("application", application);
-		result.addObject("curriculums", hacker.getCurriculums());
-		result.addObject("positions", positions);
+			Application application = new Application();
 
-		return result;
+			result = this.createEditModelAndView(application);
+			result.addObject("application", application);
+			result.addObject("curriculums", hacker.getCurriculums());
+			result.addObject("positions", positions);
+
+			return result;
+		}
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
