@@ -252,6 +252,8 @@
 		</property>
 		<property name="messages">
 			<list>
+			<ref bean="message1" />
+			<ref bean="message2" />
 			</list>
 		</property>
 		<property name="userAccount" ref="userAccount1" />
@@ -276,6 +278,7 @@
 		</property>
 		<property name="messages">
 			<list>
+			<ref bean="message3" />
 			</list>
 		</property>
 		<property name="userAccount" ref="userAccount2" />
@@ -799,6 +802,36 @@
 	<!-- FIN SOCIAL PROFILES -->
 	
 	<!-- MESSAGES -->
+	
+	<bean class="domain.Message" id="message1">
+		<property value="11/11/2011 11:11" name="moment" />
+		<property value="This is a sent message by admin1"
+			name="subject" />
+		<property value="from admin1 to admin2" name="body" />
+		<property value="tag" name="tags"/>
+		<property value="admin1" name="sender"/>	
+		<property value="admin2" name="receiver"/>	
+	</bean>
+	
+	<bean class="domain.Message" id="message2">
+		<property value="11/11/2011 11:11" name="moment" />
+		<property value="This is a sent message by admin1"
+			name="subject" />
+		<property value="from admin1 to admin2" name="body" />
+		<property value="tag" name="tags"/>
+		<property value="admin1" name="sender"/>	
+		<property value="admin2" name="receiver"/>	
+	</bean>
+	
+	<bean class="domain.Message" id="message3">
+		<property value="11/11/2011 11:11" name="moment" />
+		<property value="This is a sent message by admin1"
+			name="subject" />
+		<property value="from admin1 to admin2" name="body" />
+		<property value="tag" name="tags"/>
+		<property value="admin2" name="sender"/>	
+		<property value="admin1" name="receiver"/>	
+	</bean>
 	<!-- FIN MESSAGES -->
 	
 	<!-- CURRICULUM -->
