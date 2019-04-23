@@ -9,10 +9,21 @@
 
 <script type="text/javascript">
 
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
+
   function phonenumberval() {
 	  
-  var number = document.getElementById("phoneNumber").value;
+  var phoneNumber;
+  phoneNumber = document.getElementById("phoneNumber").value;
 
+		
   var res = false;
  
   if (/(\+[0-9]{1,3})(\([0-9]{1,3}\))([0-9]{4,})$/.test(phoneNumber)) {
@@ -21,16 +32,16 @@
   if (/(\+[0-9]{3})([0-9]{4,})$/.test(phoneNumber)) {
 	    res = true;
   }
-  if(phoneNumber == ""){
+  if(isEmpty(phoneNumber)){
 	  alert("<spring:message code="admin.alertSave" />");
   }
-  if(res == false && phoneNumber != "") {
+  if(res == false && isEmpty(phoneNumber) == false) {
 	  
-    confirm("<spring:message code="admin.confirmationPhone" />");
+    alert("<spring:message code="admin.confirmationPhone"/>");
   }
  
 }
-   </script>
+</script>
 
 <security:authorize access="hasRole('HACKER')">
 
