@@ -93,11 +93,14 @@ public class ApplicationHackerController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createApplication() {
 		ModelAndView result = null;
+		Boolean res = false;
 
 		Hacker hacker = this.hackerService.loggedHacker();
 
-		if (hacker.getCurriculums().isEmpty()) {
-			result.addObject("redirect:/list.do");
+		if (hacker.getCurriculums().isEmpty() || this.positionService.getFinalPositions().isEmpty()) {
+			result = this.list();
+			res = true;
+			result.addObject("res", res);
 			return result;
 		} else {
 
