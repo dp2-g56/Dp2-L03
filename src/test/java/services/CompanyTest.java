@@ -314,15 +314,14 @@ public class CompanyTest extends AbstractTest {
 			{
 				"company1", null
 			}, {
-				"hacker1", NullPointerException.class
+				"hacker1", IllegalArgumentException.class
 			}
 		// Negative case: Trying to delete an user with a different role
 
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
+		for (int i = 0; i < testingData.length; i++)
 			this.templateDeleteMember((String) testingData[i][0], (Class<?>) testingData[i][1]);
-		}
 	}
 
 	private void templateDeleteMember(String username, Class<?> expected) {
