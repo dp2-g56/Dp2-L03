@@ -9,24 +9,35 @@
 
 <script type="text/javascript">
 
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
+
   function phonenumberval() {
 	  
-  var number = document.getElementById("phoneNumber").value;
+  var phoneNumber;
+  phoneNumberData = document.getElementById("phoneNumber").value;
 
+		
   var res = false;
  
-  if (/(\+[0-9]{1,3})(\([0-9]{1,3}\))([0-9]{4,})$/.test(phoneNumber)) {
+  if (/(\+[0-9]{1,3})(\([0-9]{1,3}\))([0-9]{4,})$/.test(phoneNumberData)) {
     res = true;
   }
-  if (/(\+[0-9]{3})([0-9]{4,})$/.test(phoneNumber)) {
+  if (/(\+[0-9]{3})([0-9]{4,})$/.test(phoneNumberData)) {
 	    res = true;
   }
-  if(phoneNumber == ""){
+  if(isEmpty(phoneNumberData)){
 	  alert("<spring:message code="admin.alertSave" />");
   }
-  if(res == false && phoneNumber != "") {
+  if(res == false && isEmpty(phoneNumberData) == false) {
 	  
-    confirm("<spring:message code="admin.confirmationPhone" />");
+    alert("<spring:message code="admin.confirmationPhone"/>");
   }
  
 }
