@@ -12,6 +12,15 @@
 
 <script type="text/javascript">
 
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
+
   function phonenumberval() {
 	  
   var phoneNumber;
@@ -20,18 +29,18 @@
 		
   var res = false;
  
-  if (/(\+[0-9]{1,3})(\([0-9]{1,3}\))([0-9]{4,})$/.test(phone)) {
+  if (/(\+[0-9]{1,3})(\([0-9]{1,3}\))([0-9]{4,})$/.test(phoneNumber)) {
     res = true;
   }
-  if (/(\+[0-9]{3})([0-9]{4,})$/.test(phone)) {
+  if (/(\+[0-9]{3})([0-9]{4,})$/.test(phoneNumber)) {
 	    res = true;
   }
-  if(phone == ""){
+  if(isEmpty(phoneNumber)){
 	  alert("<spring:message code="admin.alertSave" />");
   }
-  if(res == false && phone != "") {
+  if(res == false && isEmpty(phoneNumber) == false) {
 	  
-    confirm("<spring:message code="admin.confirmationPhone" />");
+    alert("<spring:message code="admin.confirmationPhone"/>");
   }
  
 }
