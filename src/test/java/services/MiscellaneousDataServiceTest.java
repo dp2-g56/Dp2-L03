@@ -40,6 +40,10 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 *
 	 * 1. Manage his or her curricula, which includes deleting them.
 	 * 
+	 * Ratio of data coverage: 100%
+	 *  - Access as a hacker or not.
+	 *  - Delete a miscellaneous data that does belongs to the hacker logged in or not.
+	 * 
 	 **/
 	@Test
 	public void driverDeleteMiscellaneousData() {
@@ -90,6 +94,11 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 1. Manage his or her curricula, which includes creating them.
+	 * 
+	 * Ratio of data coverage: 4/4 = 100%
+	 * - Access as a hacker or not.
+	 * - Create a miscellaneous data in a curriculum that does belongs to the hacker logged in or not
+	 * - 1 attribute with domain restrictions.
 	 * 
 	 **/
 	@Test
@@ -148,6 +157,11 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 *
 	 * 1. Manage his or her curricula, which includes updating them.
 	 * 
+	 * Ratio of data coverage: 4/4 = 100%
+	 * - Access as a hacker or not.
+	 * - Edit a miscellaneous data that does belongs to the hacker logged in or not.
+	 * - 1 attribute with domain restrictions.
+	 * 
 	 **/
 	@Test
 	public void driverUpdateMiscellaneousData() {
@@ -205,6 +219,10 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 *
 	 * 1. Manage his or her curricula, which includes showing them.
 	 * 
+	 * Ratio of data coverage: 100%
+	 *  - Access as a hacker or not.
+	 *  - Show the attachments of a miscellaneous data that does belongs to the hacker logged in or not.
+	 * 
 	 **/
 	@Test
 	public void driverListAttachmentsMiscellaneousData() {
@@ -255,6 +273,11 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 1. Manage his or her curricula, which includes creating and updating them.
+	 * 
+	 * Ratio of data coverage: 100%
+	 * - Access as a hacker or not.
+	 * - Create an attachment in a miscellaneous data that does belongs to the hacker logged in or not.
+	 * - 1 attribute with domain restrictions.
 	 * 
 	 **/
 	@Test
@@ -310,6 +333,11 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 1. Manage his or her curricula, which includes updating them.
+	 * 
+	 * Ratio of data coverage: 100%
+	 * - Access as a hacker or not.
+	 * - Delete an attachment in a miscellaneous data that does belongs to the hacker logged in or not.
+	 * - Delete an attachment that exists or not.
 	 * 
 	 **/
 	@Test

@@ -40,6 +40,10 @@ public class EducationDataServiceTest extends AbstractTest {
 	 *
 	 * 1. Manage his or her curricula, which includes deleting them.
 	 * 
+	 * Ratio of data coverage: 100%
+	 *  - Access as a hacker or not.
+	 *  - Delete an education data that does belongs to the hacker logged in or not.
+	 * 
 	 **/
 	@Test
 	public void driverDeleteEducationData() {
@@ -90,6 +94,11 @@ public class EducationDataServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 1. Manage his or her curricula, which includes creating them.
+	 * 
+	 * Ratio of data coverage: 4/7 = 57.14%
+	 * - Access as a hacker or not.
+	 * - Create an education data in a curriculum that does belongs to the hacker logged in or not.
+	 * - 4 attributes with domain restrictions.
 	 * 
 	 **/
 	@Test
@@ -158,6 +167,11 @@ public class EducationDataServiceTest extends AbstractTest {
 	 * R17. An actor who is authenticated as a hacker must be able to:
 	 *
 	 * 1. Manage his or her curricula, which includes updating them.
+	 * 
+	 * Ratio of data coverage: 4/7 = 57.14%
+	 * - Access as a hacker or not.
+	 * - Edit an education data that does belongs to the hacker logged in or not.
+	 * - 4 attributes with domain restrictions.
 	 * 
 	 **/
 	@Test
