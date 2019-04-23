@@ -1,6 +1,10 @@
 
 package services;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
@@ -11,10 +15,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.AdminRepository;
 import utilities.AbstractTest;
 import domain.Actor;
 import domain.Admin;
+import domain.Company;
 import domain.CreditCard;
+import domain.Hacker;
+import domain.Position;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -24,13 +32,19 @@ import domain.CreditCard;
 public class AdminServiceTest extends AbstractTest {
 
 	@Autowired
-	private AdminService		adminService;
+	private AdminService			adminService;
 
 	@Autowired
-	private ActorService		actorService;
+	private AdminRepository			adminRepository;
 
 	@Autowired
-	private CreditCardService	creditCardService;
+	private ConfigurationService	configurationService;
+
+	@Autowired
+	private ActorService			actorService;
+
+	@Autowired
+	private CreditCardService		creditCardService;
 
 
 	/**
@@ -269,6 +283,174 @@ public class AdminServiceTest extends AbstractTest {
 		super.checkExceptions(expected, caught);
 		this.unauthenticate();
 		this.rollbackTransaction();
+
+	}
+
+	@Test
+	public void testAvgCurriculumPerHacker() {
+		Float query = this.adminRepository.avgCurriculumPerHacker();
+		Assert.isTrue(query == 1.0);
+	}
+
+	@Test
+	public void testMinCurriculumPerHacker() {
+		Float query = this.adminRepository.minCurriculumPerHacker();
+		Assert.isTrue(query == 0.0);
+	}
+
+	@Test
+	public void testMaxCurriculumPerHacker() {
+		Float query = this.adminRepository.maxCurriculumPerHacker();
+		Assert.isTrue(query == 2.0);
+	}
+
+	@Test
+	public void testStddevCurriculumPerHacker() {
+		Float query = this.adminRepository.stddevCurriculumPerHacker();
+		Assert.isTrue(query < 0.7071 && query > 0.707);
+	}
+
+	public Date dateToFinder() {
+		Date thisMoment = new Date();
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(thisMoment);
+		calendar.add(Calendar.HOUR_OF_DAY, -this.configurationService.getConfiguration().getTimeFinder());
+
+		return calendar.getTime();
+	}
+
+	@Test
+	public void testAvgResultFinders() {
+
+		Float query = this.adminRepository.avgResultFinders(this.dateToFinder());
+		Assert.isTrue(query == null);
+	}
+
+	@Test
+	public void testMinResultFinders() {
+		Float query = this.adminRepository.minResultFinders(this.dateToFinder());
+		Assert.isTrue(query == null);
+	}
+
+	@Test
+	public void testMaxResultFinders() {
+		Float query = this.adminRepository.maxResultFinders(this.dateToFinder());
+		Assert.isTrue(query == null);
+	}
+
+	@Test
+	public void testStddevResultFinders() {
+		Float query = this.adminRepository.stddevResultFinders(this.dateToFinder());
+		Assert.isTrue(query == null);
+	}
+
+	@Test
+	public void testRatioEmptyFinder() {
+		Float query = this.adminRepository.ratioEmptyFinder(this.dateToFinder());
+		Assert.isTrue(query == null);
+	}
+
+	@Test
+	public void testAvgPositionsCompany() {
+
+		Float query = this.adminRepository.avgPositionsCompany();
+		Assert.isTrue(query == 2.0);
+	}
+
+	@Test
+	public void testMinPositionsCompany() {
+		Float query = this.adminRepository.minPositionsCompany();
+		Assert.isTrue(query == 0.0);
+	}
+
+	@Test
+	public void testMaxPositionsCompany() {
+		Float query = this.adminRepository.maxPositionsCompany();
+		Assert.isTrue(query == 4.0);
+	}
+
+	@Test
+	public void testStddevPositionsCompany() {
+		Float query = this.adminRepository.stddevPositionsCompany();
+		Assert.isTrue(query < 1.4142 && query > 1.4141);
+	}
+
+	@Test
+	public void testAvgApplicationsHacker() {
+
+		Float query = this.adminRepository.avgApplicationsHacker();
+		Assert.isTrue(query == 0.25);
+	}
+
+	@Test
+	public void testMinApplicationsHacker() {
+		Float query = this.adminRepository.minApplicationsHacker();
+		Assert.isTrue(query == 0.0);
+	}
+
+	@Test
+	public void testMaxApplicationsHacker() {
+		Float query = this.adminRepository.maxApplicationsHacker();
+		Assert.isTrue(query == 1.0);
+	}
+
+	@Test
+	public void testStddevApplicationsHacker() {
+		Float query = this.adminRepository.stddevApplicationsHacker();
+		Assert.isTrue(query < 0.433 && query > 0.432);
+	}
+
+	@Test
+	public void testAvgSalaries() {
+
+		Float query = this.adminRepository.avgSalaries();
+		Assert.isTrue(query == 982.5);
+	}
+
+	@Test
+	public void testMinSalary() {
+		Float query = this.adminRepository.minSalary();
+		Assert.isTrue(query == 3.0);
+	}
+
+	@Test
+	public void testMaxSalary() {
+		Float query = this.adminRepository.maxSalary();
+		Assert.isTrue(query == 3240.0);
+	}
+
+	@Test
+	public void testStddevSalaries() {
+		Float query = this.adminRepository.stddevSalaries();
+		Assert.isTrue(query > 1357.0804 && query < 1357.0805);
+	}
+
+	@Test
+	public void testCompaniesMorePositions() {
+		List<Company> query = this.adminRepository.companiesMorePositions();
+		Assert.isTrue(query.size() == 1);
+
+	}
+
+	@Test
+	public void testHackersMoreApplications() {
+		List<Hacker> query = this.adminRepository.hackersMoreApplications();
+		Assert.isTrue(query.size() == 1);
+
+	}
+
+	@Test
+	public void testBestSalaryPositions() {
+		List<Position> query = this.adminRepository.bestSalaryPositions();
+		Assert.isTrue(query.size() == 2);
+
+	}
+
+	@Test
+	public void testWorstSalaryPositions() {
+		List<Position> query = this.adminRepository.worstSalaryPositions();
+		Assert.isTrue(query.size() == 3);
 
 	}
 

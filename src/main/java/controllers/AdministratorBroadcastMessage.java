@@ -35,6 +35,7 @@ public class AdministratorBroadcastMessage extends AbstractController {
 		Message message;
 
 		message = this.messageService.create();
+		message.setTags("SYSTEM");
 		result = new ModelAndView("broadcast/administrator/send");
 		result.addObject("messageSend", message);
 
