@@ -88,7 +88,7 @@
 			
 <security:authorize access="isAuthenticated()">		
 		
-		<jstl:if test="${sameActorLogged}">
+		<jstl:if test="${trueValue}">
  	
 		<display:column>
 
@@ -106,17 +106,13 @@
 	</display:table>
 	
 	<security:authorize access="isAuthenticated()">		
-	<jstl:if test="${sameActorLogged}">
+	<jstl:if test="${trueValue}">
 
 	<a href="authenticated/socialProfile/create.do"><spring:message
 			code="socialProfile.create" /></a>
 	</jstl:if> 	
 	</security:authorize>	
 	<br/>
-	
-  <security:authorize access="hasAnyRole('ROLE_ANONYMOUS')">
-  	<a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
-  </security:authorize>
   
   <br/>
   
