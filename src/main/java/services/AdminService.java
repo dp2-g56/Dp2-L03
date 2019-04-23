@@ -329,11 +329,6 @@ public class AdminService {
 		Admin sender = this.loggedAdmin();
 
 		String username = sender.getUserAccount().getUsername();
-		String newTag = message.getTags();
-		if (!newTag.contains("SYSTEM")) {
-			newTag = newTag.trim() + " SYSTEM";
-			message.setTags(newTag.trim());
-		}
 
 		List<Actor> actors = new ArrayList<Actor>();
 		actors = this.actorService.allActorsExceptOne(username);
