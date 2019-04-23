@@ -17,10 +17,78 @@
 	">
 	
 	<!-- User accounts -->
+	
+	<bean id ="configuration" class="domain.Configuration">
+		<property name="spainTelephoneCode" value="+34" />
+		<property name="maxFinderResults" value="100"/>
+		<property name="minFinderResults" value="10" />
+		<property name="spamWords">
+			<list>
+				<value>sex</value>
+				<value>viagra</value>
+				<value>cialis</value>
+				<value>one million</value>
+				<value>you’ve been selected</value>
+				<value>Nigeria</value>
+				<value>sexo</value>
+				<value>un millón</value>
+				<value>ha sido seleccionado</value>
+				<value>pene</value>
+				<value>maduras</value>
+				<value>astolfo</value>
+				<value>furry</value>
+				<value>ugly bastard</value>
+				<value>chase</value>
+				<value>wals</value>
+			</list>
+		</property>
+		<property name="priorityLvl">
+			<list>
+				<value>HIGH</value>
+				<value>NEUTRAL</value>
+				<value>LOW</value>
+			</list>
+		</property>
+		<property name="cardType">
+			<list>
+				<value>VISA</value>
+				<value>MASTER</value>
+				<value>DINNERS</value>
+				<value>AMEX</value>
+				<value>FLY</value>
+			</list>
+		</property>
+		<property name="priorityLvlSpa">
+			<list>
+				<value>ALTA</value>
+				<value>NEUTRAL</value>
+				<value>BAJA</value>
+			</list>
+		</property>
+		<property name="goodWords" value="good, fantastic, excellent, great, amazing, terrific, beautiful, bueno, fantastico, excelente, increible, estupendo, hermoso" />
+		<property name="badWords" value="not, bad, horrible, average, disaster, no, malo, horrible, mediocre, desastre " />
+		
+		<property name="minTimeFinder" value="1" />
+		<property name="maxTimeFinder" value="24" />
+		<property name="finderResult" value="10"/>
+		<property name="timeFinder" value="1"/>
+
+		
+		<property name="welcomeMessageEnglish" value="Welcome to Acme hacker Rank!We´re IT hacker´s favourite job marketplace!" />
+		<property name="welcomeMessageSpanish" value="¡Bienvenidos a Acme Hacker Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!" />
+		
+		<property name="systemName" value="Acme Hacker Rank" />
+		<property name="imageURL" value="https://i.imgur.com/7b8lu4b.pngby" />
+
+		<property name="VAT" value="21" />
+		<property name="fare" value="1" />
+		
+	</bean>
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
-		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="password"
+			value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -28,6 +96,37 @@
 				</bean>
 			</list>
 		</property>
+		<property name="isNotLocked" value="True" />
+	</bean>
+	
+	<bean id="admin" class="domain.Admin">
+		<property name="name" value="admin" />
+		<property name="surname" value="admin surname" />
+		<property name="VATNumber" value="SE123456789" />
+		<property name="creditCard" ref="creditCard1" />
+		<property name="photo"
+			value="https://trello.com/c/unl0e9cp/1-requisitos" />
+		<property name="email" value="admin1@gmail.com" />
+		<property name="phone" value="+34609236920" />
+		<property name="address" value="Reino de los Cielos" />
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="userAccount" ref="userAccount1" />
+	</bean>
+	
+	<bean id="creditCard1" class="domain.CreditCard">
+		<property name="holderName" value="David" />
+		<property name="brandName" value="VISA" />
+		<property name="number" value="4880576829512546" />
+		<property name="expirationMonth" value="12" />
+		<property name="expirationYear" value="23" />
+		<property name="cvvCode" value="123" />
 	</bean>
 	
 	<!-- Other domain beans come here -->	
