@@ -30,27 +30,26 @@ import forms.FormObjectPositionProblemCheckbox;
 public class PositionService {
 
 	@Autowired
-	private PositionRepository	positionRepository;
+	private PositionRepository positionRepository;
 
 	@Autowired
-	private CompanyService		companyService;
+	private CompanyService companyService;
 
 	@Autowired
-	private ProblemService		problemService;
+	private ProblemService problemService;
 
 	@Autowired
-	private ApplicationService	applicationService;
+	private ApplicationService applicationService;
 
 	@Autowired
-	private HackerService		hackerService;
-
+	private HackerService hackerService;
 
 	public List<Position> findAll() {
 		return this.positionRepository.findAll();
 	}
 
-	//--------------------------------BASIC CRUDS----------------------------
-	//-----------------------------------------------------------------------
+	// --------------------------------BASIC CRUDS----------------------------
+	// -----------------------------------------------------------------------
 	public Position save(Position position) {
 		return this.positionRepository.save(position);
 	}
@@ -59,11 +58,11 @@ public class PositionService {
 		return this.positionRepository.findOne(positionId);
 	}
 
-	//-------------------------------LIST-----------------------------------
-	//----------------------------------------------------------------------
+	// -------------------------------LIST-----------------------------------
+	// ----------------------------------------------------------------------
 
-	//---------------------------------------CREATE-------------------------
-	//----------------------------------------------------------------------
+	// ---------------------------------------CREATE-------------------------
+	// ----------------------------------------------------------------------
 	public Position createPosition() {
 		this.companyService.loggedAsCompany();
 
@@ -114,7 +113,7 @@ public class PositionService {
 		StringBuilder number = new StringBuilder();
 		Random rnd = new Random();
 
-		while (number.length() < 4) {	//Es posible que haya que cambiarlo a 5
+		while (number.length() < 4) { // Es posible que haya que cambiarlo a 5
 			int index = (int) (rnd.nextFloat() * numbers.length());
 			number.append(numbers.charAt(index));
 		}
@@ -132,11 +131,13 @@ public class PositionService {
 		return res;
 	}
 
-	//---------------------------------------EDIT---------------------------
-	//----------------------------------------------------------------------
+	// ---------------------------------------EDIT---------------------------
+	// ----------------------------------------------------------------------
 
-	public Position edit(Position position, Date deadline, String description, Boolean isDraftMode, Double offeredSalary, List<Problem> problems, String requiredProfile, List<String> requiredSkills, List<String> requiredTecnologies) {
-		//Security
+	public Position edit(Position position, Date deadline, String description, Boolean isDraftMode,
+			Double offeredSalary, List<Problem> problems, String requiredProfile, List<String> requiredSkills,
+			List<String> requiredTecnologies) {
+		// Security
 		Company loggedCompany = this.companyService.loggedCompany();
 		Assert.isTrue(loggedCompany.getPositions().contains(position));
 		Assert.isTrue(!position.getIsCancelled());
@@ -163,19 +164,19 @@ public class PositionService {
 		return saved;
 	}
 
-	//---------------------------------------DELETE-------------------------
-	//----------------------------------------------------------------------
+	// ---------------------------------------DELETE-------------------------
+	// ----------------------------------------------------------------------
 	public void deletePosition(Position position) {
-		//Security
+		// Security
 		Company loggedCompany = this.companyService.loggedCompany();
 		List<Position> positions = loggedCompany.getPositions();
 
-		Assert.isTrue(position.getIsDraftMode());	//Nunca podrá ser cancel
+		Assert.isTrue(position.getIsDraftMode()); // Nunca podrá ser cancel
 		Assert.isTrue(positions.contains(position));
 
-		//No puede tener applications si esta en draft
+		// No puede tener applications si esta en draft
 
-		//Eliminamos los problemas
+		// Eliminamos los problemas
 		List<Problem> problems = new ArrayList<>();
 		position.setProblems(problems);
 
@@ -187,22 +188,23 @@ public class PositionService {
 		this.positionRepository.delete(position);
 	}
 
-	//----------------------------CANCEL POSITION----------------------------------
-	//-----------------------------------------------------------------------------
+	// ----------------------------CANCEL POSITION----------------------------------
+	// -----------------------------------------------------------------------------
 	public void cancelPosition(Position position) {
-		//Security
+		// Security
 		Company loggedCompany = this.companyService.loggedCompany();
 		List<Position> positions = loggedCompany.getPositions();
 
 		Assert.isTrue(positions.contains(position));
 		Assert.isTrue(!position.getIsDraftMode());
 		Assert.isTrue(!position.getIsCancelled());
-		
+
 		positions.remove(position);
-		
-		List<Application> submittedApplication = this.applicationService.getSubmittedApplicationCompany(position.getId());
-		
-		for(Application a: submittedApplication) {
+
+		List<Application> submittedApplication = this.applicationService
+				.getSubmittedApplicationCompany(position.getId());
+
+		for (Application a : submittedApplication) {
 			a.setStatus(Status.REJECTED);
 			this.applicationService.save(a);
 		}
@@ -215,8 +217,8 @@ public class PositionService {
 		this.companyService.save(loggedCompany);
 	}
 
-	//-----------------------------RECONSTRUCT FORM OBJECT-------------------------
-	//-----------------------------------------------------------------------------
+	// -----------------------------RECONSTRUCT FORM OBJECT-------------------------
+	// -----------------------------------------------------------------------------
 	public FormObjectPositionProblemCheckbox prepareFormObjectPositionProblemCheckbox(int positionId) {
 
 		Position position = this.positionRepository.findOne(positionId);
@@ -273,7 +275,8 @@ public class PositionService {
 		return map;
 	}
 
-	public Position reconstructCheckBox(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox, BindingResult binding) {
+	public Position reconstructCheckBox(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox,
+			BindingResult binding) {
 		Position result = new Position();
 
 		if (formObjectPositionProblemCheckbox.getId() == 0) {
@@ -320,16 +323,16 @@ public class PositionService {
 			Position positionFounded = this.findOne(position.getId());
 			Assert.isTrue(positionFounded.getIsDraftMode() && loggedCompany.getPositions().contains(positionFounded));
 		}
-		
-		if(!position.getIsDraftMode()) {
-			Assert.isTrue(problems.size()>=2);
+
+		if (!position.getIsDraftMode()) {
+			Assert.isTrue(problems.size() >= 2);
 		}
 
 		position.setProblems(problems);
 		Position saved = new Position();
 		saved = this.positionRepository.save(position);
-		
-		loggedCompany.getPositions().remove(position); 
+
+		loggedCompany.getPositions().remove(position);
 		loggedCompany.getPositions().add(saved);
 
 		this.companyService.save(loggedCompany);
@@ -337,8 +340,8 @@ public class PositionService {
 		return saved;
 	}
 
-	//--------------------------------------------DELETE-----------------------------------------------------
-	//-------------------------------------------------------------------------------------------------------
+	// --------------------------------------------DELETE-----------------------------------------------------
+	// -------------------------------------------------------------------------------------------------------
 	public void deletePositionWithId(int positionId) {
 
 		Position position = this.positionRepository.findOne(positionId);
@@ -363,7 +366,18 @@ public class PositionService {
 		return this.positionRepository.getFinalPositions();
 	}
 
-	//--------------------------------------AUXILIAR METHODS-------------------------//
+	public List<Position> getFinalPositionsAndNotCancelled() {
+		List<Position> res = new ArrayList<Position>();
+		for (Position p : this.positionRepository.getFinalPositions()) {
+			if (p.getIsCancelled().equals(false)) {
+				res.add(p);
+			}
+		}
+		return res;
+	}
+
+	// --------------------------------------AUXILIAR
+	// METHODS-------------------------//
 
 	public void flush() {
 		this.positionRepository.flush();
@@ -383,7 +397,7 @@ public class PositionService {
 		Assert.isTrue(this.getFinalPositions().contains(position));
 		return position.getRequiredSkills();
 	}
-	
+
 	public List<String> getTechnologiesAsHacker(int positionId) {
 		this.hackerService.loggedAsHacker();
 		Position position = this.findOne(positionId);
@@ -392,9 +406,8 @@ public class PositionService {
 	}
 
 	/*
-	 * public List<Position> positionsOfApplicationOfHacker(Hacker hacker) {
-	 * return this.positionRepository.positionsOfApplicationOfHacker(hacker);
-	 * }
+	 * public List<Position> positionsOfApplicationOfHacker(Hacker hacker) { return
+	 * this.positionRepository.positionsOfApplicationOfHacker(hacker); }
 	 */
 
 	public void deleteInBatch(List<Position> positions) {
