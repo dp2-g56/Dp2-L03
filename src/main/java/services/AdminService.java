@@ -401,8 +401,8 @@ public class AdminService {
 		res.setPhoto(admin.getPhoto());
 		res.setEmail(admin.getEmail());
 		res.setAddress(admin.getAddress());
-
 		res.setSurname(admin.getSurname());
+		res.setPhone(admin.getPhone());
 
 		//Credit Card
 		CreditCard c = admin.getCreditCard();
