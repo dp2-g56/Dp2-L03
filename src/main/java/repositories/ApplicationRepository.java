@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Actor;
 import domain.Application;
 import domain.Curriculum;
 import domain.Hacker;
@@ -30,4 +31,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 
 	@Query("select c from Hacker h join h.applications a join a.curriculum c where h = ?1")
 	public List<Curriculum> getCopyCurriculumsOfApplications(Hacker hacker);
+
+	@Query("select c from Company c join c.positions cp join cp.applications ap where ap.id = ?1")
+	public Actor getCompanyByApplicationId(int applicationId);
 }
