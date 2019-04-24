@@ -22,6 +22,7 @@ import security.UserAccount;
 import domain.Company;
 import domain.Finder;
 import domain.Hacker;
+import domain.Message;
 import domain.Position;
 import domain.Problem;
 
@@ -273,7 +274,7 @@ public class FinderService {
 		String requiredProfile = "%" + position.getRequiredProfile() + "%";
 		String ticker = "%" + position.getTicker() + "%";
 
-		List<Hacker> hackers = this.finderRepository.getHackersThatFinderKeyWordIsContained(rs, rt, title, desription, requiredProfile, ticker);
+		List<Hacker> hackers = this.finderRepository.getHackersThatFinderKeyWordIsContaine(rs, rt, title, desription, requiredProfile, ticker);
 
 		Message message2 = this.messageService.create("Nueva oferta / New offer", "Una nueva oferta concuerda con tu busqueda / A new offer matches your finder criteria", "STATUS, NOTIFICATION", "NOTIFICATION", "");
 
