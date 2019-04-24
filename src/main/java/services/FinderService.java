@@ -265,19 +265,19 @@ public class FinderService {
 		}
 	}
 	
-//	public void sendNotificationPosition(Position position) {
-//		
-//		String rs = "%" + position.getRequiredSkills().get(0) + "%";
-//		String rt = "%" + position.getRequiredTecnologies().get(0) + "%";
-//		String title = "%" + position.getTitle() + "%";
-//		String desription = "%" + position.getDescription() + "%";
-//		String requiredProfile = "%" + position.getRequiredProfile() + "%";
-//		String ticker = "%" + position.getTicker()+ "%";
-//		
-//		List<Hacker> hackers =  this.finderRepository.getHackersThatFinderKeyWordIsContaine(rs, rt, title, desription, requiredProfile, ticker);
-//		
-//		
-//	}
+	public void sendNotificationPosition(Position position) {
+		
+		String rs = "%" + position.getRequiredSkills().get(0) + "%";
+		String rt = "%" + position.getRequiredTecnologies().get(0) + "%";
+		String title = "%" + position.getTitle() + "%";
+		String desription = "%" + position.getDescription() + "%";
+		String requiredProfile = "%" + position.getRequiredProfile() + "%";
+		String ticker = "%" + position.getTicker()+ "%";
+		
+		List<Hacker> hackers =  this.finderRepository.getHackersThatFinderKeyWordIsContaine(rs, rt, title, desription, requiredProfile, ticker);
+		
+		
+	}
 
 
 }
