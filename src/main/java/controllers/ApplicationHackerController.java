@@ -108,7 +108,7 @@ public class ApplicationHackerController extends AbstractController {
 			return result;
 		} else {
 
-			List<Position> positions = this.positionService.getFinalPositions();
+			List<Position> positions = this.positionService.getFinalPositionsAndNotCancelled();
 
 			Application application = new Application();
 
