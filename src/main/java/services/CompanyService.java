@@ -310,6 +310,7 @@ public class CompanyService {
 		res.setAddress(company.getAddress());
 		res.setCompanyName(company.getCompanyName());
 		res.setSurname(company.getSurname());
+		res.setPhone(company.getPhone());
 
 		//Credit Card
 		CreditCard c = company.getCreditCard();

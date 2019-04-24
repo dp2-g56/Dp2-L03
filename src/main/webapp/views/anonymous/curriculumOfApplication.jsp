@@ -65,4 +65,4 @@
 	
 	<br>
 	<br>
-  	<a href="anonymous/position/list.do"><spring:message code="position.back" /></a>
+  	<a href="anonymous/position/list.do"><spring:message code="position.backToPublicData" /></a>
