@@ -234,7 +234,7 @@ public class MessageService {
 				"The application " + app.getProblem().getTitle() + " has changed its status to submitted by the hacker "
 						+ sender.getName() + ". / La aplicacion " + app.getProblem().getTitle()
 						+ " ha cambiado su estado a entregada por el hacker " + sender.getName() + ".",
-				"STATUS, NOTIFICATION", sender.getName(), receiver.getName());
+				"Notificacion / Notification", sender.getName(), receiver.getName());
 
 		this.sendMessageWithActors(company, sender, receiver);
 	}
@@ -248,7 +248,7 @@ public class MessageService {
 				"The application " + app.getProblem().getTitle() + " has changed its status to accepted by the company "
 						+ receiver.getName() + ". / La aplicacion " + app.getProblem().getTitle()
 						+ " ha cambiado su estado a aceptada por la compania " + receiver.getName() + ".",
-				"STATUS, NOTIFICATION", receiver.getName(), sender.getName());
+				"Notificacion / Notification", receiver.getName(), sender.getName());
 
 		this.sendMessageWithActors(company, receiver, sender);
 	}
@@ -262,7 +262,7 @@ public class MessageService {
 				"The application " + app.getProblem().getTitle() + " has changed its status to rejected by the company "
 						+ receiver.getName() + ". / La aplicacion " + app.getProblem().getTitle()
 						+ " ha cambiado su estado a rechazada por la compania " + receiver.getName() + ".",
-				"STATUS, NOTIFICATION", receiver.getName(), sender.getName());
+				"Notificacion / Notification", receiver.getName(), sender.getName());
 
 		this.sendMessageWithActors(company, receiver, sender);
 	}
