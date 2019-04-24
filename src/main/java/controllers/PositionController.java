@@ -20,7 +20,11 @@ import services.ActorService;
 import services.ApplicationService;
 import services.CompanyService;
 import services.CurriculumService;
+
 import services.FinderService;
+
+import services.MessageService;
+
 import services.PositionService;
 import services.ProblemService;
 import domain.Actor;
@@ -37,20 +41,29 @@ import forms.FormObjectPositionProblemCheckbox;
 public class PositionController extends AbstractController {
 
 	@Autowired
-	private CompanyService		companyService;
+	private CompanyService companyService;
+
 	@Autowired
-	private PositionService		positionService;
+	private PositionService positionService;
+
 	@Autowired
-	private ProblemService		problemService;
+	private ProblemService problemService;
+
 	@Autowired
-	private ApplicationService	applicationService;
-	@Autowired
-	private CurriculumService	curriculumService;
+	private ApplicationService applicationService;
+
+
 	@Autowired
 	private ActorService		actorService;
+  
 	@Autowired
 	private FinderService		finderService;
-
+  
+	@Autowired
+	private CurriculumService curriculumService;
+  
+	@Autowired
+	private ActorService actorService;
 
 	public PositionController() {
 		super();
@@ -77,8 +90,8 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	//--------------------------LISTA DE PROBLEMAS----------------------------
-	//------------------------------------------------------------------------
+	// --------------------------LISTA DE PROBLEMAS----------------------------
+	// ------------------------------------------------------------------------
 	@RequestMapping(value = "/problem/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam int positionId) {
 		ModelAndView result;
@@ -100,8 +113,8 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	//--------------------------LISTA DE APPLICATIONS----------------------------
-	//---------------------------------------------------------------------------
+	// --------------------------LISTA DE APPLICATIONS----------------------------
+	// ---------------------------------------------------------------------------
 	@RequestMapping(value = "/application/list", method = RequestMethod.GET)
 	public ModelAndView listApplication(@RequestParam int positionId) {
 		ModelAndView result;
@@ -136,8 +149,9 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	//------------------------------SHOW CURRICULUM------------------------------------
-	//---------------------------------------------------------------------------------
+	// ------------------------------SHOW
+	// CURRICULUM------------------------------------
+	// ---------------------------------------------------------------------------------
 	@RequestMapping(value = "/curriculum/list", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam int applicationId) {
 		ModelAndView result;
@@ -167,8 +181,9 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	//------------------------------EDIT APPLICATION STATUS----------------------------
-	//---------------------------------------------------------------------------------
+	// ------------------------------EDIT APPLICATION
+	// STATUS----------------------------
+	// ---------------------------------------------------------------------------------
 	// ACCEPT APPLICATION
 	@RequestMapping(value = "/application/accept", method = RequestMethod.GET)
 	public ModelAndView acceptApplication(@RequestParam int applicationId) {
@@ -211,8 +226,8 @@ public class PositionController extends AbstractController {
 		return this.list();
 	}
 
-	//--------------------------LISTA DE ATTACHEMENTS----------------------------
-	//---------------------------------------------------------------------------
+	// --------------------------LISTA DE ATTACHEMENTS----------------------------
+	// ---------------------------------------------------------------------------
 	@RequestMapping(value = "/attachement/list", method = RequestMethod.GET)
 	public ModelAndView listAttachement(@RequestParam int problemId) {
 
@@ -238,9 +253,9 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	//---------------------------REQUIRED TECH-----------------------------------
-	//---------------------------------------------------------------------------
-	//LIST
+	// ---------------------------REQUIRED TECH-----------------------------------
+	// ---------------------------------------------------------------------------
+	// LIST
 	@RequestMapping(value = "/technology/list", method = RequestMethod.GET)
 	public ModelAndView listTech(@RequestParam int positionId) {
 
@@ -266,9 +281,9 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	//---------------------------REQUIRED SKILL-----------------------------
-	//----------------------------------------------------------------------
-	//LIST
+	// ---------------------------REQUIRED SKILL-----------------------------
+	// ----------------------------------------------------------------------
+	// LIST
 	@RequestMapping(value = "/skill/list", method = RequestMethod.GET)
 	public ModelAndView listSkill(@RequestParam int positionId) {
 
@@ -324,7 +339,8 @@ public class PositionController extends AbstractController {
 			if (!(company.getPositions().contains(position)))
 				return this.list();
 
-			FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox = this.positionService.prepareFormObjectPositionProblemCheckbox(positionId);
+			FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox = this.positionService
+					.prepareFormObjectPositionProblemCheckbox(positionId);
 
 			result = this.createEditModelAndView(formObjectPositionProblemCheckbox);
 
@@ -353,9 +369,10 @@ public class PositionController extends AbstractController {
 		return this.list();
 	}
 
-	//SAVE POSITION
+	// SAVE POSITION
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox, BindingResult binding) {
+	public ModelAndView save(@Valid FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox,
+			BindingResult binding) {
 
 		ModelAndView result;
 
@@ -400,7 +417,8 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox, String messageCode) {
+	protected ModelAndView createEditModelAndView(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox,
+			String messageCode) {
 		ModelAndView result;
 
 		Map<Integer, String> map = new HashMap<>();
@@ -444,7 +462,8 @@ public class PositionController extends AbstractController {
 	// -------------------------------------------------------------------
 	// ---------------------------DELETE----------------------------------
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox, BindingResult binding) {
+	public ModelAndView delete(FormObjectPositionProblemCheckbox formObjectPositionProblemCheckbox,
+			BindingResult binding) {
 
 		ModelAndView result;
 
