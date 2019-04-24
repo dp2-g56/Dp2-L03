@@ -21,6 +21,7 @@ import domain.Problem;
 import domain.Status;
 import services.ApplicationService;
 import services.HackerService;
+import services.MessageService;
 import services.PositionService;
 
 @Controller
@@ -35,6 +36,9 @@ public class ApplicationHackerController extends AbstractController {
 
 	@Autowired
 	private PositionService positionService;
+
+	@Autowired
+	private MessageService messageService;
 
 	public ApplicationHackerController() {
 		super();
@@ -179,13 +183,13 @@ public class ApplicationHackerController extends AbstractController {
 
 		p = this.applicationService.reconstruct(application, binding);
 
-		if (binding.hasErrors()
-				|| !(this.applicationService.isUrl(application.getLink()) || application.getLink() == "")) {
+		if (binding.hasErrors()) {
 			result = this.createEditModelAndView(p);
 			result.addObject("message", "hacker.url.error");
 		} else {
 			try {
 				this.applicationService.save(p);
+				this.messageService.notificationStatusApplicationSubmitted(p);
 				result = new ModelAndView("redirect:list.do");
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(application, "hacker.commit.error");
