@@ -20,7 +20,11 @@ import services.ActorService;
 import services.ApplicationService;
 import services.CompanyService;
 import services.CurriculumService;
+
+import services.FinderService;
+
 import services.MessageService;
+
 import services.PositionService;
 import services.ProblemService;
 import domain.Actor;
@@ -48,9 +52,16 @@ public class PositionController extends AbstractController {
 	@Autowired
 	private ApplicationService applicationService;
 
+
+	@Autowired
+	private ActorService		actorService;
+  
+	@Autowired
+	private FinderService		finderService;
+  
 	@Autowired
 	private CurriculumService curriculumService;
-
+  
 	@Autowired
 	private ActorService actorService;
 
@@ -368,6 +379,7 @@ public class PositionController extends AbstractController {
 		Position position = new Position();
 		position = this.positionService.createPosition();
 		List<Problem> problems = new ArrayList<>();
+		Position positionSaved = new Position();
 
 		problems = this.problemService.reconstructList(formObjectPositionProblemCheckbox);
 		position = this.positionService.reconstructCheckBox(formObjectPositionProblemCheckbox, binding);
@@ -383,8 +395,9 @@ public class PositionController extends AbstractController {
 				result.addObject("message", "position.problemsError");
 		} else
 			try {
-				this.positionService.saveAssignList(position, problems);
-
+				positionSaved = this.positionService.saveAssignList(position, problems);
+				if (positionSaved.getIsDraftMode() == false)
+					this.finderService.sendNotificationPosition(position);
 				result = new ModelAndView("redirect:/position/company/list.do");
 
 			} catch (Throwable oops) {
