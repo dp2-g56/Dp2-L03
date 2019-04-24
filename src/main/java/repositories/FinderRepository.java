@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import domain.Finder;
+import domain.Hacker;
 import domain.Position;
 
 @Repository
@@ -16,7 +17,10 @@ public interface FinderRepository extends JpaRepository<Finder, Integer> {
 
 	@Query("select distinct(p) from Position p join p.requiredTecnologies rt join p.requiredSkills rs where (rs like ?1 or rt like ?1 or p.title like ?1 or p.description like ?1 or p.requiredProfile like ?1 or p.ticker like ?1) and p.isDraftMode = false")
 	public List<Position> getPositionsByKeyWord(String keyWord);
-
+	
+	@Query("select distinct(h) from Finder f Hacker h where (f.keyWord like ?1 or f.keyWord like ?2  or  f.keyWord like ?3  or f.keyWord like ?4 or f.keyWord like ?5 or f.keyWord like ?6 ) where h.finder = f")
+	public List<Hacker> getHackersThatFinderKeyWordIsContaine(String rs, String rt, String title, String desription, String requiredProfile, String ticker);
+	
 	@Query("select p from Position p where p.deadline = ?1 and p.isDraftMode = false")
 	public List<Position> getPositionsByDeadline(Date deadLine);
 

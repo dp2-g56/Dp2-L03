@@ -17,6 +17,7 @@ import repositories.MessageRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
+import domain.Application;
 import domain.Message;
 
 @Service
@@ -24,17 +25,19 @@ import domain.Message;
 public class MessageService {
 
 	@Autowired
-	private MessageRepository		messageRepository;
+	private MessageRepository messageRepository;
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private Validator				validator;
+	private Validator validator;
 
 	@Autowired
-	private ConfigurationService	configurationService;
+	private ConfigurationService configurationService;
 
+	@Autowired
+	private ApplicationService applicationService;
 
 	public Message findOne(int messageId) {
 		return this.messageRepository.findOne(messageId);
@@ -113,6 +116,23 @@ public class MessageService {
 		return message;
 	}
 
+	public Message create(String Subject, String body, String tags, String sender, String receiver) {
+
+		Date thisMoment = new Date();
+		thisMoment.setTime(thisMoment.getTime() - 1);
+
+		Message message = new Message();
+
+		message.setMoment(thisMoment);
+		message.setSubject(Subject);
+		message.setBody(body);
+		message.setTags(tags);
+		message.setSender(sender);
+		message.setReceiver(receiver);
+
+		return message;
+	}
+
 	public void deleteMessage(Message message) {
 		Actor actor = this.actorService.loggedActor();
 		Assert.isTrue(actor.getMessages().contains(message));
@@ -126,6 +146,7 @@ public class MessageService {
 			actor.getMessages().add(message);
 		}
 	}
+
 	public Message sendMessage(Message message) {
 
 		this.actorService.loggedAsActor();
@@ -141,9 +162,12 @@ public class MessageService {
 		spamWords = this.configurationService.getSpamWords();
 
 		Message messageSaved = this.messageRepository.save(message);
-		Message messageCopy = this.createCopy(messageSaved.getSubject(), messageSaved.getBody(), message.getTags(), messageSaved.getReceiver());
+		Message messageCopy = this.createCopy(messageSaved.getSubject(), messageSaved.getBody(), message.getTags(),
+				messageSaved.getReceiver());
 
-		Boolean hasSpam = this.configurationService.isStringSpam(message.getBody(), spamWords) || this.configurationService.isStringSpam(message.getSubject(), spamWords) || this.configurationService.isStringSpam(message.getTags(), spamWords);
+		Boolean hasSpam = this.configurationService.isStringSpam(message.getBody(), spamWords)
+				|| this.configurationService.isStringSpam(message.getSubject(), spamWords)
+				|| this.configurationService.isStringSpam(message.getTags(), spamWords);
 
 		if (hasSpam) {
 			messageCopy.setTags("SPAM");
@@ -163,6 +187,56 @@ public class MessageService {
 		}
 
 		return messageSaved;
+	}
+
+	public void sendMessageWithActors(Message message, Actor loggedActor, Actor receiver) {
+
+		this.actorService.loggedAsActor();
+
+		List<String> spam = new ArrayList<String>();
+		spam = this.configurationService.getSpamWords();
+
+		List<String> spamWords = new ArrayList<String>();
+		spamWords = this.configurationService.getSpamWords();
+
+		Message messageSaved = this.messageRepository.save(message);
+		Message messageCopy = this.createCopy(messageSaved.getSubject(), messageSaved.getBody(), message.getTags(),
+				messageSaved.getReceiver());
+
+		Boolean hasSpam = this.configurationService.isStringSpam(message.getBody(), spamWords)
+				|| this.configurationService.isStringSpam(message.getSubject(), spamWords)
+				|| this.configurationService.isStringSpam(message.getTags(), spamWords);
+
+		if (hasSpam) {
+			messageCopy.setTags("SPAM");
+		}
+
+		Message messageSavedCopy = this.messageRepository.save(messageCopy);
+
+		loggedActor.getMessages().add(messageSaved);
+		this.actorService.save(loggedActor);
+
+		receiver.getMessages().add(messageSavedCopy);
+		this.actorService.save(receiver);
+
+		this.flush();
+		if (hasSpam) {
+			this.actorService.updateActorSpam(loggedActor);
+		}
+	}
+
+	public void notificationStatusApplicationSubmitted(Application app) {
+
+		Actor sender = app.getHacker();
+		Actor receiver = this.applicationService.getCompanyByApplicationId(app.getId());
+
+		Message company = this.create("Status change",
+				"The application " + app.getProblem().getTitle() + " has changed its status to submitted by the hacker "
+						+ sender.getName() + ". / La aplicacion " + app.getProblem().getTitle()
+						+ " ha cambiado su estado a entregada por el hacker " + sender.getName() + ".",
+				"STATUS, NOTIFICATION", sender.getName(), receiver.getName());
+
+		this.sendMessageWithActors(company, sender, receiver);
 	}
 
 	public Message reconstruct(Message messageTest, BindingResult binding) {

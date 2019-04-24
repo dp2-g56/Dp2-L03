@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ApplicationRepository;
+import domain.Actor;
 import domain.Application;
 import domain.Company;
 import domain.Curriculum;
@@ -30,26 +31,28 @@ import domain.Status;
 public class ApplicationService {
 
 	@Autowired
-	private ApplicationRepository	applicationRepository;
+	private ApplicationRepository applicationRepository;
 
 	@Autowired
-	private ProblemService			problemService;
+	private ProblemService problemService;
 
 	@Autowired
-	private HackerService			hackerService;
+	private HackerService hackerService;
 
 	@Autowired
-	private Validator				validator;
+	private Validator validator;
 
 	@Autowired
-	private CompanyService			companyService;
+	private CompanyService companyService;
 
 	@Autowired
-	private PositionService			positionService;
+	private PositionService positionService;
 
 	@Autowired
-	private CurriculumService		curriculumService;
+	private CurriculumService curriculumService;
 
+	@Autowired
+	private MessageService messageService;
 
 	public List<Application> findAll() {
 		Hacker hacker = this.hackerService.loggedHacker();
@@ -204,8 +207,8 @@ public class ApplicationService {
 			Position pos = new Position();
 			pos = app.getPosition();
 			pos.getApplications().remove(app);
-			//app.setHacker(null);
-			//app.setPosition(null);
+			// app.setHacker(null);
+			// app.setPosition(null);
 		}
 
 		// hacker.getApplications().removeAll(applications);
@@ -237,5 +240,9 @@ public class ApplicationService {
 
 	public void flush() {
 		this.applicationRepository.flush();
+	}
+
+	public Actor getCompanyByApplicationId(int applicationId) {
+		return this.applicationRepository.getCompanyByApplicationId(applicationId);
 	}
 }
