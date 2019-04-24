@@ -91,7 +91,7 @@
 				</a> / 
 				<a href="${deleteEducationData}" onclick="return confirm('<spring:message code="educationData.delete.confirmation" />')">
 					<spring:message code="educationData.delete" var="deleteEducationDataMessage" />
-					<jstl:out value="${deletePositionDataMessage}"/>
+					<jstl:out value="${deleteEducationDataMessage}"/>
 				</a>
 			</display:column>
 		</security:authorize>
