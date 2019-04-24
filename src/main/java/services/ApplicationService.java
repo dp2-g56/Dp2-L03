@@ -173,6 +173,7 @@ public class ApplicationService {
 		// Position saved = this.save(position);
 		// positions.add(saved);
 		// loggedCompany.setPositions(positions);
+
 		if (accept)
 			application.setStatus(Status.ACCEPTED);
 		else
@@ -181,6 +182,12 @@ public class ApplicationService {
 		Application saved = this.applicationRepository.save(application);
 		position.getApplications().remove(application);
 		position.getApplications().add(saved);
+
+		if (accept)
+			this.messageService.notificationStatusApplicationAccepted(saved);
+		else
+			this.messageService.notificationStatusApplicationRejected(saved);
+
 		this.positionService.save(position);
 		this.companyService.save(loggedCompany);
 
