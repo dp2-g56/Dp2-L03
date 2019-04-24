@@ -55,7 +55,7 @@ public class CreditCardService {
 
 		if (creditCard.getExpirationYear() + 2000 < year) {
 			res = false;
-		} else if (creditCard.getExpirationMonth() < month) {
+		} else if (creditCard.getExpirationYear() + 2000 == year && creditCard.getExpirationMonth() < month) {
 			res = false;
 		}
 

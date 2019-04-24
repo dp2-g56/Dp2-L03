@@ -380,8 +380,8 @@ public class HackerService {
 		res.setPhoto(hacker.getPhoto());
 		res.setEmail(hacker.getEmail());
 		res.setAddress(hacker.getAddress());
-
 		res.setSurname(hacker.getSurname());
+		res.setPhone(hacker.getPhone());
 
 		//Credit Card
 		CreditCard c = hacker.getCreditCard();
