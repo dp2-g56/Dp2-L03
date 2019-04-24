@@ -289,7 +289,7 @@ public class AdminServiceTest extends AbstractTest {
 	@Test
 	public void testAvgCurriculumPerHacker() {
 		Float query = this.adminRepository.avgCurriculumPerHacker();
-		Assert.isTrue(query == 1.0);
+		Assert.isTrue(query > 0.1);
 	}
 
 	@Test
@@ -307,7 +307,7 @@ public class AdminServiceTest extends AbstractTest {
 	@Test
 	public void testStddevCurriculumPerHacker() {
 		Float query = this.adminRepository.stddevCurriculumPerHacker();
-		Assert.isTrue(query < 0.7071 && query > 0.707);
+		Assert.isTrue(query < 0.5 && query > 0.3);
 	}
 
 	public Date dateToFinder() {
@@ -380,7 +380,7 @@ public class AdminServiceTest extends AbstractTest {
 	public void testAvgApplicationsHacker() {
 
 		Float query = this.adminRepository.avgApplicationsHacker();
-		Assert.isTrue(query == 0.25);
+		Assert.isTrue(query > 0.0033);
 	}
 
 	@Test
@@ -398,7 +398,7 @@ public class AdminServiceTest extends AbstractTest {
 	@Test
 	public void testStddevApplicationsHacker() {
 		Float query = this.adminRepository.stddevApplicationsHacker();
-		Assert.isTrue(query < 0.433 && query > 0.432);
+		Assert.isTrue(query < 0.2 && query > 0.1);
 	}
 
 	@Test

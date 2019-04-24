@@ -105,7 +105,7 @@
   
   <br />
   <jstl:if test="${publicData}">
-  <a href="anonymous/filtered/create.do"><spring:message code="position.back" /></a>
+  <a href="anonymous/filtered/create.do"><spring:message code="position.backToPublicData" /></a>
  </jstl:if>
     
     
