@@ -238,6 +238,34 @@ public class MessageService {
 
 		this.sendMessageWithActors(company, sender, receiver);
 	}
+	
+	public void notificationStatusApplicationAccepted(Application app) {
+
+		Actor sender = app.getHacker();
+		Actor receiver = this.applicationService.getCompanyByApplicationId(app.getId());
+
+		Message company = this.create("Status change",
+				"The application " + app.getProblem().getTitle() + " has changed its status to accepted by the company "
+						+ receiver.getName() + ". / La aplicacion " + app.getProblem().getTitle()
+						+ " ha cambiado su estado a aceptada por la compania " + receiver.getName() + ".",
+				"STATUS, NOTIFICATION", receiver.getName(), sender.getName());
+
+		this.sendMessageWithActors(company, receiver, sender);
+	}
+	
+	public void notificationStatusApplicationRejected(Application app) {
+
+		Actor sender = app.getHacker();
+		Actor receiver = this.applicationService.getCompanyByApplicationId(app.getId());
+
+		Message company = this.create("Status change",
+				"The application " + app.getProblem().getTitle() + " has changed its status to rejected by the company "
+						+ receiver.getName() + ". / La aplicacion " + app.getProblem().getTitle()
+						+ " ha cambiado su estado a rechazada por la compania " + receiver.getName() + ".",
+				"STATUS, NOTIFICATION", receiver.getName(), sender.getName());
+
+		this.sendMessageWithActors(company, receiver, sender);
+	}
 
 	public Message reconstruct(Message messageTest, BindingResult binding) {
 
