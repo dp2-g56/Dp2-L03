@@ -259,25 +259,32 @@ public class FinderService {
 	public void cleanFindersOfPositions(List<Position> positions) {
 		for (Position p : positions) {
 			List<Finder> finders = this.finderRepository.getFindersContainsPosition(p);
-			for (Finder f : finders) {
+			for (Finder f : finders)
 				f.getPositions().removeAll(positions);
-			}
 		}
 	}
-	
+
 	public void sendNotificationPosition(Position position) {
-		
+
 		String rs = "%" + position.getRequiredSkills().get(0) + "%";
 		String rt = "%" + position.getRequiredTecnologies().get(0) + "%";
 		String title = "%" + position.getTitle() + "%";
 		String desription = "%" + position.getDescription() + "%";
 		String requiredProfile = "%" + position.getRequiredProfile() + "%";
-		String ticker = "%" + position.getTicker()+ "%";
-		
-		List<Hacker> hackers =  this.finderRepository.getHackersThatFinderKeyWordIsContaine(rs, rt, title, desription, requiredProfile, ticker);
-		
-		
-	}
+		String ticker = "%" + position.getTicker() + "%";
 
+		List<Hacker> hackers = this.finderRepository.getHackersThatFinderKeyWordIsContained(rs, rt, title, desription, requiredProfile, ticker);
+
+		Message message2 = this.messageService.create("Nueva oferta / New offer", "Una nueva oferta concuerda con tu busqueda / A new offer matches your finder criteria", "STATUS, NOTIFICATION", "NOTIFICATION", "");
+
+		for (Hacker a : hackers) {
+
+			message2.setReceiver(a.getUserAccount().getUsername());
+			a.getMessages().add(message2);
+			this.hackerService.save(a);
+
+		}
+
+	}
 
 }
