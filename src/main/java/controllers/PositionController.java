@@ -55,15 +55,13 @@ public class PositionController extends AbstractController {
 
 	@Autowired
 	private ActorService		actorService;
-  
+
 	@Autowired
 	private FinderService		finderService;
-  
+
 	@Autowired
-	private CurriculumService curriculumService;
-  
-	@Autowired
-	private ActorService actorService;
+	private CurriculumService	curriculumService;
+
 
 	public PositionController() {
 		super();
