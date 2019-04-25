@@ -141,6 +141,7 @@ public class CompanyTest extends AbstractTest {
 	 * 
 	 * An actor who is authenticated must be able to:
 	 * 2. Edit his or her personal data.
+	 * Ratio of data coverage: 2/3 = 66.67%
 	 **/
 
 	@Test

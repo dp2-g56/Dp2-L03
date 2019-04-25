@@ -39,6 +39,7 @@ public class ApplicationHackerServiceTest extends AbstractTest {
 	@Autowired
 	private PositionService positionService;
 
+	// Ratio of data coverage: 6/6 = 100%
 	@Test
 	public void driverListApplication() {
 
@@ -109,6 +110,7 @@ public class ApplicationHackerServiceTest extends AbstractTest {
 		super.checkExceptions(expected, caught);
 	}
 
+	// Ratio of data coverage: 2/2 = 100%
 	@Test
 	public void driverCreateApplication() {
 
@@ -155,6 +157,7 @@ public class ApplicationHackerServiceTest extends AbstractTest {
 
 	}
 
+	// Ratio of data coverage: 3/4 = 75%
 	@Test
 	public void driverUpdateApplication() {
 		Application a = this.applicationService.findOne(super.getEntityId("application1"));
