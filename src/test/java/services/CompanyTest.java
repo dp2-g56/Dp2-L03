@@ -35,104 +35,150 @@ public class CompanyTest extends AbstractTest {
 	private CreditCardService	creditCardService;
 
 
+	/**
+	 * We are going to test Requirement 9.2
+	 * 
+	 * 24. An actor who is authenticated as an company must be able to:...
+	 */
+
+	/*
+	 * Positive test + Constrains + asserts = 4
+	 * Total test = 5
+	 * Total coverage of the problem = 100%
+	 */
 	@Test
 	public void driverEditProblem() {
 		Object testingData[][] = {
 
 			{
+				//Positive test, Edit a problem with correct data
 				"company1", "problem6", "title1", "statement1", null
 			}, {
+				//Negative test, Edit a problem with blank tittle
 				"company1", "problem6", "", "statement1", ConstraintViolationException.class
 			}, {
+				//Nevative test, Edit a problem with blank statement
 				"company1", "problem6", "title1", "", ConstraintViolationException.class
 			}, {
+				//Negative test, Edit a problem that is not yours
 				"company1", "problem1", "title1", "statement1", IllegalArgumentException.class
 			}, {
+				//Negative test, Edit a problem that is not yours
 				"company2", "problem6", "title1", "statement1", IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
+		for (int i = 0; i < testingData.length; i++)
 			this.templateEditProblem((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Class<?>) testingData[i][4]);
-		}
 
 	}
 
+	/*
+	 * Positive test + Constrains + asserts = 4
+	 * Total test = 5
+	 * Total coverage of the problem = 100%
+	 */
 	@Test
 	public void driverCreateProblem() {
 		Object testingData[][] = {
 
 			{
+				//Positive test, create a problem with correct data
 				"company1", "title1", "statement1", null
 			}, {
+				//Negative test, Blank title
 				"company1", "", "statement1", ConstraintViolationException.class
 			}, {
+				//Negative test, Blank statement
 				"company1", "title1", "", ConstraintViolationException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
+		for (int i = 0; i < testingData.length; i++)
 			this.templateCreateProblem((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
-		}
 
 	}
 
+	/*
+	 * Positive test + asserts = 2
+	 * Total test = 3
+	 * Total coverage of the problem = 100%
+	 */
 	@Test
 	public void driverDeleteProblem() {
 		Object testingData[][] = {
 
 			{
+				//Positive test, deleting a problem you own
 				"company1", "problem6", null
 			}, {
+				//Negative test, deleting a problem you don't own
 				"company1", "problem3", IllegalArgumentException.class
 			}, {
+				//Negative test, deleting a problem you don't own
 				"company2", "problem6", IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
+		for (int i = 0; i < testingData.length; i++)
 			this.templateDeleteProblem((String) testingData[i][0], (String) testingData[i][1], (Class<?>) testingData[i][2]);
-		}
 
 	}
+
+	/*
+	 * Positive test + asserts = 2
+	 * Total test = 4
+	 * Total coverage of the problem = 100%
+	 */
 
 	@Test
 	public void driverDeleteAttachment() {
 		Object testingData[][] = {
 
 			{
+				//Positive test, Delete attachment 
 				"company1", "problem6", 0, null
 			}, {
+				//Negative test, Delete an attachment that dont belongs to the problem
 				"company2", "problem6", 0, IllegalArgumentException.class
 			}, {
+				//Negative test, Delete an attachment that dont belongs to the problem
 				"company1", "problem3", 0, IllegalArgumentException.class
 			}, {
+				//Negative test, Delete an attachment that dont belongs to the problem
 				"company1", "problem6", 1, IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
+		for (int i = 0; i < testingData.length; i++)
 			this.templateDeleteAttachment((String) testingData[i][0], (String) testingData[i][1], (Integer) testingData[i][2], (Class<?>) testingData[i][3]);
-		}
 
 	}
+
+	/*
+	 * Positive test + asserts = 2
+	 * Total test = 3
+	 * Total coverage of the problem = 100%
+	 */
 
 	@Test
 	public void driverCreateAttachment() {
 		Object testingData[][] = {
 
 			{
+				//Positive test, create attachment with all data correct
 				"company1", "problem6", "https://www.google.com/", null
 			}, {
+				//Negative test, create an attachment to a problem you dones't own
 				"company1", "problem3", "https://www.google.com/", IllegalArgumentException.class
 			}, {
+				//Negative test, create an attachment to a problem you dones't own
 				"company2", "problem6", "https://www.google.com/", IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
+		for (int i = 0; i < testingData.length; i++)
 			this.templateCreateAttachment((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
-		}
 
 	}
 
@@ -157,9 +203,8 @@ public class CompanyTest extends AbstractTest {
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
+		for (int i = 0; i < testingData.length; i++)
 			this.templateEditPersonalData((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
-		}
 
 	}
 
@@ -351,6 +396,12 @@ public class CompanyTest extends AbstractTest {
 
 	}
 
+	/*
+	 * Positive test + asserts + constrains + credit card asserts = 16
+	 * Total test = 17
+	 * Total coverage of the problem = 100%
+	 */
+
 	@Test
 	public void driverCreateCompany() {
 		Object testingData[][] = {
@@ -409,11 +460,10 @@ public class CompanyTest extends AbstractTest {
 			},
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
+		for (int i = 0; i < testingData.length; i++)
 			this.templateCreateCompany((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Long) testingData[i][4], (Integer) testingData[i][5], (Integer) testingData[i][6],
 				(Integer) testingData[i][7], (String) testingData[i][8], (String) testingData[i][9], (String) testingData[i][10], (String) testingData[i][11], (String) testingData[i][12], (String) testingData[i][13], (String) testingData[i][14],
 				(String) testingData[i][15], (Class<?>) testingData[i][16]);
-		}
 
 	}
 

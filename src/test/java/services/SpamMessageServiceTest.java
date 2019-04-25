@@ -28,24 +28,34 @@ public class SpamMessageServiceTest extends AbstractTest {
 	private ActorService	actorService;
 
 
+	/*
+	 * Positive test + asserts = 2
+	 * Total test = 4
+	 * Total coverage of the problem = 100%
+	 * We test each of the possibilities of spam words with asserts in the test method
+	 */
+
 	@Test
 	public void driverSpamMessage() {
 		Object testingData[][] = {
 
 			{
+				//Positive test, spam word in subject
 				"admin1", "sex", "body", "tags", "hacker3", null
 			}, {
+				//Positive test, spam word in body
 				"admin1", "subject", "sex", "", "hacker3", null
 			}, {
+				//Positive test, spam word in tag
 				"admin1", "subject", "body", "sex", "hacker3", null
 			}, {
+				//Negative test, no spam words
 				"admin1", "subject", "body", "tags", "hacker3", IllegalArgumentException.class
 			}
 		};
 
-		for (int i = 0; i < testingData.length; i++) {
+		for (int i = 0; i < testingData.length; i++)
 			this.templateSpamMessage((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (Class<?>) testingData[i][5]);
-		}
 
 	}
 

@@ -95,6 +95,7 @@ public class CompanyService {
 	}
 
 	public void addProblem(Problem p) {
+		this.loggedAsCompany();
 		Company loggedCompany = this.loggedCompany();
 		Assert.isTrue(p.getId() == 0);
 
