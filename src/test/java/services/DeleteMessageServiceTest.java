@@ -24,17 +24,27 @@ public class DeleteMessageServiceTest extends AbstractTest {
 	private ActorService	actorService;
 
 
+	/*
+	 * Positive test + asserts = 3
+	 * Total test = 4
+	 * Total coverage of the problem = 100%
+	 */
+
 	@Test
 	public void driverDeleteMessage() {
 		Object testingData[][] = {
 
 			{
+				//Positive test, Delete message you own
 				"admin1", "message1", null
 			}, {
+				//Positive test, Delete message you own
 				"admin1", "message2", null
 			}, {
+				//Negative test, not logged
 				"", "message2", IllegalArgumentException.class
 			}, {
+				//Negative test, Delete a message is not yours
 				"admin1", "message3", IllegalArgumentException.class
 			}
 		};

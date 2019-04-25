@@ -28,6 +28,12 @@ public class SendMessageServiceTest extends AbstractTest {
 	private ActorService	actorService;
 
 
+	/*
+	 * Positive test + asserts + constraints = 4
+	 * Total test = 5
+	 * Total coverage of the problem = 100%
+	 */
+
 	@Test
 	public void driverSendMessage() {
 		Object testingData[][] = {

@@ -33,6 +33,12 @@ public class CreateHackerServiceTest extends AbstractTest {
 	private CreditCardService	creditCardService;
 
 
+	/*
+	 * Positive test + asserts = 15
+	 * Total test = 16
+	 * Total coverage of the problem = 100%
+	 */
+
 	@Test
 	public void driverCreateHacker() {
 		Object testingData[][] = {
