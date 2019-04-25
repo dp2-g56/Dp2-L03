@@ -39,6 +39,18 @@ public class ApplicationHackerServiceTest extends AbstractTest {
 	@Autowired
 	private PositionService positionService;
 
+	/*
+	 * 10.An actor who is authenticated as a hacker must be able to:1.Manage his or
+	 * her applications, which includes listing them grouped by status, showing
+	 * them, creating them, and updating them.When an application is created, the
+	 * system assigns an arbitrary problem to it (from the set of problems that have
+	 * been registered for the corresponding position). Updating an application
+	 * consists in submitting a solution to the corresponding problem (a piece of
+	 * text with explanations and a link to the code), registering the submission
+	 * moment, and changing the status to SUBMITTED
+	 */
+
+	// Ratio of data coverage: 6/6 = 100%
 	@Test
 	public void driverListApplication() {
 
@@ -109,6 +121,7 @@ public class ApplicationHackerServiceTest extends AbstractTest {
 		super.checkExceptions(expected, caught);
 	}
 
+	// Ratio of data coverage: 2/2 = 100%
 	@Test
 	public void driverCreateApplication() {
 
@@ -155,6 +168,7 @@ public class ApplicationHackerServiceTest extends AbstractTest {
 
 	}
 
+	// Ratio of data coverage: 3/4 = 75%
 	@Test
 	public void driverUpdateApplication() {
 		Application a = this.applicationService.findOne(super.getEntityId("application1"));

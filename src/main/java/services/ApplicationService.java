@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.servlet.ModelAndView;
 
 import repositories.ApplicationRepository;
 import domain.Actor;
@@ -89,14 +90,18 @@ public class ApplicationService {
 		thisMoment.setTime(thisMoment.getTime() - 1);
 
 		if (application.getId() == 0) {
-			Curriculum copyCur = this.curriculumService.copyCurriculum(application.getCurriculum());
-			result = this.createApplication();
-			List<Problem> problems = application.getPosition().getProblems();
-			Random rand = new Random();
-			Problem p = problems.get(rand.nextInt(problems.size()));
-			result.setProblem(p);
-			result.setCurriculum(copyCur);
-			result.setPosition(application.getPosition());
+			if (application.getPosition().getIsCancelled().equals(true)) {
+				result = null;
+			} else {
+				Curriculum copyCur = this.curriculumService.copyCurriculum(application.getCurriculum());
+				result = this.createApplication();
+				List<Problem> problems = application.getPosition().getProblems();
+				Random rand = new Random();
+				Problem p = problems.get(rand.nextInt(problems.size()));
+				result.setProblem(p);
+				result.setCurriculum(copyCur);
+				result.setPosition(application.getPosition());
+			}
 		} else {
 			Application copy = this.findOne(application.getId());
 
